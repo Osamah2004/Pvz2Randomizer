@@ -220,6 +220,9 @@ function downloadFile() {
     
     // Revoke the URL
     URL.revokeObjectURL(url);
+    if (confirm("File succesfully downloaded.")) {
+        location.reload();
+    }
 }
 
 
