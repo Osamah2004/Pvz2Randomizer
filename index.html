@@ -1,45 +1,152 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pvz2 lvl randomizer</title>
+    <title>Enhanced HTML Page</title>
     <style>
         body {
             display: flex;
-            flex-direction: column; /* Add this to stack elements vertically */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background-color: #282c34;
+            color: #61dafb;
+            font-family: 'Arial', sans-serif;
             margin: 0;
+            overflow: hidden;
         }
-    
         button {
             padding: 10px 20px;
             font-size: 16px;
+            color: #ffffff;
+            background-color: #61dafb;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
-    
-        /* Add this to create space above the select */
+        button:hover {
+            background-color: #21a1f1;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .filename-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            background-color: #3c4048;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        select, input, pre {
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #3c4048;
+            border: 1px solid #61dafb;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 0 5px;
+        }
+        select:focus, input:focus {
+            outline: none;
+            box-shadow: 0 0 10px #61dafb;
+        }
+        select option {
+            background-color: #282c34;
+            color: #61dafb;
+        }
+		a {
+			color: red;
+		}
+        .notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            background-color: #61dafb;
+            color: white;
+            font-size: 18px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: top 0.5s ease;
+        }
+        .download-notification {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div>
-        <button onclick="display()">Copy.</button>
-        <button onclick="downloadFile()">Download.</button>
+    <div class="container">
+        <button onclick="copyCode()">Copy</button>
+        <button onclick="startDownload()">Download</button>
     </div>
-    <div style="display: flex; align-items: center;">
+    <div class="filename-container">
         <select id="filename"></select>
         <input style="width: 40px;" value="1" type="number" min="1" max="32" id="levelnum">
         <pre>.json</pre>
     </div>
-
-
-
-
-
-
+	<h6>Source code <a href="https://github.com/Osamah2004/Pvz2Randomizer">here</a></h6>
     <script>
+		
+		
+function copyCode() {
+    const text = JSON.stringify(level, null, 2); // Converts the object to a formatted JSON string
+    navigator.clipboard.writeText(text);
+	alert("Level generated, press ok to copy.");
+	reload();
+}
+		
+		function startDownload() {
+    // Get the filename from the input fields
+    let filename = document.getElementById('filename').value;
+    filename += document.getElementById('levelnum').value + '.json';
+    text = JSON.stringify(level, null, 2);
+
+    // Convert the level object to a JSON string
+    let dataStr = text;
+
+    // Create a Blob object from the data string
+    let dataBlob = new Blob([dataStr], {type: 'application/json'});
+
+    // Create a URL for the Blob object
+    let url = URL.createObjectURL(dataBlob);
+
+    // Create a link element
+    let link = document.createElement('a');
+    link.download = filename;
+    link.href = url;
+
+    // Append the link to the body
+    document.body.appendChild(link);
+
+    // Simulate a click on the link
+    link.click();
+
+    // Remove the link from the body
+    document.body.removeChild(link);
+	
+	alert("Level downloaded.")
+	reload();
+
+    // Reload the page after the download
+
+}
+
+
+function rtid(str,module){
+    return `RTID(${str}@${module})`;
+}
+
 let interval = randint(7,10);
-let flags = randint(1,3);
+let flags = 1 //randint(1,3);
 let total = interval * flags;
 
 
@@ -56,18 +163,19 @@ let specials = [
 let basics = ["tutorial","mummy","pirate","cowboy","future","dark","beach","iceage","lostcity","eighties","dino"];
 let flyingUnits = ["lostcity_bug_armor2","lostcity_bug_armor1","modern_balloon","tutorial_balloon","future_jetpack_veteran","future_jetpack","pelican","cannon","lostcity_bug"];
 
-let stage = ["Egypt","Pirate","West","Future","Dark","Beach","Iceage","Lostcity","Eighties","Dino","FrontLawn"];
+let stage = ["Egypt","Pirate","West","Future","Dark","Beach","Iceage","LostCity","Eighties","Dino","FrontLawn"];
 
 for (let i = 0; i < stage.length - 1; i++) {
     let option = document.createElement('option');
     let select = document.getElementById('filename');
     let txt = stage[i];
-    debugger;
     if (i == 2){txt = 'Cowboy'}
     option.setAttribute('value', txt);
     option.text = txt;
     select.appendChild(option);
 }
+
+
 
 stage[stage.length - 3] = stage[stage.length - 2];
 stage[stage.length - 2] = stage[stage.length - 1];
@@ -78,7 +186,7 @@ stage = choice(stage);
 let pool = sample(specials,randint(2,4));
 
 pool.push(choice(basics));
-pool.push(choice(basics) + '_armor2');
+pool.push(choice(basics) + '_armor1');
 pool.push(choice(basics) + '_armor2');
 
 
@@ -100,10 +208,18 @@ function sample(arr, k) {
 }
 
 function randint(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) ) + min;
+  if (max < min) {
+    [min, max] = [max, min]; // Swap min and max if max is less than min
+  }
+  // If min and max are equal, return that value
+  if (min === max) {
+    return min;
+  }
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function randBool() {
+
+function coinFlip() {
     return Math.random() >= 0.5;
 }
 
@@ -113,18 +229,73 @@ var objdata = new Object();
 var waveManager = new Object();
 let escalation = new Object();
 
-waveManager.FlagWaveInterval = interval;
-waveManager.WaveCount = total;
-waveManager.SuppressFlagZombie = false;
-waveManager.Waves = waveArray();
+
 
 function waveArray() {
     let emptyWave = [];
     let waveOfEmptyWaves = [];
-    for (let i = 0; i < total; i++) {
-        waveOfEmptyWaves.push(emptyWave);
+    for (let i = 1; i < total + 1; i++) {
+        if (i % interval == 0){
+            waveOfEmptyWaves.push([rtid(`wave${i}ambush`,'.')]);
+            ambush(i);
+            if (['Dark','Iceage'].includes(stage)){waveOfEmptyWaves[i-1].push(rtid(`wave${i}ambushExtra`,'.'))}
+        }
+        else if (randint(1,3) == 3){
+            waveOfEmptyWaves.push([rtid(`wave${i}ambush`,'.')]);
+            ambush(i);
+            if (['Dark','Iceage'].includes(stage)){waveOfEmptyWaves[i-1].push(rtid(`wave${i}ambushExtra`,'.'))}
+        }
+        else waveOfEmptyWaves.push(emptyWave);
     }
     return waveOfEmptyWaves;
+}
+
+function dinoStage(){
+    let k;
+    switch (flags) {
+        case 1: k = randint(1,2); break;
+        case 2: k = randint(2,3); break;
+        case 3: k = randint(3,5); break;
+    }
+    let dinos = sample(["raptor","ptero","stego","tyranno","ankylo"],k);
+
+    for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < dinos.length; j++) {
+            append0({"DinoRow": i,"DinoType": dinos[j]},'DinoWaveActionProps',`${dinos[j]}${i}`);
+        }
+    }
+
+
+    var emptyWave = [];
+    let waveOfEmptyWaves = [];
+    for (let i = 1; i < total + 1; i++) {
+        if (i % interval == 0){
+            for (let j = 0; j < getViolence(i);j++){
+                emptyWave.push(`${rtid(choice(dinos)+randint(0,4),'.')}`);
+            }
+        }
+        else if (randint(1,3) == 3){
+            for (let j = 0; j < getViolence(i);j++){
+                emptyWave.push(`${rtid(choice(dinos)+randint(0,4),'.')}`);
+            }
+        }
+        else emptyWave = [];waveOfEmptyWaves.push(emptyWave);
+        emptyWave = [];
+    }
+    return waveOfEmptyWaves;
+}
+
+function getViolence(wave){
+    if (wave < 3) {
+            return 1;
+        } else if (wave < 6) {
+            return randint(1,2);
+        } else if (wave < 10) {
+            return randint(2,3);
+        } else if (wave < 16) {
+            return randint(3,5);
+    }
+    else return randint(3,7);
 }
 
 escalation.FlagCount = flags;
@@ -139,7 +310,7 @@ var modules = [];
 
 function append(objdata,objclass,alias) {
     let obj = new Object();
-    if (!(alias === undefined)){
+    if (!(alias === undefined)) {
         obj.aliases = [alias];
         modules.push(`RTID(${alias}@.)`);
     }
@@ -148,13 +319,19 @@ function append(objdata,objclass,alias) {
     objects.push(obj);
 }
 
+function append0(objdata,objclass,alias){
+    let obj = new Object();
+    obj.aliases = [alias];
+    obj.objclass = objclass;
+    obj.objdata = objdata;
+    objects.push(obj);
+}
 
 modules.push("RTID(StandardIntro@LevelModules)");
 modules.push("RTID(ZombiesDeadWinCon@LevelModules)");
 modules.push("RTID(DefaultZombieWinCondition@LevelModules)");
-if (randBool()){
-    modules.push(`RTID(${stage}Mowers@LevelModules)`)
-}
+if (coinFlip()){modules.push(`RTID(${stage}Mowers@LevelModules)`)};
+if (stage !== 'Dark'){modules.push("RTID(DefaultSunDropper@LevelModules)")};
 
 objdata.StartingSun = randint(0,4) * 25;
 objdata.Description = "my randomized level";
@@ -163,19 +340,65 @@ objdata.Modules = modules;
 objdata.Name = "My Level";
 objdata.StageModule = `RTID(${stage}Stage@LevelModules)`;
 
+waveManager.FlagWaveInterval = interval;
+waveManager.WaveCount = total;
+waveManager.SuppressFlagZombie = false;
+
 append(objdata,'LevelDefinition');
 append({"SelectionMethod": "chooser"},"SeedBankProperties","SeedBank");
 append({},"WaveManagerModuleProperties","NewWaves");
 append(escalation,"LevelEscalationModuleProperties","Escalation");
-append(waveManager,"WaveManagerProperties","WaveManagerProps");
+
+
+if (stage == 'Dino'){waveManager.Waves = dinoStage()}
+else waveManager.Waves = waveArray();
+append(waveManager,"WaveManagerProperties","WaveManager");
 
 level.objects = objects;
 level.version = 1;
 
+let occupied = new Set();
+
 switch (stage) {
+    case 'Egypt':
+        chessboard(1,8,['gravestone_egypt']);
+        break;
     case 'Pirate':
         append({"PlankRows":sample([0,1,2,3,4],randint(1,5)).sort()},"PiratePlankProperties","PiratePlanks");
         pool.push(...sample(flyingUnits,randint(2,4)));
+        break;
+    case 'West':
+        railCarts();
+        break;
+    case 'Future':
+        let diceRoll = randint(1,4);
+        let latin = ['alpha','beta','gamma','delta'];
+        let str = 'powertile_';
+        latin = sample(latin,diceRoll);
+        let InitialGridItemPlacements = [];
+        for (let i = 0; i < latin.length; i++) {
+            InitialGridItemPlacements.push(...powertileBoard(0,6,str+latin[i],randint(2,5)));
+        }
+        let obj = new Object();
+        obj.InitialGridItemPlacements = InitialGridItemPlacements;
+        append(obj,'InitialGridItemProperties','GI')
+        break;
+    case 'Dark':
+        chessboard(1,8,['gravestone_dark','gravestone_dark','gravestoneSunOnDestruction']);
+        break;
+    case 'Beach':
+        let columns = [9,8,7,6,5,4];
+        let index = randint(0,5);
+        append({"StartingWaveLocation": columns[index]},"TideProperties","InitialTide");
+        chessboard(index,9,['lilypad']);
+        break;
+    case 'Iceage':
+        chessboard(2,6,['slider_up','slider_down']);
+        break;
+    case 'LostCity':
+        let goldTiles = [];
+        goldTiles.push(...powertileBoard(0,6,'goldtile',randint(3,12)));
+        append({InitialGridItemPlacements: goldTiles},'InitialGridItemProperties','GI')
         break;
     default:
         break;
@@ -184,73 +407,439 @@ switch (stage) {
 for (let i = 0; i < pool.length; i++) {
     pool[i] = `RTID(${pool[i]}@ZombieTypes)`;
 }
-function display() {
-    const text = JSON.stringify(level, null, 2); // Converts the object to a formatted JSON string
-    navigator.clipboard.writeText(text);
-    if (confirm("level's code succesfully copied.")) {
+
+window.onload = function() {
+    let filename = localStorage.getItem('filename');
+    let levelnum = localStorage.getItem('levelnum'); // corrected key to 'levelnum'
+    let select = document.getElementById('filename');
+    if (filename !== null) {
+        for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === filename) {
+                select.selectedIndex = i;
+                break;
+            }
+        }
+    }
+    let num = document.getElementById('levelnum');
+    if (levelnum !== null) {
+        num.value = levelnum;
+    }
+}
+
+        // Save the selected values and reload the page
+function reload() {
+    let num = document.getElementById('levelnum');
+    let filename = document.getElementById('filename');
+    localStorage.setItem('levelnum', num.value);
+    let selectElement = document.getElementById('filename');
+    let selectedValue = selectElement.options[selectElement.selectedIndex].value;
+    localStorage.setItem('filename', selectedValue); // corrected key to 'filename'
     location.reload();
-    }
-}
-
-function downloadFile() {
-    // Create a Blob from the text
-    text = JSON.stringify(level, null, 2);
-    var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
-    debugger;
-    let filename = document.getElementById('filename').value;
-    filename += document.getElementById('levelnum').value + '.json';
-    console.log(filename);
-    // Create a URL representing the text
-    var url = URL.createObjectURL(blob);
-    
-    // Create a hidden anchor element
-    var a = document.createElement("a");
-    a.style.display = "none";
-    a.href = url;
-    a.download = filename;
-    
-    // Append the anchor to the body
-    document.body.appendChild(a);
-    
-    // Simulate a click to start the download
-    a.click();
-    
-    // Clean up by removing the anchor
-    document.body.removeChild(a);
-    
-    // Revoke the URL
-    URL.revokeObjectURL(url);
-    if (confirm("File succesfully downloaded.")) {
-        location.reload();
-    }
 }
 
 
 
 
+function chessboard(start,end,typeName){
+    let grids = [];
+    for (let i = 0; i <= 4; i++) {
+        for (let j = start; j < end; j++) {
+            if (coinFlip()){
+                if (stage == 'Iceage' && i == 0){grids.push({"GridX":j,"GridY":i,"TypeName":"slider_down"});}
+                else if (stage == 'Iceage' && i == 4){grids.push({"GridX":j,"GridY":i,"TypeName":"slider_up"});}
+                else grids.push({"GridX":j,"GridY":i,"TypeName":choice(typeName)});
+            }
+        }
+    }
+    let objdata = new Object();
+    objdata.InitialGridItemPlacements = grids;
+    append(objdata,"InitialGridItemProperties","GI");
+}
+
+
+function powertileBoard(start, end, typeName, num) {
+    let grids = [];
+    while (grids.length < num) {
+        let i = randint(0,4);
+        let j = randint(start,end);
+        if (coinFlip() && grids.length < num) {
+            let pos = {"GridX":j,"GridY":i};
+            let posStr = JSON.stringify(pos);
+            if (!occupied.has(posStr)) {
+                occupied.add(posStr);
+                grids.push({...pos, "TypeName":typeName});
+            }
+        }
+    }
+    return grids;
+}
+
+
+function railCarts() {
+    let objdata = new Object();
+    objdata.RailcartType = "railcart_cowboy";
+    let rails = [];
+    let carts = [];
+    for (let i = 0; i < 8; i++) {
+        var diceRoll = randint(1,6);
+        var rows = sample([0,1,2,3,4],2);
+        var end = Math.max(...rows);
+        var start = Math.min(...rows);
+        
+        switch (diceRoll) {
+            case 1:
+            case 6:
+                continue;
+            case 2:
+                rails.push({"RowEnd": 4,"RowStart": 0,"Column":i});
+                carts.push({"Column": i,"Row": randint(0,4)});
+                break;
+            case 3:
+                rails.push({"RowEnd": end,"RowStart": start,"Column":i});
+                carts.push({"Column": i,"Row": randint(start,end)});
+                break;
+            case 4:
+                rails.push({"RowEnd": 4,"RowStart": 3,"Column":i});
+                rails.push({"RowEnd": 1,"RowStart": 0,"Column":i});
+                carts.push({"Column": i,"Row": randint(3,4)});
+                carts.push({"Column": i,"Row": randint(0,1)});
+                break;
+            case 5:
+                rails.push({"RowEnd": 4,"RowStart": 0,"Column":i});
+                carts.push({"Column": i,"Row": start});
+                carts.push({"Column": i,"Row": end});
+                break;
+            default:
+                break;
+        }
+    }
+    objdata.RailcartType = "railcart_cowboy";
+    objdata.Rails = rails;
+    objdata.Railcarts = carts;
+    append(objdata,"RailcartProperties","CowboyRails");
+}
 
 
 
+/*
+{"aliases":["Sandstorm1_C1"],
+"objclass": "StormZombieSpawnerProps",
+"objdata": {
+objdata.AdditionalPlantfood = "0",
+objdata.Type = "sandstorm",
+objdata.ColumnStart = 1,
+objdata.ColumnEnd = 1,
+objdata.TimeBetweenGroups = 0.5,
+objdata.GroupSize = 1,
+    "Zombies": [
+        {"Type": "RTID(tutorial@ZombieTypes)"},
+        {"Type": "RTID(tutorial@ZombieTypes)"}
+    ]
+}},
+*/
+function stormAmbush(wave,type,violence){
+        let pool = [];
+        var basic,conhead,buckethead,brickhead,garg;
+        switch (type) {
+            case 'sand':
+                basic = "mummy";
+                conehead = "mummy_armor1";
+                buckethead = "mummy_armor2";
+                brickhead = "mummy_armor4";
+                garg = "egypt_gargantuar";
+                break;
+            case 'dark':
+                basic = {"Type":"RTID(dark@ZombieTypes)"};
+                conehead = {"Type":"RTID(dark_armor1@ZombieTypes)"};
+                buckethead = {"Type":"RTID(dark_armor2@ZombieTypes)"};
+                brickhead = {"Type":"RTID(dark_armor3@ZombieTypes)"};
+                garg = {"Type":"RTID(dark_gargantuar@ZombieTypes)"};
+                break;
+            case 'snow':
+                basic = "iceage";
+                conehead = "iceage_armor1";
+                buckethead = "iceage_armor2";
+                brickhead = "iceage_armor3";
+                garg = "iceage_gargantuar";
+                break;
+            default:
+                console.log("Unknown type");
+                break;
+        }
+        let start = 0;
+        let num = 0;
+        let end = 0;
+        switch (violence){
+            case 0:
+                pool = [basic];
+                start = 6;
+                end = 8;
+                num = 1;
+                break;
+            case 1:
+                pool = [basic,basic,conehead];
+                start = 5;
+                end = 7;
+                num = randint(1,3);
+                break;
+            case 2:
+                pool = [basic,conehead,conehead,buckethead];
+                start = 4;
+                end = 7;
+                num = randint(2,4);
+                break;
+            case 3:
+                pool = [conehead,conehead,buckethead,buckethead,brickhead];
+                start = 3;
+                end = 6;
+                num = randint(3,6);
+                break;
+            case 4:
+                pool = [buckethead,buckethead,buckethead,brickhead,brickhead,brickhead,garg];
+                start = 2;
+                end = 6;
+                num = randint(4,8);
+                break;
+        }
+    let objdata = new Object();
+    objdata.AdditionalPlantfood = "0",
+    objdata.Type = `${type}storm`,
+    objdata.ColumnStart = start,
+    objdata.ColumnEnd = end,
+    objdata.TimeBetweenGroups = 0.5,
+    objdata.GroupSize = 1;
+    let temp = [];
+    for (let i = 0; i < num; i++) {
+        temp.push({"Type":`RTID(${choice(pool)}@ZombieTypes)`});
+    }
+    objdata.Zombies = temp;
+    if (type == 'dark'){
+        return pool;
+    }
+    append0(objdata,"StormZombieSpawnerProps",`wave${wave}ambush`);
+}
 
+/*
+"GroupSize": 3,
+"SwashbucklerCount": 3,
+"TimeBetweenGroups": 1
+*/
 
+function raidingParty(wave,violence){
+    let objdata = new Object();
+    let times = [1.5,1.25,1.0,0.75,0.5,0.25,0.1];
 
+    objdata.GroupSize = 1;
+    switch (violence){
+        case 0:
+            objdata.TimeBetweenGroups = times[0];
+            objdata.SwashbucklerCount = 1;
+            break;
+        case 1:
+            objdata.TimeBetweenGroups = times[randint(1,4)];
+            objdata.SwashbucklerCount = randint(2,4);
+            break;
+        case 2:
+            objdata.TimeBetweenGroups = times[randint(3,5)];
+            objdata.SwashbucklerCount = randint(3,7);
+            break;
+        case 3:
+            objdata.TimeBetweenGroups = times[randint(5,6)];
+            objdata.SwashbucklerCount = randint(9,13);
+            break;
+        case 4:
+            objdata.TimeBetweenGroups = times[6];
+            objdata.SwashbucklerCount = randint(10,18);
+            break;
+    }
+    append0(objdata,'RaidingPartyZombieSpawnerProps',`wave${wave}ambush`);
+}
 
+function rain(wave,violence){
+    var num = 0;
+    var start = 0;
+    var end = 0;
+    var time = 0;
+    switch (violence){
+        case 0:
+            time = 1.0;
+            start = 6;
+            end = 8;
+            num = randint(1,2);
+            break;
+        case 1:
+            time = 0.75;
+            start = 5;
+            end = 7;
+            num = randint(2,4);
+            break;
+        case 2:
+            time = 0.5;
+            start = 4;
+            end = 6;
+            num = randint(4,7);
+            break;
+        case 3:
+            time = 0.25;
+            start = 3;
+            end = 6;
+            num = randint(6,9);
+            break;
+        case 4:
+            time = 0.1;
+            start = 2;
+            end = 6;
+            num = randint(8,14);
+            break;
+        }
+    let objclass,name,message;
+    switch (stage) {
+        case 'Future':
+            objclass = 'SpiderRainZombieSpawnerProps'
+            name = 'future_imp'
+            message = 'Bot Swarm!'
+            break;
+        case 'LostCity':
+            objclass = 'ParachuteRainZombieSpawnerProps'
+            name = 'lostcity_lostpilot'
+            message = 'Parachute Rain!'
+            break;
 
+        default:
+            break;
+    }
+    let objdata = new Object();
+    objdata.ColumnStart = start;
+    objdata.ColumnEnd = end;
+    objdata.SpiderCount = num;
+    objdata.TimeBetweenGroups = `${time}`;
+    objdata.ZombieFallTime = `${time}`;
+    objdata.SpiderZombieName = name;
+    objdata.WaveStartMessage = message;
+    append0(objdata,objclass,`wave${wave}ambush`);
+}
 
+function graveSpawn(wave,violence){
+    let num;
+    switch (violence) {
+            case 0: num = randint(1, 2); break;
+            case 1: num = randint(2, 4); break;
+            case 2: num = randint(2, 6); break;
+            case 3: num = randint(4, 8); break;
+            case 4: num = randint(7, 12); break;
+        };
+    let sun = 0;
+    let regular = 0;
+    while (num !== 0) {
+        let diceRoll = randint(1,num);
+        regular += diceRoll;
+        num -= diceRoll;
+        diceRoll = randint(1,num);
+        sun += diceRoll;
+        num -= diceRoll;
+    }
+    let objdata = new Object();
+    objdata.GravestonePool = [
+        {"Count": regular,"Type": "RTID(gravestone_dark@GridItemTypes)"},
+        {"Count": sun,"Type": "RTID(gravestoneSunOnDestruction@GridItemTypes)"}
+    ]
+    objdata.SpawnEffectAnimID = 'POPANIM_EFFECTS_TOMBSTONE_DARK_SPAWN_EFFECT';
+    objdata.SpawnPositionsPool = [{"mX":1,"mY":0},{"mX":1,"mY":1},{"mX":1,"mY":2},{"mX":1,"mY":3},{"mX":1,"mY":4},{"mX":2,"mY":0},{"mX":2,"mY":1},{"mX":2,"mY":2},{"mX":2,"mY":3},{"mX":2,"mY":4},{"mX":3,"mY":0},{"mX":3,"mY":1},{"mX":3,"mY":2},{"mX":3,"mY":3},{"mX":3,"mY":4},{"mX":4,"mY":0},{"mX":4,"mY":1},{"mX":4,"mY":2},{"mX":4,"mY":3},{"mX":4,"mY":4},{"mX":5,"mY":0},{"mX":5,"mY":1},{"mX":5,"mY":2},{"mX":5,"mY":3},{"mX":5,"mY":4},{"mX":6,"mY":0},{"mX":6,"mY":1},{"mX":6,"mY":2},{"mX":6,"mY":3},{"mX":6,"mY":4},{"mX":7,"mY":0},{"mX":7,"mY":1},{"mX":7,"mY":2},{"mX":7,"mY":3},{"mX":7,"mY":4},{"mX":8,"mY":0},{"mX":8,"mY":1},{"mX":8,"mY":2},{"mX":8,"mY":3},{"mX":8,"mY":4}];
+    objdata.SpawnSoundID = 'Play_Zomb_Egypt_TombRaiser_Grave_Rise';
+    append0(objdata,"SpawnGravestonesWaveActionProps",`wave${wave}ambush`);
+}
 
+function ambush(wave) {
+    if (stage === 'West'){
+        return;
+    }
+    let violence;
+    if (wave < 3) {
+            violence = 0;
+        } else if (wave < 6) {
+            violence = 1;
+        } else if (wave < 10) {
+            violence = 2;
+        } else if (wave < 16) {
+            violence = 3;
+        }
+    else violence = 4;
+    switch (stage) {
+        case 'Iceage':
+            ambushRoulette(wave,violence);
+            break;
+        case 'Egypt':
+            stormAmbush(wave,'sand',violence);
+            break;
+        case 'Pirate':
+            raidingParty(wave,violence);
+            break;
+        case 'Future':
+        case 'LostCity':
+            rain(wave,violence);
+            break;
+        case 'Dark':
+            ambushRoulette(wave,violence);
+            break;
+        case 'Beach':
+            let columns = [9,8,7,6,5,4];
+            let index = randint(0,5);
+            append0({"TidalChange": columns[index],"ChangeType": "absolute"},'TidalChangeWaveActionProps',`wave${wave}ambush`);
+            break;
+        default:
+            break;
+    }
+}
 
+function necromancy(wave,violence){
+    let objdata = new Object();
+    objdata.AdditionalPlantfood = '0';
+    objdata.GridTypes = ["RTID(gravestone_dark@GridItemTypes)","RTID(gravestoneSunOnDestruction@GridItemTypes)"];
+    objdata.WaveStartMessage = '[WARNING_GRAVESTONE_SPAWN]';
+    objdata.ZombieSpawnWaitTime = '1';
+    objdata.Zombies = stormAmbush(wave,'dark',violence);
+    append0(objdata,"SpawnZombiesFromGridItemSpawnerProps",`wave${wave}ambushExtra`);
+}
 
+function winds(wave,violence){
+    let winds = [{"Direction":"left","Row":"0"},{"Direction":"left","Row":"1"},{"Direction":"left","Row":"2"},{"Direction":"left","Row":"3"},{"Direction":"left","Row":"4"},{"Direction":"right","Row":"0"},{"Direction":"right","Row":"1"},{"Direction":"right","Row":"2"},{"Direction":"right","Row":"3"},{"Direction":"right","Row":"4"}];
+    let objdata = new Object();
+    let temp = [];
+    switch (violence){
+            case 0: temp = sample(winds,randint(1,2)); break;
+            case 1: temp = sample(winds,randint(1,4)); break;
+            case 2: temp = sample(winds,randint(2,6)); break;
+            case 3: temp = sample(winds,randint(3,8)); break;
+            case 4: temp = sample(winds,randint(4,10)); break;
+        }
+    objdata.Winds = temp;
+    append0(objdata,'FrostWindWaveActionProps',`wave${wave}ambushExtra`)
+}
 
-
-
-
-
-
-
-
-
-
-
+function ambushRoulette(wave,violence){
+    let diceRoll;
+    if (violence > 1) {diceRoll = randint(1,3);}
+    else diceRoll = randint(1,2);
+    switch (diceRoll) {
+        case 1:
+            if (stage == 'Dark'){graveSpawn(wave,violence);}
+            else stormAmbush(wave,'snow',violence);
+            append0({"Zombies": []},"SpawnZombiesJitteredWaveActionProps",`wave${wave}ambushExtra`);
+            break;
+        case 2:
+            if (stage == 'Dark') {necromancy(wave,violence);}
+            else winds(wave,violence);
+            append0({"Zombies": []},"SpawnZombiesJitteredWaveActionProps",`wave${wave}ambush`);
+            break;
+        case 3:
+            if (stage == 'Dark'){graveSpawn(wave,violence);necromancy(wave,violence);}
+            else stormAmbush(wave,'snow',violence); winds(wave,violence);
+            console.log(`triple shot at ${wave}`);
+            break;
+        default:
+            break;
+    }
+}
 
     </script>
 </body>
