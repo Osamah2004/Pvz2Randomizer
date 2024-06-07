@@ -89,9 +89,14 @@
         <button onclick="startDownload()">Download</button>
     </div>
     <div class="filename-container">
+        <label>Filename: </label>
         <select id="filename"></select>
         <input style="width: 40px;" value="1" type="number" min="1" max="32" id="levelnum">
         <pre>.json</pre>
+    </div>
+    <div class="filename-container">
+        <label>Stage: </label>
+        <select id="stage"></select>
     </div>
 	<h6>Source code <a href="https://github.com/Osamah2004/Pvz2Randomizer">here</a></h6>
     <script>
@@ -104,7 +109,7 @@ function copyCode() {
 	reload();
 }
 		
-		function startDownload() {
+function startDownload() {
     // Get the filename from the input fields
     let filename = document.getElementById('filename').value;
     filename += document.getElementById('levelnum').value + '.json';
@@ -163,9 +168,10 @@ let specials = [
 let basics = ["tutorial","mummy","pirate","cowboy","future","dark","beach","iceage","lostcity","eighties","dino"];
 let flyingUnits = ["lostcity_bug_armor2","lostcity_bug_armor1","modern_balloon","tutorial_balloon","future_jetpack_veteran","future_jetpack","pelican","cannon","lostcity_bug"];
 
-let stage = ["Egypt","Pirate","West","Future","Dark","Beach","Iceage","LostCity","Eighties","Dino","FrontLawn"];
+let stage = ["Egypt","Pirate","West","Future","Dark","Beach","Iceage","LostCity","Eighties","Dino"];
+let stageBtn = localStorage.getItem('selectedStage');
 
-for (let i = 0; i < stage.length - 1; i++) {
+for (let i = 0; i < stage.length; i++) {
     let option = document.createElement('option');
     let select = document.getElementById('filename');
     let txt = stage[i];
@@ -175,14 +181,39 @@ for (let i = 0; i < stage.length - 1; i++) {
     select.appendChild(option);
 }
 
+function linearSearchAndRemove(array, element) {
+    let index = array.indexOf(element);
+    if (index !== -1) {
+        array.splice(index, 1);
+    }
+    return array;
+}
 
 
-stage[stage.length - 3] = stage[stage.length - 2];
-stage[stage.length - 2] = stage[stage.length - 1];
-stage.pop();
+linearSearchAndRemove(stage,'Eighties')
 
-stage = choice(stage);
 
+stage.unshift('random');
+let select = document.getElementById('stage');
+
+for (let i = 0; i < stage.length; i++) {
+    let option = document.createElement('option');
+    let txt = stage[i];
+    option.setAttribute('value', txt);
+    option.text = txt;
+    select.appendChild(option);
+}
+
+select.addEventListener('change', function() {
+    localStorage.setItem('selectedStage', this.value);
+    reload();
+});
+stage.shift();
+
+if (stageBtn === null || stageBtn === 'random'){
+    stage = choice(stage);
+}
+else stage = stageBtn;
 let pool = sample(specials,randint(2,4));
 
 pool.push(choice(basics));
@@ -230,34 +261,27 @@ var waveManager = new Object();
 let escalation = new Object();
 
 
-let hasAmbush = stage !== 'West';
 
 function waveArray() {
     let emptyWave = [];
     let waveOfEmptyWaves = [];
     for (let i = 1; i < total + 1; i++) {
-        if (!hasAmbush) {
-            waveOfEmptyWaves.push(emptyWave);
-            continue;
-        }
-        if (i % interval == 0) {
-            waveOfEmptyWaves.push([rtid(`wave${i}ambush`, '.')]);
+        if (stage === 'West'){waveOfEmptyWaves.push(emptyWave);continue;}
+        if (i % interval == 0){
+            waveOfEmptyWaves.push([rtid(`wave${i}ambush`,'.')]);
             ambush(i);
-            if (['Dark', 'Iceage'].includes(stage)) {
-                waveOfEmptyWaves[i - 1].push(rtid(`wave${i}ambushExtra`, '.'));
-            }
-        } else if (randint(1, 3) == 3) {
-            waveOfEmptyWaves.push([rtid(`wave${i}ambush`, '.')]);
-            ambush(i);
-            if (['Dark', 'Iceage'].includes(stage)) {
-                waveOfEmptyWaves[i - 1].push(rtid(`wave${i}ambushExtra`, '.'));
-            }
-        } else {
-            waveOfEmptyWaves.push(emptyWave);
+            if (['Dark','Iceage'].includes(stage)){waveOfEmptyWaves[i-1].push(rtid(`wave${i}ambushExtra`,'.'))}
         }
+        else if (randint(1,3) == 3){
+            waveOfEmptyWaves.push([rtid(`wave${i}ambush`,'.')]);
+            ambush(i);
+            if (['Dark','Iceage'].includes(stage)){waveOfEmptyWaves[i-1].push(rtid(`wave${i}ambushExtra`,'.'))}
+        }
+        else waveOfEmptyWaves.push(emptyWave);
     }
     return waveOfEmptyWaves;
 }
+
 function dinoStage(){
     let k;
     switch (flags) {
@@ -418,7 +442,10 @@ for (let i = 0; i < pool.length; i++) {
 
 window.onload = function() {
     let filename = localStorage.getItem('filename');
-    let levelnum = localStorage.getItem('levelnum'); // corrected key to 'levelnum'
+    let levelnum = localStorage.getItem('levelnum');
+    let selectedStage = localStorage.getItem('stage');
+    
+    let stageSelect = document.getElementById('stage');
     let select = document.getElementById('filename');
     if (filename !== null) {
         for (let i = 0; i < select.options.length; i++) {
@@ -428,6 +455,15 @@ window.onload = function() {
             }
         }
     }
+    if (selectedStage !== null) {
+        for (let i = 0; i < stageSelect.options.length; i++) {
+            if (stageSelect.options[i].value === selectedStage) {
+                stageSelect.selectedIndex = i;
+                break;
+            }
+        }
+    }
+
     let num = document.getElementById('levelnum');
     if (levelnum !== null) {
         num.value = levelnum;
@@ -438,10 +474,12 @@ window.onload = function() {
 function reload() {
     let num = document.getElementById('levelnum');
     let filename = document.getElementById('filename');
+    let stageElement = document.getElementById('stage');
     localStorage.setItem('levelnum', num.value);
-    let selectElement = document.getElementById('filename');
-    let selectedValue = selectElement.options[selectElement.selectedIndex].value;
-    localStorage.setItem('filename', selectedValue); // corrected key to 'filename'
+    let selectedFilename = filename.options[filename.selectedIndex].value;
+    let selectedStage = stageElement.options[stageElement.selectedIndex].value;
+    localStorage.setItem('filename', selectedFilename);
+    localStorage.setItem('stage', selectedStage);
     location.reload();
 }
 
