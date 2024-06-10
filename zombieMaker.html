@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zombie Properties Search</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="adjustResultsWidth()">
+    <div class="container">
+        <input type="text" id="search" placeholder="Search zombie properties..." onkeyup="searchAliases()" onfocus="showResults()">
+        <div id="results" onblur="hideResults()"></div>
+        <div id="tableContainer"></div>
+        <h6><a href="index.html">Get back to the randomizer</a></h6>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

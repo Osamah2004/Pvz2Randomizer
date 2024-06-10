@@ -1,0 +1,86 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    background-color: #282c34;
+    color: #61dafb;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    overflow: auto;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #61dafb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+button:hover {
+    background-color: #21a1f1;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+table, th, td {
+    border: 1px solid rgb(255, 255, 255);
+    border-collapse: collapse;
+    color: #ffffff;
+}
+input, select, pre {
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #3c4048;
+    border: 1px solid #61dafb;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px;
+}
+input:focus::placeholder {
+    color: transparent;
+}
+select:focus, input:focus {
+    outline: none;
+    box-shadow: 0 0 10px #61dafb;
+}
+select option {
+    background-color: #282c34;
+    color: #5bd8fa;
+}
+#results {
+    border: 1px solid #ffffff;
+    display: none;
+    max-height: 150px;
+    overflow-y: auto;
+}
+a {
+    margin: 0;
+    color: #00ffee;
+    padding: 5px;
+}
+a:hover {
+    color: #002fff;
+}
+button.red {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #ff0000; /* Red */
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+button.red:hover {
+    background-color: #cc0000; /* Darker Red */
+}
+
