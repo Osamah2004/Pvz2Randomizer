@@ -715,6 +715,7 @@ let bannedAttributes = [
     "PlantsToFlyOver",
     "BounceableProjectiles",
     "ProjectileClassesToNeverBlock",
+    "ZombieSpawnWeights",
     "PlantsShovelableWhileInvincible",
     "PlantsToBashInsteadOfShovel",
     "PlantsWhichAlsoKillBasic",
