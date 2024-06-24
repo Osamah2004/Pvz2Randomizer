@@ -1,0 +1,1480 @@
+{
+    "version": 1,
+    "objects": [
+        {
+            "objclass": "ZombieTeleportActionDefinition",
+            "aliases": [
+                "ZombieCarnieMagicianTeleportActionOther"
+            ],
+            "objdata": {
+                "NumZombies": 1,
+                "TilesToAdvance": 2.5,
+                "WeightLeftmost": 20,
+                "WeightRightmost": 35,
+                "WeightRandom": 10,
+                "TimeBeforeWarpStart": 0,
+                "TimeOfWarpOut": 0,
+                "TimeZombieIsGone": 0.5,
+                "TimeOfWarpIn": 1,
+                "Phase": "Attacking",
+                "ColumnMin": 4,
+                "DelayWarpIn": true,
+                "RampUpAnimation": "teleport",
+                "LoopingAnimation": "",
+                "RampDownAnimation": "idle",
+                "AnimationSoundFX": "Play_Zomb_Carnival_Magician_Teleport",
+                "NoRepeatTargets": true,
+                "DoOnlySelfTeleport": false,
+                "IgnoreSelfWhileTeleportingOther": true,
+                "CanShiftLane": true,
+                "TeleportFailureChance": 5,
+                "MaxRowShift": 3,
+                "ShouldAshOnTeleportError": true,
+                "ConditionsRemovedByWarping": [
+                    "gummed"
+                ],
+                "ZombieTargetExcludeList": {
+                    "ListType": "excludelist",
+                    "List": [
+                        "ZombieRomanShield",
+                        "ZombieRomanTopShield",
+                        "ZombieCamel",
+                        "ZombieGargantuar",
+                        "ZombieGeneralBase",
+                        "ZombieZombossMech",
+                        "ZombieCarnieCannon",
+                        "ZombiePirateCannon",
+                        "ZombieRomanBallista",
+                        "ZombieBullVeteran",
+                        "ZombieBull",
+                        "ZombieTreasureYeti",
+                        "ZombieCarnieDove",
+                        "ZombiePirateParrot",
+                        "ZombieBeachFisherman",
+                        "ZombieZcorpRacerProps",
+                        "ZombieZCorpConsultant",
+                        "ZombieDarkKing"
+                    ]
+                }
+            }
+        },
+        {
+            "objclass": "ZombieTeleportActionDefinition",
+            "aliases": [
+                "ZombieCarnieMagicianTeleportActionSelf"
+            ],
+            "objdata": {
+                "NumZombies": 1,
+                "TilesToAdvance": 2.5,
+                "WeightLeftmost": 50,
+                "WeightRightmost": 50,
+                "WeightRandom": 50,
+                "TimeBeforeWarpStart": 0,
+                "TimeOfWarpOut": 0,
+                "TimeZombieIsGone": 0.5,
+                "TimeOfWarpIn": 1,
+                "Phase": "Attacking",
+                "ColumnMin": 4,
+                "DelayWarpIn": false,
+                "RampUpAnimation": "teleport",
+                "LoopingAnimation": "",
+                "RampDownAnimation": "idle",
+                "AnimationSoundFX": "Play_Zomb_Carnival_Magician_Teleport",
+                "NoRepeatTargets": true,
+                "DoOnlySelfTeleport": true,
+                "IgnoreSelfWhileTeleportingOther": false,
+                "CanShiftLane": true,
+                "MaxRowShift": 3,
+                "ShouldAshOnTeleportError": true,
+                "ConditionsRemovedByWarping": [
+                    "gummed"
+                ]
+            }
+        },
+        {
+            "objclass": "ZombieSpawnActionDefinition",
+            "aliases": [
+                "ZombieCarnieMagicianSpawnDove"
+            ],
+            "objdata": {
+                "SpawnZombieType": "carnie_dove",
+                "SpawnStartAnimation": "magic_start",
+                "SpawnDoneAnimation": "dove_release",
+                "IsADove": true,
+                "Phase": "Attacking",
+                "SpawnOffset": {
+                    "x": -55,
+                    "y": -10
+                },
+                "ZombieSpawnWeights": [
+                    {
+                        "Count": 1,
+                        "Weight": 20
+                    },
+                    {
+                        "Count": 3,
+                        "Weight": 45
+                    },
+                    {
+                        "Count": 5,
+                        "Weight": 15
+                    },
+                    {
+                        "Count": 7,
+                        "Weight": 5
+                    }
+                ],
+                "PlantTargetExcludeList": [
+                    "shadowpeashooter",
+                    "cactus",
+                    "spikeweed",
+                    "spikerock",
+                    "rhubarbarian"
+                ]
+            }
+        },
+		{
+			"objclass": "ZombiePushGridItemActionDefinition",
+			"aliases": [
+				"ZombieEightiesArcadePushAction"
+			],
+			"objdata": {
+				"PushableGridItems": {
+					"ListType": "includelist",
+					"List": [
+						"eightiesarcadecabinet"
+					]
+				},
+				"PushBlockingGridItems": {
+					"ListType": "excludelist",
+					"List": [
+						"lilypad",
+						"powertile_alpha",
+						"powertile_beta",
+						"powertile_gamma",
+						"powertile_delta",
+						"powertile_epsilon",
+						"sap",
+						"plantfoodsap",
+						"lava",
+						"goldtile",
+						"wisp",
+						"bombegranateseeds",
+						"score_2x_tile",
+						"score_3x_tile",
+						"score_5x_tile",
+						"poison_tile",
+						"butter"
+					]
+				},
+				"NotSquashedPlants": {
+					"ListType": "includelist",
+					"List": [
+						"potatomine",
+						"primalpotatomine"
+					]
+				},
+				"RelocationDuration": 0.5,
+				"PushRectangle": {
+					"mX": 15,
+					"mY": 0,
+					"mWidth": 65,
+					"mHeight": 95
+				}
+			}
+		},
+        {
+            "objclass": "ZombieDarkWizardZapActionDefinition",
+            "aliases": [
+                "ZombieDarkWizardZap"
+            ],
+            "objdata": {
+                "TimeBeforeFirst": {
+                    "Min": 7,
+                    "Max": 9
+                },
+                "TimeBetween": {
+                    "Min": 11,
+                    "Max": 14
+                },
+                "SoundOnActivate": "Play_RaZombie_WandActivate",
+                "ProjectilePopAnim": "POPANIM_EFFECTS_DARK_WIZARD_LIGHTNINGBOLT",
+                "SheepPopAnim": "POPANIM_EFFECTS_DARK_WIZARD_SHEEPENING",
+                "SheepOffset": {
+                    "mX": 0,
+                    "mY": 20
+                }
+            }
+        },
+        {
+            "objclass": "ZombieRomanHealerHealActionDefinition",
+            "aliases": [
+                "ZombieRomanHealerHeal"
+            ],
+            "objdata": {
+                "TimeBeforeFirstHeal": {
+                    "Min": 1,
+                    "Max": 3
+                },
+                "TimeBetweenHeal": {
+                    "Min": 4.5,
+                    "Max": 6.5
+                },
+                "TimeBeforeHealRecheck": {
+                    "Min": 0.5,
+                    "Max": 1.5
+                },
+                "TimeBeforeFirstHypnoHeal": {
+                    "Min": 1,
+                    "Max": 4
+                },
+                "TimeBetweenHypnoHeal": {
+                    "Min": 5,
+                    "Max": 7
+                },
+                "TimeBeforeHypnoHealRecheck": {
+                    "Min": 0.5,
+                    "Max": 1.5
+                },
+                "TimeBeforeFirstPoisonHeal": {
+                    "Min": 1,
+                    "Max": 5
+                },
+                "TimeBetweenPoisonHeal": {
+                    "Min": 7,
+                    "Max": 9
+                },
+                "TimeBeforePoisonHealRecheck": {
+                    "Min": 0.5,
+                    "Max": 1.5
+                },
+                "SoundOnActivate": "Play_RaZombie_WandActivate",
+                "HealingAuraPopAnim": "POPANIM_EFFECTS_ZOMBIE_ROMAN_HEALER_EFFECT",
+                "ProjectilePopAnim": "POPANIM_EFFECTS_ZOMBIE_ROMAN_HEALER_BEAM",
+                "AuraOffset": {
+                    "mX": 0,
+                    "mY": -25
+                },
+                "HealPercent": 0.5,
+                "UnhealableZombies": {
+                    "ListType": "excludelist",
+                    "List": [
+                        "cannon",
+                        "roman_ballista",
+                        "dark_king",
+                        "beach_fisherman",
+                        "pirate_barrel",
+                        "joustyeti",
+                        "mech_cone",
+                        "future_gargantuar",
+                        "football_mech",
+                        "disco_mech",
+                        "west_bull",
+                        "west_bull_veteran",
+                        "caketank",
+                        "future_protector",
+                        "future_protector_veteran",
+                        "future_imp"
+                    ]
+                }
+            }
+        },
+        {
+            "objclass": "ZombieRomanMedusaPetrifyActionDefinition",
+            "aliases": [
+                "ZombieRomanMedusaPetrifyAction"
+            ],
+            "objdata": {
+                "TimeBeforeFirst": {
+                    "Min": 1,
+                    "Max": 3
+                },
+                "TimeBetweenActions": {
+                    "Min": 2,
+                    "Max": 4
+                },
+                "SoundOnActivate": "Play_RaZombie_WandActivate",
+                "PetrifyRectangle": {
+                    "mX": 15,
+                    "mY": 0,
+                    "mWidth": 265,
+                    "mHeight": 80
+                },
+                "CannotBePetrified": {
+                    "ListType": "includelist",
+                    "List": [
+                        "ZombieTreasureYeti",
+                        "ZombiePirateCannon",
+                        "ZombieDarkKing",
+                        "ZombieZombossMech",
+                        "ZombieGeneralBase",
+                        "ZombieRomanHealer",
+                        "ZombieStatue"
+                    ]
+                }
+            }
+        },
+        {
+            "objclass": "ZombieProjectileLaunchActionDefinition",
+            "aliases": [
+                "ZombieOctopusProjectileAction"
+            ],
+            "objdata": {
+                "TimeBeforeFirst": {
+                    "Min": 7,
+                    "Max": 9
+                },
+                "TimeBetween": {
+                    "Min": 11,
+                    "Max": 14
+                },
+                "Projectile": "RTID(SquidDefault@ProjectileTypes)",
+                "ProjectileSound": "Play_Zomb_Egypt_Zomboss_Attack_Rush",
+                "SpawnOffset": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 50
+                },
+                "ApexHeight": 250,
+                "TimeUntilHit": 1.5
+            }
+        },
+        {
+            "objclass": "ZombieProjectileActionDefinition",
+            "aliases": [
+                "ZombieIceAgeProjectileAction"
+            ],
+            "objdata": {
+                "TimeBeforeFirst": {
+                    "Min": 7,
+                    "Max": 9
+                },
+                "TimeBetween": {
+                    "Min": 0.5,
+                    "Max": 0.5
+                },
+                "TimeBetweenBarrages": {
+                    "Min": 9,
+                    "Max": 12
+                },
+                "Projectile": "RTID(HunterSnowballDefault@ProjectileTypes)",
+                "ProjectileSound": "Play_Zomb_Egypt_Zomboss_Attack_Rush",
+                "SpawnOffset": {
+                    "x": -20,
+                    "y": 0,
+                    "z": 45
+                },
+                "ApexHeight": 100,
+                "TimeUntilHit": 0.75
+            }
+        },
+        {
+            "objclass": "ZombiePushGridItemActionDefinition",
+            "aliases": [
+                "ZombiePushGridItemAction"
+            ],
+            "objdata": {
+                "PushableGridItems": {
+                    "ListType": "includelist",
+                    "List": [
+                        "planttarget_iceblock",
+                        "zombietarget_iceblock",
+                        "zombietarget_birthday_present",
+                        "zombietarget_stoneblock"
+                    ]
+                },
+                "PushBlockingGridItems": {
+                    "ListType": "excludelist",
+                    "List": [
+                        "lilypad",
+                        "powertile_alpha",
+                        "powertile_beta",
+                        "powertile_gamma",
+                        "powertile_delta",
+                        "powertile_epsilon",
+                        "sap",
+                        "plantfoodsap",
+                        "lava",
+                        "goldtile",
+                        "wisp",
+                        "bombegranateseeds",
+                        "score_2x_tile",
+                        "score_3x_tile",
+                        "score_5x_tile",
+                        "poison_tile",
+                        "butter"
+                    ]
+                },
+                "NotSquashedPlants": {
+                    "ListType": "includelist",
+                    "List": [
+                        "potatomine",
+                        "primalpotatomine"
+                    ]
+                },
+                "RelocationDuration": 0.5,
+                "PushRectangle": {
+                    "mX": 15,
+                    "mY": 0,
+                    "mWidth": 65,
+                    "mHeight": 95
+                }
+            }
+        },
+        {
+            "objclass": "ZombiePushGridItemActionDefinition",
+            "aliases": [
+                "ZombiePushBirthdayPresentAction"
+            ],
+            "objdata": {
+                "PushableGridItems": {
+                    "ListType": "includelist",
+                    "List": [
+                        "planttarget_iceblock",
+                        "zombietarget_iceblock",
+                        "zombietarget_birthday_present",
+                        "zombietarget_stoneblock"
+                    ]
+                },
+                "PushBlockingGridItems": {
+                    "ListType": "excludelist",
+                    "List": [
+                        "lilypad",
+                        "powertile_alpha",
+                        "powertile_beta",
+                        "powertile_gamma",
+                        "powertile_delta",
+                        "powertile_epsilon",
+                        "sap",
+                        "plantfoodsap",
+                        "lava",
+                        "goldtile",
+                        "wisp",
+                        "bombegranateseeds",
+                        "score_2x_tile",
+                        "score_3x_tile",
+                        "score_5x_tile",
+                        "poison_tile",
+                        "butter"
+                    ]
+                },
+                "NotSquashedPlants": {
+                    "ListType": "includelist",
+                    "List": [
+                        "potatomine",
+                        "primalpotatomine"
+                    ]
+                },
+                "RelocationDuration": 0.5,
+                "PushRectangle": {
+                    "mX": 15,
+                    "mY": 0,
+                    "mWidth": 65,
+                    "mHeight": 95
+                }
+            }
+        },
+        {
+            "objclass": "ZombieWalkActionDefinition",
+            "aliases": [
+                "ZombieGeneralWalkOn"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Entering",
+                "PhaseAfter": "Attacking",
+                "SoundOnStart": "Play_Zomb_Premium_Cardio_Enter",
+                "StopAtColumn": 6,
+                "HasTransition": false
+            }
+        },
+        {
+            "objclass": "ZombieWalkActionDefinition",
+            "aliases": [
+                "ZombieGeneralWalkOff"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "WalkBackwards": true,
+                "Phase": "Retreat",
+                "PhaseAfter": "Attacking",
+                "HasTransition": false
+            }
+        },
+        {
+            "objclass": "ZombiePlayAnimationActionDefinition",
+            "aliases": [
+                "ZombieGeneralIdle"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Attacking",
+                "AnimationToPlay": "idle",
+                "CanPickAgain": true
+            }
+        },
+        {
+            "objclass": "ZombiePlayAnimationActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechIdle"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Attacking",
+                "AnimationToPlay": "idle",
+                "CanPickAgain": "true"
+            }
+        },
+        {
+            "objclass": "ZombiePlayAnimationActionDefinition",
+            "aliases": [
+                "ZombieGeneralInjured"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Dying",
+                "PhaseAfter": "RetreatInjured",
+                "AnimationToPlay": "injury"
+            }
+        },
+        {
+            "objclass": "ZombiePlayAnimationActionDefinition",
+            "aliases": [
+                "ZombieGeneralRetreatInjured"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "RetreatInjured",
+                "PhaseAfter": "Destroy",
+                "AnimationToPlay": "walk_off2"
+            }
+        },
+        {
+            "objclass": "ZombiePlayAnimationActionDefinition",
+            "aliases": [
+                "ZombieGeneralDying"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Dying",
+                "PhaseAfter": "Destroy",
+                "AnimationToPlay": "die"
+            }
+        },
+        {
+            "objclass": "ZombiePlayAnimationActionDefinition",
+            "aliases": [
+                "ZombieGeneralTaunt"
+            ],
+            "objdata": {
+                "Weight": 0,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Attacking",
+                "AnimationToPlay": "eat"
+            }
+        },
+        {
+            "objclass": "ZombieProjectileLaunchActionDefinition",
+            "aliases": [
+                "ZombieGeneralTreadmillProjectileAction"
+            ],
+            "objdata": {
+                "Weight": 99,
+                "RepeatMin": 3,
+                "RepeatMax": 5,
+                "Phase": "Attacking",
+                "TargetType": "FriendlyZombies",
+                "OnlyHitTarget": true,
+                "NoRepeatTargets": false,
+                "Projectile": "RTID(PowerDrinkDefault@ProjectileTypes)",
+                "ProjectileSound": "Play_Zomb_Egypt_Zomboss_Attack_Rush",
+                "SpawnOffset": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 50
+                },
+                "ApexHeight": 200,
+                "TimeUntilHit": 1
+            }
+        },
+        {
+            "objclass": "ZombieProjectileLaunchActionDefinition",
+            "aliases": [
+                "ZombieGeneralTreadmillProjectilePhase2Action"
+            ],
+            "objdata": {
+                "Weight": 99,
+                "RepeatMin": 5,
+                "RepeatMax": 8,
+                "Phase": "Attacking",
+                "TargetType": "FriendlyZombies",
+                "OnlyHitTarget": true,
+                "NoRepeatTargets": false,
+                "Projectile": "RTID(PowerDrinkSquared@ProjectileTypes)",
+                "ProjectileSound": "Play_Zomb_Egypt_Zomboss_Attack_Rush",
+                "SpawnOffset": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 50
+                },
+                "ApexHeight": 250,
+                "TimeUntilHit": 1
+            }
+        },
+        {
+            "objclass": "ZombieProjectileLaunchActionDefinition",
+            "aliases": [
+                "ZombieGeneralTreadmillProjectilePhase3Action"
+            ],
+            "objdata": {
+                "Weight": 99,
+                "RepeatMin": 8,
+                "RepeatMax": 12,
+                "Phase": "Attacking",
+                "TargetType": "FriendlyZombies",
+                "OnlyHitTarget": true,
+                "NoRepeatTargets": false,
+                "Projectile": "RTID(PowerDrinkCubed@ProjectileTypes)",
+                "ProjectileSound": "Play_Zomb_Egypt_Zomboss_Attack_Rush",
+                "SpawnOffset": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 50
+                },
+                "ApexHeight": 300,
+                "TimeUntilHit": 1
+            }
+        },
+        {
+            "objclass": "ZombieWalkActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechWalkOn"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Entering",
+                "PhaseAfter": "Attacking",
+                "SoundOnStart": "Play_Zomb_Commander_ZMech_Imp_Walk",
+                "StopAtColumn": 6,
+                "TransitionAtStart": false,
+                "TransitionAnimation": "landing",
+                "HasTransition": true
+            }
+        },
+        {
+            "objclass": "ZombieWalkActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechWalkOff"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "WalkBackwards": true,
+                "TransitionAtStart": true,
+                "TransitionAnimation": "end_phase_timeout",
+                "Phase": "Retreat",
+                "PhaseAfter": "Attacking",
+                "HasTransition": true
+            }
+        },
+        {
+            "objclass": "ZombiePlayAnimationActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechRetreatInjured"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Dying",
+                "PhaseAfter": "Destroy",
+                "AnimationToPlay": "end_phase_damaged"
+            }
+        },
+        {
+            "objclass": "ZombiePlayAnimationActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechDying"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Dying",
+                "PhaseAfter": "Destroy",
+                "AnimationToPlay": "end_phase_defeated"
+            }
+        },
+        {
+            "objclass": "ZombieStunActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechStun"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Stunned",
+                "PhaseAfter": "Attacking",
+                "StartingAnimation": "stun_start",
+                "LoopingAnimation": "stun_loop",
+                "EndingAnimation": "stun_end"
+            }
+        },
+        {
+            "objclass": "ZombieOrbitalStrikeActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechOrbitalStrikePhase1Action"
+            ],
+            "objdata": {
+                "Weight": 0,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "FireMinColumn": 0,
+                "FireMaxColumn": 5,
+                "FireRowRange": 5,
+                "FireTargetTilesWeight": 0,
+                "FireTargetPlantWeight": 1,
+                "FireTargetEmptyWeight": 1,
+                "FireRocketHitTime": 0.75,
+                "FireRocketSpeed": 500,
+                "FireRocketDropSound": "Play_Zomb_Egypt_Zomboss_Attack_Projectile_Impact_Whistle",
+                "FireRocketCount": {
+                    "Min": 1,
+                    "Max": 1
+                },
+                "Phase": "Attacking",
+                "NoRepeatTargets": true
+            }
+        },
+        {
+            "objclass": "ZombieOrbitalStrikeActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechOrbitalStrikePhase2Action"
+            ],
+            "objdata": {
+                "Weight": 25,
+                "RepeatMin": 0,
+                "RepeatMax": 1,
+                "FireMinColumn": 0,
+                "FireMaxColumn": 5,
+                "FireRowRange": 5,
+                "FireTargetTilesWeight": 0,
+                "FireTargetPlantWeight": 1,
+                "FireTargetEmptyWeight": 1,
+                "FireRocketHitTime": 0.75,
+                "FireRocketSpeed": 500,
+                "FireRocketDropSound": "Play_Zomb_Egypt_Zomboss_Attack_Projectile_Impact_Whistle",
+                "FireRocketCount": {
+                    "Min": 1,
+                    "Max": 1
+                },
+                "Phase": "Attacking",
+                "NoRepeatTargets": true
+            }
+        },
+        {
+            "objclass": "ZombieOrbitalStrikeActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechOrbitalStrikePhase3Action"
+            ],
+            "objdata": {
+                "Weight": 30,
+                "RepeatMin": 0,
+                "RepeatMax": 1,
+                "FireMinColumn": 0,
+                "FireMaxColumn": 5,
+                "FireRowRange": 5,
+                "FireTargetTilesWeight": 0,
+                "FireTargetPlantWeight": 1,
+                "FireTargetEmptyWeight": 0.8,
+                "FireRocketHitTime": 0.75,
+                "FireRocketSpeed": 500,
+                "FireRocketDropSound": "Play_Zomb_Egypt_Zomboss_Attack_Projectile_Impact_Whistle",
+                "FireRocketCount": {
+                    "Min": 1,
+                    "Max": 2
+                },
+                "Phase": "Attacking",
+                "NoRepeatTargets": true
+            }
+        },
+        {
+            "objclass": "ZombieDropZombiesOnBoardActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechSpiderRainPhase1Action"
+            ],
+            "objdata": {
+                "Weight": 15,
+                "RepeatMin": 0,
+                "RepeatMax": 1,
+                "ColumnEnd": "7",
+                "ColumnStart": "5",
+                "MinSpawn": "2",
+                "MaxSpawn": "3",
+                "ZombieNames": [
+                    "future_imp"
+                ],
+                "ZombieWeights": [
+                    100
+                ],
+                "TimeBeforeSpawn": 1.5,
+                "ZombieFallTime": 0.5,
+                "Phase": "Attacking",
+                "RampUpAnimation": "summon_spiderbot_start",
+                "LoopingAnimation": "summon_spiderbot_loop",
+                "RampDownAnimation": "summon_spiderbot_end",
+                "EffectTypeToShow": ""
+            }
+        },
+        {
+            "objclass": "ZombieDropZombiesOnBoardActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechSpiderRainPhase2Action"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "ColumnEnd": "7",
+                "ColumnStart": "4",
+                "MinSpawn": "3",
+                "MaxSpawn": "5",
+                "ZombieNames": [
+                    "future_imp"
+                ],
+                "ZombieWeights": [
+                    100
+                ],
+                "TimeBeforeSpawn": 1.5,
+                "ZombieFallTime": 0.5,
+                "Phase": "Attacking",
+                "RampUpAnimation": "summon_spiderbot_start",
+                "LoopingAnimation": "summon_spiderbot_loop",
+                "RampDownAnimation": "summon_spiderbot_end",
+                "EffectTypeToShow": ""
+            }
+        },
+        {
+            "objclass": "ZombieDropZombiesOnBoardActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechSpiderRainPhase3Action"
+            ],
+            "objdata": {
+                "Weight": 15,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "ColumnEnd": "6",
+                "ColumnStart": "3",
+                "MinSpawn": "4",
+                "MaxSpawn": "5",
+                "ZombieNames": [
+                    "future_imp"
+                ],
+                "ZombieWeights": [
+                    100
+                ],
+                "TimeBeforeSpawn": 1.5,
+                "ZombieFallTime": 0.5,
+                "Phase": "Attacking",
+                "RampUpAnimation": "summon_spiderbot_start",
+                "LoopingAnimation": "summon_spiderbot_loop",
+                "RampDownAnimation": "summon_spiderbot_end",
+                "EffectTypeToShow": ""
+            }
+        },
+        {
+            "objclass": "ZombieDropZombiesOnBoardActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechJetpackSummonPhase1Action"
+            ],
+            "objdata": {
+                "Weight": 0,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "ColumnEnd": "0",
+                "ColumnStart": "0",
+                "MinSpawn": "4",
+                "MaxSpawn": "4",
+                "CenterOnInstigator": true,
+                "ZombieNames": [
+                    "future_jetpack",
+                    "future_jetpack_veteran",
+                    "future_jetpack_disco"
+                ],
+                "ZombieWeights": [
+                    50,
+                    25,
+                    25
+                ],
+                "TimeBeforeSpawn": 1.5,
+                "ZombieFallTime": 1.5,
+                "Phase": "Attacking",
+                "RampUpAnimation": "summon_disco_start",
+                "LoopingAnimation": "summon_disco_loop",
+                "RampDownAnimation": "summon_disco_end",
+                "EffectTypeToShow": ""
+            }
+        },
+        {
+            "objclass": "ZombieDropZombiesOnBoardActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechJetpackSummonPhase2Action"
+            ],
+            "objdata": {
+                "Weight": 0,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "ColumnEnd": "0",
+                "ColumnStart": "0",
+                "MinSpawn": "4",
+                "MaxSpawn": "4",
+                "CenterOnInstigator": true,
+                "ZombieNames": [
+                    "future_jetpack",
+                    "future_jetpack_veteran",
+                    "future_jetpack_disco"
+                ],
+                "ZombieWeights": [
+                    25,
+                    50,
+                    25
+                ],
+                "TimeBeforeSpawn": 1.5,
+                "ZombieFallTime": 1.5,
+                "Phase": "Attacking",
+                "RampUpAnimation": "summon_disco_start",
+                "LoopingAnimation": "summon_disco_loop",
+                "RampDownAnimation": "summon_disco_end",
+                "EffectTypeToShow": ""
+            }
+        },
+        {
+            "objclass": "ZombieDropZombiesOnBoardActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechJetpackSummonPhase3Action"
+            ],
+            "objdata": {
+                "Weight": 15,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "ColumnEnd": "0",
+                "ColumnStart": "0",
+                "MinSpawn": "4",
+                "MaxSpawn": "4",
+                "CenterOnInstigator": true,
+                "ZombieNames": [
+                    "future_jetpack",
+                    "future_jetpack_veteran",
+                    "future_jetpack_disco"
+                ],
+                "ZombieWeights": [
+                    5,
+                    90,
+                    5
+                ],
+                "TimeBeforeSpawn": 1.5,
+                "ZombieFallTime": 1.5,
+                "Phase": "Attacking",
+                "RampUpAnimation": "summon_disco_start",
+                "LoopingAnimation": "summon_disco_loop",
+                "RampDownAnimation": "summon_disco_end",
+                "EffectTypeToShow": ""
+            }
+        },
+        {
+            "objclass": "ZombieTeleportActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechTeleportPhase1Action"
+            ],
+            "objdata": {
+                "Weight": 45,
+                "RepeatMin": 0,
+                "RepeatMax": 3,
+                "NumZombies": 2,
+                "TilesToAdvance": 2,
+                "WeightLeftmost": 5,
+                "WeightRightmost": 35,
+                "WeightRandom": 50,
+                "TimeBeforeWarpStart": 0.1,
+                "TimeOfWarpOut": 1.5,
+                "TimeZombieIsGone": 0,
+                "TimeOfWarpIn": 1.5,
+                "Phase": "Attacking",
+                "ColumnMin": 3,
+                "DelayWarpIn": false,
+                "RampUpAnimation": "teleport_start",
+                "LoopingAnimation": "teleport_loop",
+                "RampDownAnimation": "teleport_end",
+                "NoRepeatTargets": true,
+                "ConditionsRemovedByWarping": [
+                    "gummed"
+                ]
+            }
+        },
+        {
+            "objclass": "ZombieTeleportActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechTeleportPhase2Action"
+            ],
+            "objdata": {
+                "Weight": 35,
+                "RepeatMin": 0,
+                "RepeatMax": 3,
+                "NumZombies": 3,
+                "TilesToAdvance": 2,
+                "WeightLeftmost": 10,
+                "WeightRightmost": 35,
+                "WeightRandom": 50,
+                "TimeBeforeWarpStart": 0.1,
+                "TimeOfWarpOut": 1.5,
+                "TimeZombieIsGone": 0,
+                "TimeOfWarpIn": 1.5,
+                "Phase": "Attacking",
+                "ColumnMin": 3,
+                "DelayWarpIn": false,
+                "RampUpAnimation": "teleport_start",
+                "LoopingAnimation": "teleport_loop",
+                "RampDownAnimation": "teleport_end",
+                "NoRepeatTargets": true,
+                "ConditionsRemovedByWarping": [
+                    "gummed"
+                ]
+            }
+        },
+        {
+            "objclass": "ZombieTeleportActionDefinition",
+            "aliases": [
+                "ZombieGeneralZmechTeleportPhase3Action"
+            ],
+            "objdata": {
+                "Weight": 20,
+                "RepeatMin": 0,
+                "RepeatMax": 1,
+                "NumZombies": 3,
+                "TilesToAdvance": 3,
+                "WeightLeftmost": 15,
+                "WeightRightmost": 35,
+                "WeightRandom": 50,
+                "TimeBeforeWarpStart": 0.1,
+                "TimeOfWarpOut": 1.5,
+                "TimeZombieIsGone": 0,
+                "TimeOfWarpIn": 1.5,
+                "Phase": "Attacking",
+                "ColumnMin": 3,
+                "DelayWarpIn": false,
+                "RampUpAnimation": "teleport_start",
+                "LoopingAnimation": "teleport_loop",
+                "RampDownAnimation": "teleport_end",
+                "NoRepeatTargets": true,
+                "ConditionsRemovedByWarping": [
+                    "gummed"
+                ]
+            }
+        },
+        {
+            "objclass": "ZombieWalkActionDefinition",
+            "aliases": [
+                "ZombieGeneralCakeTankWalkOn"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Entering",
+                "PhaseAfter": "Attacking",
+                "SoundOnStart": "Play_Zomb_Premium_Cardio_Enter",
+                "StopAtColumn": 5,
+                "HasTransition": false
+            }
+        },
+        {
+            "objclass": "ZombieDropActionDefinition",
+            "aliases": [
+                "ZombieCakeTankDamageReact1Action"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "None",
+                "Invulnerable": "true",
+                "Animation": "IDLE",
+                "AwardDrop": "RTID(CakeTankDrops1@AwardConfig)",
+                "EffectPam": "POPANIM_EFFECTS_CAKE_BREAK_FX",
+                "EffectAnim": "break_power_tier4",
+                "EffectOffsetX": 30,
+                "EffectOffsetY": -90
+            }
+        },
+        {
+            "objclass": "ZombieDropActionDefinition",
+            "aliases": [
+                "ZombieCakeTankDamageReact2Action"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "None",
+                "Invulnerable": "true",
+                "Animation": "IDLE",
+                "AwardDrop": "RTID(CakeTankDrops2@AwardConfig)",
+                "EffectPam": "POPANIM_EFFECTS_CAKE_BREAK_FX",
+                "EffectAnim": "break_power_tier3",
+                "EffectOffsetX": 15,
+                "EffectOffsetY": -90
+            }
+        },
+        {
+            "objclass": "ZombieDropActionDefinition",
+            "aliases": [
+                "ZombieCakeTankDamageReact3Action"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "None",
+                "Invulnerable": "true",
+                "Animation": "IDLE",
+                "AwardDrop": "RTID(CakeTankDrops3@AwardConfig)",
+                "EffectPam": "POPANIM_EFFECTS_CAKE_BREAK_FX",
+                "EffectAnim": "break_power_tier2",
+                "EffectOffsetX": 10,
+                "EffectOffsetY": -30
+            }
+        },
+        {
+            "objclass": "ZombieDropActionDefinition",
+            "aliases": [
+                "ZombieCakeTankDamageReact4Action"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "None",
+                "PhaseAfter": "Dying",
+                "Invulnerable": "true",
+                "Animation": "",
+                "AwardDrop": "RTID(CakeTankDrops4@AwardConfig)",
+                "EffectPam": "POPANIM_EFFECTS_CAKE_BREAK_FX",
+                "EffectAnim": "break_power_tier1",
+                "EffectOffsetX": 0,
+                "EffectOffsetY": -10
+            }
+        },
+        {
+            "objclass": "ZombieWalkActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarWalkOn"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Entering",
+                "PhaseAfter": "Attacking",
+                "SoundOnStart": "Play_Zombie_Roman_Caesar_Enter",
+                "StopAtColumn": 7,
+                "TransitionAtStart": false,
+                "TransitionAnimation": "landing",
+                "HasTransition": true
+            }
+        },
+        {
+            "objclass": "ZombieProjectileLaunchActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarProjectilePhase1Action"
+            ],
+            "objdata": {
+                "Weight": 30,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Attacking",
+                "TargetType": "PlantGroups",
+                "OnlyHitTarget": true,
+                "NoRepeatTargets": true,
+                "Projectile": "RTID(SauceDefault@ProjectileTypes)",
+                "ProjectileSound": "Play_Zomb_Egypt_Zomboss_Attack_Rush",
+                "SpawnOffset": {
+                    "x": -70,
+                    "y": 0,
+                    "z": 210
+                },
+                "ApexHeight": 500,
+                "TimeUntilHit": 1
+            }
+        },
+        {
+            "objclass": "ZombieProjectileLaunchActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarProjectilePhase2Action"
+            ],
+            "objdata": {
+                "Weight": 50,
+                "RepeatMin": 0,
+                "RepeatMax": 1,
+                "Phase": "Attacking",
+                "TargetType": "PlantGroups",
+                "OnlyHitTarget": true,
+                "NoRepeatTargets": true,
+                "Projectile": "RTID(SauceDefault@ProjectileTypes)",
+                "ProjectileSound": "Play_Zomb_Egypt_Zomboss_Attack_Rush",
+                "SpawnOffset": {
+                    "x": -70,
+                    "y": 0,
+                    "z": 210
+                },
+                "ApexHeight": 500,
+                "TimeUntilHit": 1
+            }
+        },
+        {
+            "objclass": "ZombieProjectileLaunchActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarProjectilePhase3Action"
+            ],
+            "objdata": {
+                "Weight": 80,
+                "RepeatMin": 0,
+                "RepeatMax": 2,
+                "Phase": "Attacking",
+                "TargetType": "PlantGroups",
+                "OnlyHitTarget": true,
+                "NoRepeatTargets": true,
+                "Projectile": "RTID(SauceDefault@ProjectileTypes)",
+                "ProjectileSound": "Play_Zomb_Egypt_Zomboss_Attack_Rush",
+                "SpawnOffset": {
+                    "x": -70,
+                    "y": 0,
+                    "z": 210
+                },
+                "ApexHeight": 500,
+                "TimeUntilHit": 1
+            }
+        },
+        {
+            "objclass": "ZombieDropZombiesOnBoardActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarShieldSummonPhase1Action"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "ColumnEnd": "9",
+                "ColumnStart": "7",
+                "MinSpawn": "1",
+                "MaxSpawn": "1",
+                "ZombieNames": [
+                    "roman_shield_triad",
+                    "roman"
+                ],
+                "ZombieWeights": [
+                    75,
+                    100
+                ],
+                "TimeBeforeSpawn": 2.25,
+                "ZombieFallTime": 0,
+                "Phase": "Attacking",
+                "RiseFromGround": "true",
+                "RampUpAnimation": "",
+                "LoopingAnimation": "summon",
+                "RampDownAnimation": "",
+                "EffectTypeToShow": "",
+                "DropAudioEvent": ""
+            }
+        },
+        {
+            "objclass": "ZombieDropZombiesOnBoardActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarShieldSummonPhase2Action"
+            ],
+            "objdata": {
+                "Weight": 50,
+                "RepeatMin": 0,
+                "RepeatMax": 1,
+                "ColumnEnd": "9",
+                "ColumnStart": "7",
+                "MinSpawn": "1",
+                "MaxSpawn": "2",
+                "ZombieNames": [
+                    "roman_shield_triad",
+                    "roman"
+                ],
+                "ZombieWeights": [
+                    90,
+                    100
+                ],
+                "TimeBeforeSpawn": 2.25,
+                "ZombieFallTime": 0,
+                "Phase": "Attacking",
+                "RiseFromGround": "true",
+                "RampUpAnimation": "",
+                "LoopingAnimation": "summon",
+                "RampDownAnimation": "",
+                "EffectTypeToShow": "",
+                "DropAudioEvent": ""
+            }
+        },
+        {
+            "objclass": "ZombieDropZombiesOnBoardActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarShieldSummonPhase3Action"
+            ],
+            "objdata": {
+                "Weight": 40,
+                "RepeatMin": 0,
+                "RepeatMax": 1,
+                "ColumnEnd": "9",
+                "ColumnStart": "7",
+                "MinSpawn": "1",
+                "MaxSpawn": "2",
+                "ZombieNames": [
+                    "roman_shield_triad",
+                    "roman"
+                ],
+                "ZombieWeights": [
+                    100,
+                    100
+                ],
+                "TimeBeforeSpawn": 2.25,
+                "ZombieFallTime": 0,
+                "Phase": "Attacking",
+                "RiseFromGround": "true",
+                "RampUpAnimation": "",
+                "LoopingAnimation": "summon",
+                "RampDownAnimation": "",
+                "EffectTypeToShow": "",
+                "DropAudioEvent": ""
+            }
+        },
+        {
+            "objclass": "ZombieInstantTargetAttackActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarPromotionPhase1Action"
+            ],
+            "objdata": {
+                "Weight": 40,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Attacking",
+                "TargetType": "FriendlyZombies",
+                "OnlyHitTarget": true,
+                "NoRepeatTargets": true,
+                "InstantAttack": "PromoteRomans",
+                "OverrideProjectileAnimation": "promotion"
+            }
+        },
+        {
+            "objclass": "ZombieInstantTargetAttackActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarPromotionPhase2Action"
+            ],
+            "objdata": {
+                "Weight": 60,
+                "RepeatMin": 0,
+                "RepeatMax": 1,
+                "Phase": "Attacking",
+                "TargetType": "FriendlyZombies",
+                "OnlyHitTarget": true,
+                "NoRepeatTargets": true,
+                "InstantAttack": "PromoteRomans",
+                "OverrideProjectileAnimation": "promotion"
+            }
+        },
+        {
+            "objclass": "ZombieInstantTargetAttackActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarPromotionPhase3Action"
+            ],
+            "objdata": {
+                "Weight": 70,
+                "RepeatMin": 0,
+                "RepeatMax": 2,
+                "Phase": "Attacking",
+                "TargetType": "FriendlyZombies",
+                "OnlyHitTarget": true,
+                "NoRepeatTargets": true,
+                "InstantAttack": "PromoteRomans",
+                "OverrideProjectileAnimation": "promotion"
+            }
+        },
+        {
+            "objclass": "ZombiePlayAnimationActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarIdlePhase1"
+            ],
+            "objdata": {
+                "Weight": 10,
+                "RepeatMin": 0,
+                "RepeatMax": 1,
+                "Phase": "Attacking",
+                "AnimationToPlay": "idle",
+                "CanPickAgain": false
+            }
+        },
+        {
+            "objclass": "ZombiePlayAnimationActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarIdlePhase2"
+            ],
+            "objdata": {
+                "Weight": 8,
+                "RepeatMin": 0,
+                "RepeatMax": 1,
+                "Phase": "Attacking",
+                "AnimationToPlay": "idle",
+                "CanPickAgain": false
+            }
+        },
+        {
+            "objclass": "ZombiePlayAnimationActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarIdlePhase3"
+            ],
+            "objdata": {
+                "Weight": 5,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Attacking",
+                "AnimationToPlay": "idle",
+                "CanPickAgain": false
+            }
+        },
+        {
+            "objclass": "ZombiePlayAnimationActionDefinition",
+            "aliases": [
+                "ZombieGeneralCaesarInjured"
+            ],
+            "objdata": {
+                "Weight": 1,
+                "RepeatMin": 0,
+                "RepeatMax": 0,
+                "Phase": "Dying",
+                "PhaseAfter": "Destroy",
+                "AnimationToPlay": "walk_off"
+            }
+        }
+    ]
+}

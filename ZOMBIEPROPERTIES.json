@@ -1,14 +1,11 @@
 {
     "objects": [
         {
-            "# Zombie Template - copy+paste me!": 0,
             "aliases": [
                 "ZombieNameDefault"
             ],
             "objclass": "ZombiePropertySheet",
             "objdata": {
-                "# Actual speed will be +/- this fraction of total Speed": 0,
-                "# z == scale": 0,
                 "Ammo": 0,
                 "ArtCenter": {
                     "x": 135,
@@ -1164,7 +1161,7 @@
             "objclass": "ZombieIceAgeTroglobiteProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombiePushGridItemAction@ZombieActions)"
+                    "RTID(ZombiePushGridItemAction@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -1239,7 +1236,7 @@
             "objclass": "ZombieIceAgeTroglobiteProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombiePushGridItemAction@ZombieActions)"
+                    "RTID(ZombiePushGridItemAction@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -1314,7 +1311,7 @@
             "objclass": "ZombieIceAgeTroglobiteProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombiePushGridItemAction@ZombieActions)"
+                    "RTID(ZombiePushGridItemAction@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -1758,7 +1755,7 @@
             "objclass": "ZombieIceAgeTroglobiteProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombiePushBirthdayPresentAction@ZombieActions)"
+                    "RTID(ZombiePushBirthdayPresentAction@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -1834,7 +1831,7 @@
             "objclass": "ZombieIceAgeTroglobiteProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombiePushBirthdayPresentAction@ZombieActions)"
+                    "RTID(ZombiePushBirthdayPresentAction@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -1910,7 +1907,7 @@
             "objclass": "ZombieIceAgeTroglobiteProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombiePushBirthdayPresentAction@ZombieActions)"
+                    "RTID(ZombiePushBirthdayPresentAction@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -4117,8 +4114,6 @@
             ],
             "objclass": "ZombieCamelTouchProps",
             "objdata": {
-                "# Camel pieces all walk at the same speed": 0,
-                "# Camel-specific values ": 0,
                 "ArtCenter": {
                     "x": 90,
                     "y": 125
@@ -4320,7 +4315,6 @@
             ],
             "objclass": "ZombieTombRaiserProps",
             "objdata": {
-                "# TombRaiser specific properties ": 0,
                 "Ammo": 5,
                 "ArtCenter": {
                     "x": 90,
@@ -5090,7 +5084,6 @@
             ],
             "objclass": "ZombieBarrelProps",
             "objdata": {
-                "# These plants will target the barrel, not the pusher": 0,
                 "ArmDropFraction": -1,
                 "ArtCenter": {
                     "x": 57,
@@ -9096,7 +9089,7 @@
             "objclass": "ZombieDarkWizardProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieDarkWizardZap@ZombieActions)"
+                    "RTID(ZombieDarkWizardZap@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -9168,7 +9161,7 @@
             "objclass": "ZombieDarkWizardProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieDarkWizardVeteranZap@ZombieActions)"
+                    "RTID(ZombieDarkWizardVeteranZap@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -9240,7 +9233,7 @@
             "objclass": "ZombieDarkWizardProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieEasterWizardZap@ZombieActions)"
+                    "RTID(ZombieEasterWizardZap@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -10533,7 +10526,7 @@
             "objclass": "ZombieBeachOctopusProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieOctopusProjectileAction@ZombieActions)"
+                    "RTID(ZombieOctopusProjectileAction@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -10964,7 +10957,7 @@
             "objclass": "ZombieIceAgeHunterProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieIceAgeProjectileAction@ZombieActions)"
+                    "RTID(ZombieIceAgeProjectileAction@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -11040,7 +11033,7 @@
             "objclass": "ZombieIceAgeTroglobiteProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombiePushGridItemAction@ZombieActions)"
+                    "RTID(ZombiePushGridItemAction@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -11115,7 +11108,7 @@
             "objclass": "ZombieIceAgeTroglobiteProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombiePushGridItemAction@ZombieActions)"
+                    "RTID(ZombiePushGridItemAction@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -11190,7 +11183,7 @@
             "objclass": "ZombieIceAgeTroglobiteProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombiePushGridItemAction@ZombieActions)"
+                    "RTID(ZombiePushGridItemAction@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -12132,8 +12125,6 @@
             ],
             "objclass": "ZombieExcavatorProps",
             "objdata": {
-                "# For when he's hypnotized, or sans shovel": 0,
-                "# z == scale": 0,
                 "ArtCenter": {
                     "x": 90,
                     "y": 125
@@ -13674,8 +13665,7 @@
                         "Type": "speed",
                         "Value": "speed2"
                     }
-                ],
-                "comment": "About 3 grid square widths (64x3=192)"
+                ]
             }
         },
         {
@@ -13770,7 +13760,7 @@
             "objclass": "ZombieEightiesArcadeProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieEightiesArcadePushAction@ZombieActions)"
+                    "RTID(ZombieEightiesArcadePushAction@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -15565,7 +15555,6 @@
             ],
             "objclass": "ZombieHamsterBallProps",
             "objdata": {
-                "# Behaviors: Default: 0, Impact: 1, Ricochet: 2": 0,
                 "Behavior": 0,
                 "SpeedBeforeImpact": 2.0,
                 "RicochetLaneChangeTime": 5.0,
@@ -16463,7 +16452,6 @@
             ],
             "objclass": "ZombieBarrelProps",
             "objdata": {
-                "# These plants will target the barrel, not the pusher": 0,
                 "ArmDropFraction": -1,
                 "ArtCenter": {
                     "x": 57,
@@ -16772,7 +16760,6 @@
             ],
             "objclass": "ZombieBarrelProps",
             "objdata": {
-                "# These plants will target the barrel, not the pusher": 0,
                 "ArmDropFraction": -1,
                 "ArtCenter": {
                     "x": 57,
@@ -16863,12 +16850,12 @@
             "objclass": "ZombieGeneralTreadmillProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieGeneralWalkOn@ZombieActions)",
-                    "RTID(ZombieGeneralIdle@ZombieActions)",
-                    "RTID(ZombieGeneralTreadmillProjectileAction@ZombieActions)",
-                    "RTID(ZombieGeneralWalkOff@ZombieActions)",
-                    "RTID(ZombieGeneralInjured@ZombieActions)",
-                    "RTID(ZombieGeneralRetreatInjured@ZombieActions)"
+                    "RTID(ZombieGeneralWalkOn@.)",
+                    "RTID(ZombieGeneralIdle@.)",
+                    "RTID(ZombieGeneralTreadmillProjectileAction@.)",
+                    "RTID(ZombieGeneralWalkOff@.)",
+                    "RTID(ZombieGeneralInjured@.)",
+                    "RTID(ZombieGeneralRetreatInjured@.)"
                 ],
                 "LifetimeSeconds": 40,
                 "GeneralPhase": 0,
@@ -16946,12 +16933,12 @@
             "objclass": "ZombieGeneralTreadmillProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieGeneralWalkOn@ZombieActions)",
-                    "RTID(ZombieGeneralIdle@ZombieActions)",
-                    "RTID(ZombieGeneralTreadmillProjectilePhase2Action@ZombieActions)",
-                    "RTID(ZombieGeneralWalkOff@ZombieActions)",
-                    "RTID(ZombieGeneralInjured@ZombieActions)",
-                    "RTID(ZombieGeneralRetreatInjured@ZombieActions)"
+                    "RTID(ZombieGeneralWalkOn@.)",
+                    "RTID(ZombieGeneralIdle@.)",
+                    "RTID(ZombieGeneralTreadmillProjectilePhase2Action@.)",
+                    "RTID(ZombieGeneralWalkOff@.)",
+                    "RTID(ZombieGeneralInjured@.)",
+                    "RTID(ZombieGeneralRetreatInjured@.)"
                 ],
                 "LifetimeSeconds": 40,
                 "GeneralPhase": 1,
@@ -17029,11 +17016,11 @@
             "objclass": "ZombieGeneralTreadmillProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieGeneralWalkOn@ZombieActions)",
-                    "RTID(ZombieGeneralIdle@ZombieActions)",
-                    "RTID(ZombieGeneralTreadmillProjectilePhase3Action@ZombieActions)",
-                    "RTID(ZombieGeneralWalkOff@ZombieActions)",
-                    "RTID(ZombieGeneralDying@ZombieActions)"
+                    "RTID(ZombieGeneralWalkOn@.)",
+                    "RTID(ZombieGeneralIdle@.)",
+                    "RTID(ZombieGeneralTreadmillProjectilePhase3Action@.)",
+                    "RTID(ZombieGeneralWalkOff@.)",
+                    "RTID(ZombieGeneralDying@.)"
                 ],
                 "LifetimeSeconds": 40,
                 "GeneralPhase": 2,
@@ -17111,15 +17098,15 @@
             "objclass": "ZombieGeneralZmechProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieGeneralZmechWalkOn@ZombieActions)",
-                    "RTID(ZombieGeneralZmechIdle@ZombieActions)",
-                    "RTID(ZombieGeneralZmechOrbitalStrikePhase1Action@ZombieActions)",
-                    "RTID(ZombieGeneralZmechSpiderRainPhase1Action@ZombieActions)",
-                    "RTID(ZombieGeneralZmechJetpackSummonPhase1Action@ZombieActions)",
-                    "RTID(ZombieGeneralZmechTeleportPhase1Action@ZombieActions)",
-                    "RTID(ZombieGeneralZmechStun@ZombieActions)",
-                    "RTID(ZombieGeneralZmechWalkOff@ZombieActions)",
-                    "RTID(ZombieGeneralZmechRetreatInjured@ZombieActions)"
+                    "RTID(ZombieGeneralZmechWalkOn@.)",
+                    "RTID(ZombieGeneralZmechIdle@.)",
+                    "RTID(ZombieGeneralZmechOrbitalStrikePhase1Action@.)",
+                    "RTID(ZombieGeneralZmechSpiderRainPhase1Action@.)",
+                    "RTID(ZombieGeneralZmechJetpackSummonPhase1Action@.)",
+                    "RTID(ZombieGeneralZmechTeleportPhase1Action@.)",
+                    "RTID(ZombieGeneralZmechStun@.)",
+                    "RTID(ZombieGeneralZmechWalkOff@.)",
+                    "RTID(ZombieGeneralZmechRetreatInjured@.)"
                 ],
                 "LifetimeSeconds": 45,
                 "GeneralPhase": 0,
@@ -17196,15 +17183,15 @@
             "objclass": "ZombieGeneralZmechProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieGeneralZmechWalkOn@ZombieActions)",
-                    "RTID(ZombieGeneralZmechIdle@ZombieActions)",
-                    "RTID(ZombieGeneralZmechOrbitalStrikePhase2Action@ZombieActions)",
-                    "RTID(ZombieGeneralZmechSpiderRainPhase2Action@ZombieActions)",
-                    "RTID(ZombieGeneralZmechJetpackSummonPhase2Action@ZombieActions)",
-                    "RTID(ZombieGeneralZmechTeleportPhase2Action@ZombieActions)",
-                    "RTID(ZombieGeneralZmechStun@ZombieActions)",
-                    "RTID(ZombieGeneralZmechWalkOff@ZombieActions)",
-                    "RTID(ZombieGeneralZmechRetreatInjured@ZombieActions)"
+                    "RTID(ZombieGeneralZmechWalkOn@.)",
+                    "RTID(ZombieGeneralZmechIdle@.)",
+                    "RTID(ZombieGeneralZmechOrbitalStrikePhase2Action@.)",
+                    "RTID(ZombieGeneralZmechSpiderRainPhase2Action@.)",
+                    "RTID(ZombieGeneralZmechJetpackSummonPhase2Action@.)",
+                    "RTID(ZombieGeneralZmechTeleportPhase2Action@.)",
+                    "RTID(ZombieGeneralZmechStun@.)",
+                    "RTID(ZombieGeneralZmechWalkOff@.)",
+                    "RTID(ZombieGeneralZmechRetreatInjured@.)"
                 ],
                 "LifetimeSeconds": 40,
                 "GeneralPhase": 1,
@@ -17281,15 +17268,15 @@
             "objclass": "ZombieGeneralZmechProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieGeneralZmechWalkOn@ZombieActions)",
-                    "RTID(ZombieGeneralZmechIdle@ZombieActions)",
-                    "RTID(ZombieGeneralZmechOrbitalStrikePhase3Action@ZombieActions)",
-                    "RTID(ZombieGeneralZmechSpiderRainPhase3Action@ZombieActions)",
-                    "RTID(ZombieGeneralZmechJetpackSummonPhase3Action@ZombieActions)",
-                    "RTID(ZombieGeneralZmechTeleportPhase3Action@ZombieActions)",
-                    "RTID(ZombieGeneralZmechStun@ZombieActions)",
-                    "RTID(ZombieGeneralZmechWalkOff@ZombieActions)",
-                    "RTID(ZombieGeneralZmechDying@ZombieActions)"
+                    "RTID(ZombieGeneralZmechWalkOn@.)",
+                    "RTID(ZombieGeneralZmechIdle@.)",
+                    "RTID(ZombieGeneralZmechOrbitalStrikePhase3Action@.)",
+                    "RTID(ZombieGeneralZmechSpiderRainPhase3Action@.)",
+                    "RTID(ZombieGeneralZmechJetpackSummonPhase3Action@.)",
+                    "RTID(ZombieGeneralZmechTeleportPhase3Action@.)",
+                    "RTID(ZombieGeneralZmechStun@.)",
+                    "RTID(ZombieGeneralZmechWalkOff@.)",
+                    "RTID(ZombieGeneralZmechDying@.)"
                 ],
                 "LifetimeSeconds": 35,
                 "GeneralPhase": 2,
@@ -17370,13 +17357,13 @@
             "objclass": "ZombieGeneralCaesarProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieGeneralCaesarWalkOn@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarIdlePhase1@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarProjectilePhase1Action@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarShieldSummonPhase1Action@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarPromotionPhase1Action@ZombieActions)",
-                    "RTID(ZombieGeneralWalkOff@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarInjured@ZombieActions)"
+                    "RTID(ZombieGeneralCaesarWalkOn@.)",
+                    "RTID(ZombieGeneralCaesarIdlePhase1@.)",
+                    "RTID(ZombieGeneralCaesarProjectilePhase1Action@.)",
+                    "RTID(ZombieGeneralCaesarShieldSummonPhase1Action@.)",
+                    "RTID(ZombieGeneralCaesarPromotionPhase1Action@.)",
+                    "RTID(ZombieGeneralWalkOff@.)",
+                    "RTID(ZombieGeneralCaesarInjured@.)"
                 ],
                 "LifetimeSeconds": 30,
                 "GeneralPhase": 0,
@@ -17458,13 +17445,13 @@
             "objclass": "ZombieGeneralCaesarProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieGeneralCaesarWalkOn@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarIdlePhase2@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarProjectilePhase2Action@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarShieldSummonPhase2Action@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarPromotionPhase2Action@ZombieActions)",
-                    "RTID(ZombieGeneralWalkOff@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarInjured@ZombieActions)"
+                    "RTID(ZombieGeneralCaesarWalkOn@.)",
+                    "RTID(ZombieGeneralCaesarIdlePhase2@.)",
+                    "RTID(ZombieGeneralCaesarProjectilePhase2Action@.)",
+                    "RTID(ZombieGeneralCaesarShieldSummonPhase2Action@.)",
+                    "RTID(ZombieGeneralCaesarPromotionPhase2Action@.)",
+                    "RTID(ZombieGeneralWalkOff@.)",
+                    "RTID(ZombieGeneralCaesarInjured@.)"
                 ],
                 "LifetimeSeconds": 40,
                 "GeneralPhase": 1,
@@ -17546,13 +17533,13 @@
             "objclass": "ZombieGeneralCaesarProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieGeneralCaesarWalkOn@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarIdlePhase3@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarProjectilePhase3Action@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarShieldSummonPhase3Action@ZombieActions)",
-                    "RTID(ZombieGeneralCaesarPromotionPhase3Action@ZombieActions)",
-                    "RTID(ZombieGeneralWalkOff@ZombieActions)",
-                    "RTID(ZombieGeneralDying@ZombieActions)"
+                    "RTID(ZombieGeneralCaesarWalkOn@.)",
+                    "RTID(ZombieGeneralCaesarIdlePhase3@.)",
+                    "RTID(ZombieGeneralCaesarProjectilePhase3Action@.)",
+                    "RTID(ZombieGeneralCaesarShieldSummonPhase3Action@.)",
+                    "RTID(ZombieGeneralCaesarPromotionPhase3Action@.)",
+                    "RTID(ZombieGeneralWalkOff@.)",
+                    "RTID(ZombieGeneralDying@.)"
                 ],
                 "LifetimeSeconds": 50,
                 "GeneralPhase": 2,
@@ -17984,14 +17971,14 @@
             "objclass": "ZombieCakeTankProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieGeneralCakeTankWalkOn@ZombieActions)",
-                    "RTID(ZombieGeneralIdle@ZombieActions)",
-                    "RTID(ZombieGeneralWalkOff@ZombieActions)",
-                    "RTID(ZombieGeneralDying@ZombieActions)",
-                    "RTID(ZombieCakeTankDamageReact1Action@ZombieActions)",
-                    "RTID(ZombieCakeTankDamageReact2Action@ZombieActions)",
-                    "RTID(ZombieCakeTankDamageReact3Action@ZombieActions)",
-                    "RTID(ZombieCakeTankDamageReact4Action@ZombieActions)"
+                    "RTID(ZombieGeneralCakeTankWalkOn@.)",
+                    "RTID(ZombieGeneralIdle@.)",
+                    "RTID(ZombieGeneralWalkOff@.)",
+                    "RTID(ZombieGeneralDying@.)",
+                    "RTID(ZombieCakeTankDamageReact1Action@.)",
+                    "RTID(ZombieCakeTankDamageReact2Action@.)",
+                    "RTID(ZombieCakeTankDamageReact3Action@.)",
+                    "RTID(ZombieCakeTankDamageReact4Action@.)"
                 ],
                 "LifetimeSeconds": 90,
                 "GeneralPhase": 0,
@@ -18093,19 +18080,19 @@
                     },
                     {
                         "MaxDamagePercent": 0.94,
-                        "ActionOnStart": "RTID(ZombieCakeTankDamageReact1Action@ZombieActions)"
+                        "ActionOnStart": "RTID(ZombieCakeTankDamageReact1Action@.)"
                     },
                     {
                         "MaxDamagePercent": 0.77,
-                        "ActionOnStart": "RTID(ZombieCakeTankDamageReact2Action@ZombieActions)"
+                        "ActionOnStart": "RTID(ZombieCakeTankDamageReact2Action@.)"
                     },
                     {
                         "MaxDamagePercent": 0.38,
-                        "ActionOnStart": "RTID(ZombieCakeTankDamageReact3Action@ZombieActions)"
+                        "ActionOnStart": "RTID(ZombieCakeTankDamageReact3Action@.)"
                     },
                     {
                         "MaxDamagePercent": 0.0,
-                        "ActionOnStart": "RTID(ZombieCakeTankDamageReact4Action@ZombieActions)"
+                        "ActionOnStart": "RTID(ZombieCakeTankDamageReact4Action@.)"
                     }
                 ],
                 "CollideHypnotizedZombies": "ignore",
@@ -18669,7 +18656,7 @@
             "objclass": "ZombieRomanHealerProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieRomanHealerHeal@ZombieActions)"
+                    "RTID(ZombieRomanHealerHeal@.)"
                 ],
                 "GridItemToDrop": "RTID(roman_healer_staff@GridItemTypes)",
                 "BreaksStaff": {
@@ -18757,8 +18744,6 @@
             ],
             "objclass": "ZombieCamelProps",
             "objdata": {
-                "# Camel pieces all walk at the same speed": 0,
-                "# Camel-specific values ": 0,
                 "ArtCenter": {
                     "x": 90,
                     "y": 125
@@ -18848,8 +18833,6 @@
             ],
             "objclass": "ZombieCamelProps",
             "objdata": {
-                "# Camel pieces all walk at the same speed": 0,
-                "# Camel-specific values ": 0,
                 "ArtCenter": {
                     "x": 90,
                     "y": 125
@@ -19291,8 +19274,8 @@
             "objclass": "ZombieRomanMedusaProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombiePushGridItemAction@ZombieActions)",
-                    "RTID(ZombieRomanMedusaPetrifyAction@ZombieActions)"
+                    "RTID(ZombiePushGridItemAction@.)",
+                    "RTID(ZombieRomanMedusaPetrifyAction@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,
@@ -21699,9 +21682,9 @@
             "objclass": "ZombieCarnieMagicianProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieCarnieMagicianTeleportActionOther@ZombieActions)",
-                    "RTID(ZombieCarnieMagicianTeleportActionSelf@ZombieActions)",
-                    "RTID(ZombieCarnieMagicianSpawnDove@ZombieActions)"
+                    "RTID(ZombieCarnieMagicianTeleportActionOther@.)",
+                    "RTID(ZombieCarnieMagicianTeleportActionSelf@.)",
+                    "RTID(ZombieCarnieMagicianSpawnDove@.)"
                 ],
                 "TeleportOtherStartTime": 6,
                 "TeleportSelfStartTime": 23,
@@ -21893,7 +21876,6 @@
                 "FlameDamagePerSecond": 1500,
                 "FlameRange": 2.25,
                 "FlameCooldownTime": 0,
-                "#Keeping it zero as we don't need cooldown time for flame right now! Can be used later if we require": 0,
                 "DeathExplosionDamage": 300,
                 "DeathExplosionRadius": 0.5,
                 "SkipHeadDropState": true,
@@ -22544,7 +22526,7 @@
             "objclass": "ZombieDarkWizardProps",
             "objdata": {
                 "Actions": [
-                    "RTID(ZombieDarkWizardZap@ZombieActions)"
+                    "RTID(ZombieDarkWizardZap@.)"
                 ],
                 "ArtCenter": {
                     "x": 90,

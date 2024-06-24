@@ -10,18 +10,39 @@ body {
     margin: 0;
     overflow: auto;
 }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    background-color: #3c4048;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    gap: 10px; /* Adjust the gap between buttons */
+}
+  
+
 button {
     padding: 10px 20px;
     font-size: 16px;
     color: #ffffff;
-    background-color: #61dafb;
+    background-color: #07576b;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.4s ease;
 }
 button:hover {
     background-color: #21a1f1;
+}
+.filename-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    background-color: #3c4048;
+    padding: 10px;
+    gap: 5px; /* Adjust the gap between buttons */
+    border-radius: 5px;
 }
 .container {
     display: flex;
@@ -30,11 +51,34 @@ button:hover {
     width: 100%;
     padding: 20px;
 }
-table, th, td {
-    border: 1px solid rgb(255, 255, 255);
+table {
     border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+th, td {
+    border: 2px solid #00eeff; /* Light blue border for cells */
+    padding: 12px 15px;
+}
+
+th {
+    background-color: #07576b; /* Darker background for header */
+    color: #ffffff;
+    text-align: center;
+}
+
+td {
+    background-color: #3c4048; /* Consistent background for cells */
     color: #ffffff;
 }
+
+tr:nth-child(even) td {
+    background-color: #282c34; /* Alternating row color */
+}
+
 input, select, pre {
     font-size: 16px;
     color: #ffffff;
@@ -63,24 +107,24 @@ select option {
 }
 a {
     margin: 0;
-    color: #00ffee;
+    color: #21a1f1;
     padding: 5px;
 }
 a:hover {
-    color: #002fff;
+    color: #00ff33;
 }
 button.red {
     padding: 10px 20px;
     font-size: 16px;
     color: #ffffff;
-    background-color: #ff0000; /* Red */
     border: none;
     border-radius: 5px;
+    background-color: #730000; /* Darker Red */
     margin: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.4s ease;
 }
 button.red:hover {
-    background-color: #cc0000; /* Darker Red */
+    background-color: #ff0000; /* Red */
 }
 
