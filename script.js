@@ -688,6 +688,7 @@ function createTable(alias, zombieType, zombieProperty) {
 let extraAttributes = [
     {"CanBePlantTossedStrong":true},
     {"FlickIsLaneRestricted":false},
+    {"TimeToKillInSeconds":99999},
     {"ChillInsteadOfFreeze":false},
     {"CanBePlantTossedWeak":true},
     {"CanTriggerZombieWin":true},
