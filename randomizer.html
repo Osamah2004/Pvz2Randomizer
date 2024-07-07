@@ -101,8 +101,8 @@
         //     "spongebob_newspaper", "explorer_veteran", "pelican", "west_bull_veteran", "future_jetpack_veteran", "dark_wizard_veteran", "dark_gravedropper",
         //     "summer_boombox", "summer_boombox_ballad", "beach_toxicwater", "dino_eggstealer"
         // ];
-        let basics = ["tutorial", "mummy", "pirate", "cowboy", "future", "dark", "beach", "iceage", "lostcity", "eighties", "dino", "summer"];
-        let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran"];
+        let basics = ["tutorial", "mummy", "pirate", "cowboy", "future", "dark", "beach", "iceage", "lostcity", "eighties", "dino"];
+        let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "future_jetpack_veteran"];
         let stage = ["Egypt", "Pirate", "West", "Future", "Dark", "Beach", "Iceage", "LostCity", "Eighties", "Dino"];
         let stageBtn = localStorage.getItem('selectedStage');
 
@@ -306,7 +306,7 @@
         modules.push("RTID(ZombiesDeadWinCon@LevelModules)");
         modules.push("RTID(DefaultZombieWinCondition@LevelModules)");
         if (coinFlip()) { modules.push(`RTID(${stage}Mowers@LevelModules)`) };
-        if (stage !== 'Dark' || stage !== 'Summer') { modules.push("RTID(DefaultSunDropper@LevelModules)") };
+        if (stage !== 'Dark') { modules.push("RTID(DefaultSunDropper@LevelModules)") };
 
         objdata.StartingSun = randint(0, 4) * 25;
         objdata.Description = "Inszanity on a lower level";
