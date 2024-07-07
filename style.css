@@ -34,14 +34,17 @@ body::before {
 }
 
 /* General Styles */
-input, textarea, select, pre {
+input,
+textarea,
+select,
+pre {
   padding: 10px;
   margin-bottom: 20px;
   border: 2px solid #5a4100;
   border-radius: 5px;
   font-size: 16px;
   font-family: 'PvZ2Regular', sans-serif;
-  width: 100%;
+  width:auto;
   max-width: 400px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -57,14 +60,17 @@ select option {
 }
 
 /* Input Fields */
-input[type="text"]:focus, textarea:focus, select:focus {
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
   border-color: #312300;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   outline: none;
 }
 
 /* Buttons */
-button {
+#specialA,button {
+  display: inline-block;
   padding: 10px 20px;
   font-size: 16px;
   font-family: 'PvZ2Regular', sans-serif;
@@ -75,26 +81,34 @@ button {
   transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
   text-shadow: 1px 1px #000000;
   border: 3px solid white;
+  margin-right: 10px;
 }
 
-button:hover {
-  background-color: #21a1f1;
+#specialA:hover,button:hover {
+  background: #7453c5;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 button.red {
+  display: inline-block;
   padding: 10px 20px;
   font-size: 16px;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  background-color: #730000; /* Darker Red */
-  margin: 10px;
+  font-family: 'PvZ2Regular', sans-serif;
+  color: whitesmoke;
+  background: linear-gradient(to top, #700000, #a30101);
   cursor: pointer;
-  transition: background-color 0.4s ease;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  text-shadow: 1px 1px #000000;
+  border: none;
+  margin-right: 10px;
 }
 
 button.red:hover {
-  background-color: #ff0000; /* Red */
+  background: #ff0000;
+  transform: translateY(-2px);
+  box-shadow: none;
+  /* Red */
 }
 
 /* Grid Container */
@@ -103,12 +117,15 @@ button.red:hover {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   width: 100%;
-  max-width: 1600px; /* Set maximum width to limit the number of columns */
-  margin: 0 auto; /* Center the grid */
+  max-width: 1600px;
+  /* Set maximum width to limit the number of columns */
+  margin: 0 auto;
+  /* Center the grid */
 }
 
 /* Box and Info Box */
-.box::before, .info-box::before {
+.box::before,
+.info-box::before {
   content: '';
   position: absolute;
   top: -10px;
@@ -120,7 +137,8 @@ button.red:hover {
   z-index: -1;
 }
 
-.box::after, .info-box::after {
+.box::after,
+.info-box::after {
   content: '';
   position: absolute;
   top: -2px;
@@ -150,7 +168,7 @@ textarea {
   background-color: #a86e42;
   padding: 20px;
   border-radius: 15px;
-  width: 90%;
+  width: 70%;
   max-width: 1200px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin: 20px;
@@ -179,11 +197,14 @@ table {
   text-align: left;
 }
 
-th, td {
-  padding: 15px; /* Adjust padding for cells */
+th,
+td {
+  padding: 15px;
+  /* Adjust padding for cells */
   color: #312300;
   background-color: #e2dabd;
   border-radius: solid;
+  border: 1px solid #9b7922;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -194,16 +215,19 @@ th {
 }
 
 td {
-  background-color: #4d1f00; /* Consistent background for cells */
+  background-color: #4d1f00;
+  /* Consistent background for cells */
   color: #e9c67c;
 }
 
 tr:nth-child(even) {
-  background-color: #282c34; /* Alternating row color */
+  background-color: #282c34;
+  /* Alternating row color */
 }
 
 tr:hover {
-  background-color: #4a4e57; /* Hover effect for rows */
+  background-color: #4a4e57;
+  /* Hover effect for rows */
 }
 
 
@@ -211,9 +235,9 @@ tr:hover {
 /* Results Dropdown */
 #results {
   border: 1px solid #ffffff;
-  background-color: #e2dabd;
+  background-color: #3b3b3b40;
   display: none;
-  max-height: 150px;
+  max-height: 250px;
   overflow-y: auto;
 }
 
@@ -230,16 +254,16 @@ tr:hover {
 }
 
 #results li:hover {
-  background-color: #f0f0f0; /* Hover color */
+  background-color: #f0f0f0;
+  /* Hover color */
 }
-
 /* Links */
 a {
   margin: 0;
-  color: #21a1f1;
+  color: #00f2ff;
   padding: 5px;
 }
 
 a:hover {
-  color: #00ff33;
+  color: #d07cd7;
 }
