@@ -306,7 +306,7 @@
         modules.push("RTID(ZombiesDeadWinCon@LevelModules)");
         modules.push("RTID(DefaultZombieWinCondition@LevelModules)");
         if (coinFlip()) { modules.push(`RTID(${stage}Mowers@LevelModules)`) };
-        if (stage !== 'Dark' || stage !== 'Summer') { modules.push("RTID(DefaultSunDropper@LevelModules)") };
+        if (stage !== 'Dark' && stage !== 'Summer') { modules.push("RTID(DefaultSunDropper@LevelModules)") };
 
         objdata.StartingSun = randint(0, 4) * 25;
         objdata.Description = "Inszanity on a lower level";
