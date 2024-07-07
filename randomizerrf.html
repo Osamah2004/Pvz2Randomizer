@@ -6,96 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PvZ2 level randomizer</title>
     <link rel="stylesheet" href="style.css">
-    <!--
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #282c34;
-            color: #61dafb;
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            overflow: hidden;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #ffffff;
-            background-color: #61dafb;
-            border: none;
-            border-radius: 5px;
-            margin: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #21a1f1;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        select, input, pre {
-            font-size: 16px;
-            color: #ffffff;
-            background-color: #3c4048;
-            border: 1px solid #61dafb;
-            border-radius: 5px;
-            padding: 5px;
-            margin: 0 5px;
-        }
-        select:focus, input:focus {
-            outline: none;
-            box-shadow: 0 0 10px #61dafb;
-        }
-        select option {
-            background-color: #282c34;
-            color: #61dafb;
-        }
-		a {
-			color: red;
-		}
-        .notification {
-            position: fixed;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 15px 30px;
-            background-color: #61dafb;
-            color: white;
-            font-size: 18px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            transition: top 0.5s ease;
-        }
-        .download-notification {
-            display: none;
-        }
-    </style>
-    -->
 </head>
 
 <body>
+<div class="filename-container">
+    <label>Filename: </label><select id="filename"></select>
+    <input style="width: 40px;" value="1" type="number" min="1" max="40" id="levelnum">
+    .json
+</div>
+<div class="filename-container">
+    <label>Stage: </label>
+    <select id="stage"></select>
+</div>
     <div class="filename-container">
-        <button onclick="copyCode()">Copy</button>
-        <button onclick="startDownload()">Download</button>
+        <button id="buttonA" onclick="copyCode()">Copy</button>
+        <button id="buttonA" onclick="startDownload()">Download</button>
     </div>
-    <div class="filename-container">
-        <label>Filename: </label>
-        <select id="filename"></select>
-        <input style="width: 40px;" value="1" type="number" min="1" max="32" id="levelnum">
-        <pre>.json</pre>
-    </div>
-    <div class="filename-container">
-        <label>Stage: </label>
-        <select id="stage"></select>
-    </div>
-    <h6><a href="index.html">Home page</a></h6>
+    <h4><a href="index.html">Home page</a></h4>
     <script>
 
 
@@ -153,21 +80,30 @@
 
 
         let specials = [
-        "future_protector","dark_wizard","dark_juggler","dark_king","beach_octopus",
-        "iceage_hunter","iceage_dodo","iceage_weaselhoarder","iceage_troglobite",
-        "camel_onehump","camel_twohump","camel_manyhump","pharaoh","ra","tomb_raiser",
-        "explorer","barrelroller","cannon","seagull","pirate_captain","swashbuckler",
-        "lostcity_impporter","lostcity_excavator","lostcity_jane","lostcity_bug","lostcity_bug_armor1",
-        "lostcity_bug_armor2","lostcity_crystalskull","lostcity_relichunter",
-        "eighties_boombox","dino_bully","modern_newspaper","modern_balloon","modern_allstar",
-        "prospector","west_bull","poncho","piano","chicken_farmer","mech_cone","football_mech","disco_mech",
-        "future_jetpack","summer_explorer","summer_bug","summer_bug_armor1","summer_bug_armor2","summer_ra","eighties_punk_veteran",
-        "spongebob_newspaper","explorer_veteran","pelican","west_bull_veteran","future_jetpack_veteran","dark_wizard_veteran","dark_gravedropper",
-        "summer_boombox","summer_boombox_ballad","beach_toxicwater","dino_eggstealer"
+            //     "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus",
+            //     "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite",
+            //     "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser",
+            //     "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler",
+            //     "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1",
+            //     "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter",
+            //     "eighties_boombox", "dino_bully", "modern_newspaper", "modern_balloon", "modern_allstar",
+            //     "prospector", "west_bull", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack",
+            // ];
+            "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus",
+            "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite",
+            "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser",
+            "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler",
+            "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1",
+            "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter",
+            "eighties_boombox", "dino_bully", "modern_newspaper", "modern_balloon", "modern_allstar",
+            "prospector", "west_bull", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech",
+            "future_jetpack", "summer_explorer", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "summer_ra", "eighties_punk_veteran",
+            "spongebob_newspaper", "explorer_veteran", "pelican", "west_bull_veteran", "future_jetpack_veteran", "dark_wizard_veteran", "dark_gravedropper",
+            "summer_boombox", "summer_boombox_ballad", "beach_toxicwater", "dino_eggstealer"
         ];
-        let basics = ["tutorial","mummy","pirate","cowboy","future","dark","beach","iceage","lostcity","eighties","dino","summer"];
-        let flyingUnits = ["lostcity_bug_armor2","lostcity_bug_armor1","modern_balloon","tutorial_balloon","future_jetpack_veteran","future_jetpack","pelican","cannon","lostcity_bug","summer_bug","summer_bug_armor1","summer_bug_armor2","future_jetpack_veteran"];
-        let stage = ["Egypt", "Pirate", "West", "Future", "Dark", "Beach", "Iceage", "LostCity", "Eighties", "Dino", "Summer"];
+        let basics = ["tutorial", "mummy", "pirate", "cowboy", "future", "dark", "beach", "iceage", "lostcity", "eighties", "dino", "summer"];
+        let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran"];
+        let stage = ["Egypt", "Pirate", "West", "Future", "Dark", "Beach", "Iceage", "LostCity", "Eighties", "Dino","Summer"];
         let stageBtn = localStorage.getItem('selectedStage');
 
         for (let i = 0; i < stage.length; i++) {
@@ -214,6 +150,13 @@
         }
         else stage = stageBtn;
         let pool = sample(specials, randint(2, 4));
+
+        if (pool.includes("dark_king")){
+            basics = ['dark'];
+        }
+        else if (pool.includes("piano")) {
+            basics = ['cowboy'];
+        }
 
         pool.push(choice(basics));
         pool.push(choice(basics) + '_armor1');
@@ -432,7 +375,9 @@
                 let columns = [9, 8, 7, 6, 5, 4];
                 let index = randint(0, 5);
                 append({ "StartingWaveLocation": columns[index] }, "TideProperties", "InitialTide");
-                chessboard(index, 9, ['lilypad']);
+                var lilypads = [];
+                lilypads.push(...powertileBoard(index, 7,'lilypad', randint(2, columns[index]+2)));
+                append({ InitialGridItemPlacements: lilypads }, 'InitialGridItemProperties', 'GI')
                 break;
             case 'Iceage':
                 chessboard(4, 8, ['slider_up', 'slider_down']);
@@ -498,15 +443,20 @@
 
         function chessboard(start, end, typeName) {
             let grids = [];
+            let counter = 0;
+            let limit = randint(4,10);
             for (let i = 0; i <= 4; i++) {
                 for (let j = start; j < end; j++) {
                     if (coinFlip()) {
-                        if (stage == 'Iceage' && i == 0) { grids.push({ "GridX": j, "GridY": i, "TypeName": "slider_down" }); }
-                        else if (stage == 'Iceage' && i == 2) { grids.push({ "GridX": j, "GridY": i, "TypeName": "slider_up" }); }
-                        else if (stage == 'Iceage' && i == 4) { grids.push({ "GridX": j, "GridY": i, "TypeName": "gravestone_iceage" }); }
+                        console.log(`counter: ${counter} limit: ${limit}\ncounter === limit: ${counter === limit}`)
+                        if (counter == limit){break}
+                        if(stage == 'Iceage'){counter++;}
+                        if (stage == 'Iceage' && i == 0){grids.push({ "GridX": j, "GridY": i, "TypeName": "slider_down" });}
+                        else if (stage == 'Iceage' && i == 4){grids.push({ "GridX": j, "GridY": i, "TypeName": "slider_up" });}
                         else grids.push({ "GridX": j, "GridY": i, "TypeName": choice(typeName) });
                     }
                 }
+                if (counter == limit) {break}
             }
             let objdata = new Object();
             objdata.InitialGridItemPlacements = grids;
