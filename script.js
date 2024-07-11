@@ -182,7 +182,6 @@ function objdataHandling(object,table){
 let conditionImmunitiesObject = [];
 
 function removeCondition(condition){
-    debugger;
     let temp = [];
     conditionImmunitiesObject.forEach(i => {
         if (condition != i.Condition){
@@ -431,7 +430,7 @@ function findValueByKey(lists, keyToFind) {
     return null; // Key not found
 }
 
-function capitalizeTableCellsByText(targetText) {
+function displayHint(targetText,fileName = targetText) {
     const table = document.getElementById('zombieTable');
     if (!table) {
         console.error(`Table with ID "${tableId}" not found.`);
@@ -444,6 +443,7 @@ function capitalizeTableCellsByText(targetText) {
             // Create a button with a question mark
             const button = document.createElement('button');
             button.textContent = '?';
+            button.style.width = '5%';
             button.style.position = 'absolute';
             button.style.top = '0';
             button.style.right = '0';
@@ -464,7 +464,7 @@ function capitalizeTableCellsByText(targetText) {
 
 
                 const hintText = hints[targetText] || 'No hint available';
-                const imageSrc = `hints/${targetText}.gif`; // Replace with actual image path
+                const imageSrc = `hints/${fileName}.gif`; // Replace with actual image path
 
                 const hintDiv = document.createElement('div');
                 hintDiv.classList.add('filename-container'); // Set div's position to fixed
@@ -473,9 +473,9 @@ function capitalizeTableCellsByText(targetText) {
                 hintDiv.style.left = '50%';
                 hintDiv.style.transform = 'translate(-50%, -50%)';
                 hintDiv.style.padding = '20px';
-                hintDiv.style.color = '#ffffff';
+                hintDiv.style.color = '#000000';
                 hintDiv.innerHTML = `
-                    <p>${hintText}</p>
+                    <h3 id='outline'>${hintText}</h3>
                     <img src="${imageSrc}" alt="Hint Image">
                     <br>
                 `;
@@ -540,7 +540,6 @@ function createTable(alias, zombieType, zombieProperty) {
         select.value = zombieProperty.objdata[key];
         select.onchange = function () {
             zombieProperty.objdata[key] = select.value;
-            debugger;
             let resource = findValueByKey(resourceGroups,select.value);
             let audio = findValueByKey(audioGroups,select.value);
             zombieType.objdata.ResourceGroups.push(...resource);
@@ -548,6 +547,7 @@ function createTable(alias, zombieType, zombieProperty) {
         }
         let label = document.createElement('label');
         label.textContent = key;
+        label.style.color = '#e9c67c';
         let header = createCell('td', label);
         let data = createCell('td', select);
         let row = document.createElement('tr')
@@ -574,6 +574,7 @@ function createTable(alias, zombieType, zombieProperty) {
         }
         let label = document.createElement('label');
         label.textContent = 'jam';
+        label.style.color = '#e9c67c';
         let header = createCell('td',label);
         let data = createCell('td',select);
         let row = document.createElement('tr')
@@ -715,6 +716,7 @@ function createTable(alias, zombieType, zombieProperty) {
         pushObject(zombieType,0);
         pushObject(zombieProperty,1);
         if (zombieProperty.objdata.hasOwnProperty("Actions")){
+            console.log('hasAction')
             if (zombieProperty.objclass === 'ZombieCarnieMagicianProps'){
                 pushObject(magicianObjects[0],2)
                 pushObject(magicianObjects[1],3)
@@ -738,7 +740,13 @@ function createTable(alias, zombieType, zombieProperty) {
         console.log('Error: Could not find the table container');
     }
     Object.keys(hints).forEach(key => {
-        capitalizeTableCellsByText(key);
+        if (key.includes('Flick')){
+            displayHint(key,'Flick')
+        }
+        else if (key.includes('Tossed')){
+            displayHint(key,'Toss')
+        }
+        else displayHint(key);
     })
 
 }
@@ -750,6 +758,12 @@ function createTable(alias, zombieType, zombieProperty) {
 let hints = { //a block of code }
     'ArtScale': 'art scale changes the zombie\'s size\nmaking him smaller or larger depending on the value',
     'ConditionImmunities': 'control the zombie\'s immunity to certain effects whether negative effects from the plants or positve effect from potions',    'tomb_raiser': 'control the zombie\'s immunity to certain effects whether negative effects from the plants or positve effect from potions',
+    'CanBeFlickedOff': "you can't flick the zombie off screen if the value is false",
+    'FireDamageMultiplier': "how durable a zombie is against fire damage",
+    'FlickIsLaneRestricted': "you can't flick the zombie to another row if the value is true",
+    'CanBeFlicked': "you can't flick the zombie at all if the value is false",
+    'CanBePlantTossedWeak': "setting it to false makes the zombie immune to primal peashooter's knockback",
+    'CanBePlantTossedStrong': "setting it to false makes the zombie immune to other plants such as spring bean,chard guard, leveled stallia etc...",
     'CanSurrender': 'when true, the zomibe will commit suicide if other zombies are dead in the last wave'
 }
 
@@ -761,6 +775,7 @@ let extraAttributes = [
     {"CanTriggerZombieWin":true},
     {"FireDamageMultiplier":1},
     {"CanBeFlickedOff":true},
+    {"CanBeFlicked":true},
     {"CanSurrender":false},
     {"ArtScale":1}
 ]

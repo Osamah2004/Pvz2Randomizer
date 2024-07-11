@@ -11,6 +11,7 @@ body {
   background: url('bgA.png') no-repeat center center fixed;
   background-size: cover;
   color: white;
+  overflow-x: hidden;
   font-family: 'PvZ2Regular', sans-serif;
   margin: 0;
   display: flex;
@@ -20,6 +21,11 @@ body {
   text-align: center;
   flex-direction: column;
   position: relative;
+}
+
+#outline {
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke: 1.25px black;
 }
 
 body::before {
