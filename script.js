@@ -234,7 +234,6 @@ function conditionFunction(table){
         buttonRemove.classList.add('red');
         buttonRemove.dataset.condition = selectedCondition; //  Store the condition in a data attribute
         buttonRemove.onclick = function() {
-            console.log(selectedCondition);
             removeCondition(selectedCondition);
             table.removeChild(tr);
         };
@@ -430,6 +429,69 @@ function findValueByKey(lists, keyToFind) {
         }
     }
     return null; // Key not found
+}
+
+function capitalizeTableCellsByText(targetText) {
+    const table = document.getElementById('zombieTable');
+    if (!table) {
+        console.error(`Table with ID "${tableId}" not found.`);
+        return;
+    }
+
+    const tds = table.querySelectorAll('td');
+    tds.forEach((td) => {
+        if (td.textContent.trim() === targetText) {
+            // Create a button with a question mark
+            const button = document.createElement('button');
+            button.textContent = '?';
+            button.style.position = 'absolute';
+            button.style.top = '0';
+            button.style.right = '0';
+            td.style.position = 'relative'; // Set td's position to relative
+            td.appendChild(button);
+
+            // Add event listener to the button
+            button.addEventListener('click', () => {
+                // Darken the screen
+                const overlay = document.createElement('div');
+                overlay.style.position = 'fixed';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                document.body.appendChild(overlay);
+
+
+                const hintText = hints[targetText] || 'No hint available';
+                const imageSrc = `hints/${targetText}.gif`; // Replace with actual image path
+
+                const hintDiv = document.createElement('div');
+                hintDiv.classList.add('filename-container'); // Set div's position to fixed
+                hintDiv.style.position = 'fixed'; // Set div's position to fixed
+                hintDiv.style.top = '50%';
+                hintDiv.style.left = '50%';
+                hintDiv.style.transform = 'translate(-50%, -50%)';
+                hintDiv.style.padding = '20px';
+                hintDiv.style.color = '#000000';
+                hintDiv.innerHTML = `
+                    <p>${hintText}</p>
+                    <img src="${imageSrc}" alt="Hint Image">
+                    <br>
+                `;
+                document.body.appendChild(hintDiv);
+
+                // Create a close button
+                const closeButton = document.createElement('button');
+                closeButton.textContent = 'Close';
+                closeButton.addEventListener('click', () => {
+                    document.body.removeChild(hintDiv);
+                    document.body.removeChild(overlay);
+                });
+                hintDiv.appendChild(closeButton);
+            });
+        }
+    });
 }
 
 function createTable(alias, zombieType, zombieProperty) {
@@ -675,20 +737,25 @@ function createTable(alias, zombieType, zombieProperty) {
     } else {
         console.log('Error: Could not find the table container');
     }
-
+    Object.keys(hints).forEach(key => {
+        capitalizeTableCellsByText(key);
+    })
 
 }
-
-
-
-
-
-
+/**
+ *     hints.forEach(key => {
+        myFunction(key);
+    })
+ */
+let hints = { //a block of code }
+    'ArtScale': 'art scale changes the zombie\'s size\nmaking him smaller or larger depending on the value',
+    'ConditionImmunities': 'control the zombie\'s immunity to certain effects whether negative effects from the plants or positve effect from potions',    'tomb_raiser': 'control the zombie\'s immunity to certain effects whether negative effects from the plants or positve effect from potions',
+    'CanSurrender': 'when true, the zomibe will commit suicide if other zombies are dead in the last wave'
+}
 
 let extraAttributes = [
     {"CanBePlantTossedStrong":true},
     {"FlickIsLaneRestricted":false},
-    {"TimeToKillInSeconds":99999},
     {"ChillInsteadOfFreeze":false},
     {"CanBePlantTossedWeak":true},
     {"CanTriggerZombieWin":true},
@@ -716,7 +783,6 @@ let bannedAttributes = [
     "PlantsToFlyOver",
     "BounceableProjectiles",
     "ProjectileClassesToNeverBlock",
-    "ZombieSpawnWeights",
     "PlantsShovelableWhileInvincible",
     "PlantsToBashInsteadOfShovel",
     "PlantsWhichAlsoKillBasic",
@@ -733,6 +799,7 @@ let bannedAttributes = [
     "BreaksSurfboard",
     "BlocksSurfboard",
     "AllowedLowPlants",
+    "ZombieSpawnWeights",
     "ImpType",
     "StaticArtImageAsset",
     "ValidKnightTargets",
@@ -767,8 +834,6 @@ fetchJsonFile('ZOMBIETYPES.json').then(zombieTypes => {
         resourceGroups.push({ 'alias': alias, 'group': resource });
         audioGroups.push({ 'alias': alias, 'group':audio })
     })
-    console.log(resourceGroups);
-    console.log(audioGroups);
     fetchJsonFile('ZOMBIEPROPERTIES.json').then(zombiePropertiesObjects => {
         zombiePropertiesObjectsData = zombiePropertiesObjects; // Store the data in the global variable
         // Get the first alias from each object in zombiePropertiesObjects

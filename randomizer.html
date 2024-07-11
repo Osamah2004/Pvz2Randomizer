@@ -9,6 +9,14 @@
 </head>
 
 <body>
+    <div class="filename-container">
+        <button id="buttonA" onclick="copyCode()">Copy</button>
+        <button id="buttonA" onclick="startDownload()">Download</button>
+        <select onchange="setMod(modOption.value)" name="mod" id="modOption">
+            <option value="vnl">VNL</option>
+            <option value="rfl">RFL</option>
+        </select>
+    </div>
 <div class="filename-container">
     <label>Filename: </label><select id="filename"></select>
     <input style="width: 40px;" value="1" type="number" min="1" max="40" id="levelnum">
@@ -18,10 +26,7 @@
     <label>Stage: </label>
     <select id="stage"></select>
 </div>
-    <div class="filename-container">
-        <button id="buttonA" onclick="copyCode()">Copy</button>
-        <button id="buttonA" onclick="startDownload()">Download</button>
-    </div>
+
     <h4><a href="index.html">Home page</a></h4>
     <script>
 
@@ -65,10 +70,18 @@
             alert("Level downloaded.")
             reload();
 
-            // Reload the page after the download
 
         }
 
+        
+        let mod = localStorage.getItem('mod');
+        if (mod == null) { mod = 'vnl' }
+        document.getElementById('modOption').value = mod;
+
+        function setMod(mod) {
+            localStorage.setItem('mod', mod);
+            reload();
+        }
 
         function rtid(str, module) {
             return `RTID(${str}@${module})`;
@@ -78,7 +91,32 @@
         let flags = randint(1, 4);
         let total = interval * flags;
 
+        function extraSpecials() {
+            switch (mod) {
+                case 'rfl':
+                    return [
+                        "summer_explorer", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "summer_ra", "eighties_punk_veteran",
+                        "spongebob_newspaper", "explorer_veteran", "pelican", "west_bull_veteran", "future_jetpack_veteran", "dark_wizard_veteran", "dark_gravedropper",
+                        "summer_boombox", "summer_boombox_ballad", "beach_toxicwater", "dino_eggstealer"
+                    ];
+                    break;
+                default:
+                    return [];
+                    break;
+            }
+        }
 
+        function extraStages(){
+            switch (mod) {
+                case 'rfl':
+                    return ['Summer'];
+                    break;
+            
+                default:
+                    return [];
+                    break;
+            }
+        }
         let specials = [
                 "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus",
                 "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite",
@@ -89,21 +127,12 @@
                 "eighties_boombox", "dino_bully", "modern_newspaper", "modern_balloon", "modern_allstar",
                 "prospector", "west_bull", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack",
             ];
-        //     "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus",
-        //     "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite",
-        //     "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser",
-        //     "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler",
-        //     "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1",
-        //     "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter",
-        //     "eighties_boombox", "dino_bully", "modern_newspaper", "modern_balloon", "modern_allstar",
-        //     "prospector", "west_bull", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech",
-        //     "future_jetpack", "summer_explorer", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "summer_ra", "eighties_punk_veteran",
-        //     "spongebob_newspaper", "explorer_veteran", "pelican", "west_bull_veteran", "future_jetpack_veteran", "dark_wizard_veteran", "dark_gravedropper",
-        //     "summer_boombox", "summer_boombox_ballad", "beach_toxicwater", "dino_eggstealer"
-        // ];
-        let basics = ["tutorial", "mummy", "pirate", "cowboy", "future", "dark", "beach", "iceage", "lostcity", "eighties", "dino"];
-        let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "future_jetpack_veteran"];
+        specials.push(...extraSpecials());
+        let basics = ["tutorial", "mummy", "pirate", "cowboy", "future", "dark", "beach", "iceage", "lostcity", "eighties", "dino", "summer"];
+        let validArmor4 = ["tutorial", "mummy", "pirate", "cowboy", "future", "dino"]
+        let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran"];
         let stage = ["Egypt", "Pirate", "West", "Future", "Dark", "Beach", "Iceage", "LostCity", "Eighties", "Dino"];
+        stage.push(...extraStages());
         let stageBtn = localStorage.getItem('selectedStage');
 
         for (let i = 0; i < stage.length; i++) {
@@ -149,6 +178,7 @@
             stage = choice(stage);
         }
         else stage = stageBtn;
+
         let pool = sample(specials, randint(2, 4));
 
         if (pool.includes("dark_king")){
@@ -161,7 +191,10 @@
         pool.push(choice(basics));
         pool.push(choice(basics) + '_armor1');
         pool.push(choice(basics) + '_armor2');
-        pool.push(choice(basics) + '_armor4');
+        if (mod == 'vnl') {
+            pool.push(choice(validArmor4) + '_armor4')
+        }
+        else pool.push(choice(basics) + '_armor4');
 
 
 
@@ -203,13 +236,13 @@
         var waveManager = new Object();
         let escalation = new Object();
 
-
+        let nonAmbush = ['West','Summer']
 
         function waveArray() {
             let emptyWave = [];
             let waveOfEmptyWaves = [];
             for (let i = 1; i < total + 1; i++) {
-                if (stage === 'West' || stage === 'Summer') { waveOfEmptyWaves.push(emptyWave); continue; }
+                if (nonAmbush.includes(stage)) { waveOfEmptyWaves.push(emptyWave); continue; }
                 if (i % interval == 0) {
                     waveOfEmptyWaves.push([rtid(`wave${i}ambush`, '.')]);
                     ambush(i);
@@ -306,7 +339,7 @@
         modules.push("RTID(ZombiesDeadWinCon@LevelModules)");
         modules.push("RTID(DefaultZombieWinCondition@LevelModules)");
         if (coinFlip()) { modules.push(`RTID(${stage}Mowers@LevelModules)`) };
-        if (stage !== 'Dark') { modules.push("RTID(DefaultSunDropper@LevelModules)") };
+        if (stage !== 'Dark' && stage !== 'Summer') { modules.push("RTID(DefaultSunDropper@LevelModules)") };
 
         objdata.StartingSun = randint(0, 4) * 25;
         objdata.Description = "Inszanity on a lower level";
@@ -336,7 +369,7 @@
 
         switch (stage) {
             case 'Egypt':
-                chessboard(1, 8, ['gravestone_egypt']);
+                chessboard(2, 8, 'gravestone_egypt');
                 break;
             case 'Pirate':
                 append({ "PlankRows": sample([0, 1, 2, 3, 4], randint(1, 5)).sort() }, "PiratePlankProperties", "PiratePlanks");
@@ -369,24 +402,19 @@
                 append(obj, 'InitialGridItemProperties', 'GI')
                 break;
             case 'Dark':
-                chessboard(1, 8, ['gravestone_dark', 'gravestone_dark', 'gravestoneSunOnDestruction']);
+                chessboard(2, 8, ['gravestone_dark', 'gravestone_dark', 'gravestoneSunOnDestruction']);
                 break;
             case 'Beach':
                 let columns = [9, 8, 7, 6, 5, 4];
                 let index = randint(0, 5);
                 append({ "StartingWaveLocation": columns[index] }, "TideProperties", "InitialTide");
-                var lilypads = [];
-                lilypads.push(...powertileBoard(index, 7,'lilypad', randint(2, columns[index]+2)));
-                append({ InitialGridItemPlacements: lilypads }, 'InitialGridItemProperties', 'GI')
+                chessboard(index, 7,'lilypad', randint(2, columns[index]+2));
                 break;
             case 'Iceage':
-                chessboard(4, 8, ['slider_up', 'slider_down']);
+                chessboard(3, 7, ['slider_up', 'slider_down'],randint(3,6));
                 break;
             case 'LostCity':
-                let goldTiles = [];
-                goldTiles.push(...powertileBoard(0, 8, 'goldtile', randint(3, 10)));
-                append({ InitialGridItemPlacements: goldTiles }, 'InitialGridItemProperties', 'GI')
-                break;
+                chessboard(0,5,'goldtile',randint(0,7));
             default:
                 break;
         }
@@ -441,22 +469,26 @@
 
 
 
-        function chessboard(start, end, typeName) {
+        function chessboard(start, end, typeName,num = randint(0,20)) {
             let grids = [];
-            let counter = 0;
-            let limit = randint(4,10);
-            for (let i = 0; i <= 4; i++) {
-                for (let j = start; j < end; j++) {
-                    if (coinFlip()) {
-                        console.log(`counter: ${counter} limit: ${limit}\ncounter === limit: ${counter === limit}`)
-                        if (counter == limit){break}
-                        if(stage == 'Iceage'){counter++;}
-                        if (stage == 'Iceage' && i == 0){grids.push({ "GridX": j, "GridY": i, "TypeName": "slider_down" });}
-                        else if (stage == 'Iceage' && i == 4){grids.push({ "GridX": j, "GridY": i, "TypeName": "slider_up" });}
-                        else grids.push({ "GridX": j, "GridY": i, "TypeName": choice(typeName) });
+            while (grids.length < num) {
+                let i = randint(0, 4);
+                let j = randint(start, end);
+                let pos = { "GridX": j, "GridY": i };
+                let posStr = JSON.stringify(pos);
+                if (!occupied.has(posStr)) {
+                    occupied.add(posStr);
+                    if (stage == 'Iceage' && i == 0){
+                        grids.push({ ...pos, "TypeName": 'slider_down' });
                     }
+                    else if (stage == 'Iceage' && i == 4){
+                        grids.push({ ...pos, "TypeName": 'slider_up' });
+                    }
+                    else if (Array.isArray(typeName)){
+                        grids.push({ ...pos, "TypeName": choice(typeName) });
+                    }
+                    else grids.push({ ...pos, "TypeName": typeName });
                 }
-                if (counter == limit) {break}
             }
             let objdata = new Object();
             objdata.InitialGridItemPlacements = grids;
@@ -469,7 +501,7 @@
             while (grids.length < num) {
                 let i = randint(0, 4);
                 let j = randint(start, end);
-                if (coinFlip() && grids.length < num) {
+                if (grids.length < num) {
                     let pos = { "GridX": j, "GridY": i };
                     let posStr = JSON.stringify(pos);
                     if (!occupied.has(posStr)) {
@@ -855,7 +887,6 @@
                 case 3:
                     if (stage == 'Dark') { graveSpawn(wave, violence); necromancy(wave, violence); }
                     else stormAmbush(wave, 'snow', violence); winds(wave, violence);
-                    console.log(`triple shot at ${wave}`);
                     break;
                 default:
                     break;
