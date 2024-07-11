@@ -473,7 +473,7 @@ function capitalizeTableCellsByText(targetText) {
                 hintDiv.style.left = '50%';
                 hintDiv.style.transform = 'translate(-50%, -50%)';
                 hintDiv.style.padding = '20px';
-                hintDiv.style.color = '#000000';
+                hintDiv.style.color = '#ffffff';
                 hintDiv.innerHTML = `
                     <p>${hintText}</p>
                     <img src="${imageSrc}" alt="Hint Image">
