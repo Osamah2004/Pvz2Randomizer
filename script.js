@@ -8,7 +8,7 @@ let searchArray = [];
 
 // Create a table to display the zombie's properties
 let table = document.createElement('table');
-table.id = 'zombieTable'; // Add an id to the table
+table.id = 'zombieDiv'; // Add an id to the table
 
 
 function adjustResultsWidth() {
@@ -41,7 +41,7 @@ function handleClick(alias, resultsDiv, zombieTypesData, zombiePropertiesObjects
     resultsDiv.style.display = 'none'; // Hide the results div
 
     // Remove the existing table if it exists
-    let existingTable = document.getElementById('zombieTable');
+    let existingTable = document.getElementById('zombieDiv');
     if (existingTable) existingTable.remove();
 
     // Search for the selected zombie in ZombieTypes and ZombieProperties
@@ -49,7 +49,7 @@ function handleClick(alias, resultsDiv, zombieTypesData, zombiePropertiesObjects
     let zombieProperty = zombiePropertiesObjectsData.find(p => p.aliases.includes(zombieType.objdata.Properties.slice(zombieType.objdata.Properties.indexOf('(') + 1, zombieType.objdata.Properties.indexOf('@'))));
 
     // Call the createTable function
-    createTable(alias, zombieType, zombieProperty);
+    createDiv(alias, zombieType, zombieProperty);
 }
 
 
@@ -71,11 +71,11 @@ function showResults() {
         resultsDiv.appendChild(a);
 
         // Add a line break after each alias
-        let br = document.createElement('br');
-        resultsDiv.appendChild(br);
+        resultsDiv.appendChild(document.createElement('br'));
     }
 
     resultsDiv.style.display = 'block'; // Show the results div
+    resultsDiv.classList.add('results-div'); // Add class for styling
 }
 
 function searchAliases() {
@@ -102,27 +102,23 @@ function searchAliases() {
             resultsDiv.appendChild(a);
 
             // Add a line break after each alias
-            let br = document.createElement('br');
-            resultsDiv.appendChild(br);
+            resultsDiv.appendChild(document.createElement('br'));
         }
     }
 
     // Show or hide results div based on whether there are any results
     resultsDiv.style.display = resultsDiv.hasChildNodes() ? 'block' : 'none';
+    resultsDiv.classList.add('results-div'); // Add class for styling
 }
 
+function objdataHandling(object, div) {
+    div.classList.add('object-data-div'); // Add class for styling
 
-function objdataHandling(object,table){
     Object.keys(object).forEach(attr => {
         if (!bannedAttributes.includes(attr)) {
-            let tr = document.createElement('tr');
             if (typeof object[attr] === 'object' && object[attr] !== null) {
                 for (let nestedAttr in object[attr]) {
-                    let tr = document.createElement('tr');
-                    let td1 = document.createElement('td');
-                    td1.textContent = attr + ' ' + nestedAttr;
-                    tr.appendChild(td1);
-                    let td2 = document.createElement('td');
+                    // Make inputs for nested objects
                     let input;
                     if (typeof object[attr][nestedAttr] === 'boolean') {
                         input = document.createElement('input');
@@ -133,24 +129,21 @@ function objdataHandling(object,table){
                         };
                     } else {
                         input = document.createElement('input');
-                        if (typeof object[attr][nestedAttr] === 'number')
-                            {
-                                input.type = 'number';
-                            }
+                        if (typeof object[attr][nestedAttr] === 'number') {
+                            input.type = 'number';
+                        }
                         input.placeholder = object[attr][nestedAttr];
                         input.onchange = function() {
                             object[attr][nestedAttr] = isNaN(input.value) ? input.value : Number(input.value);
                         };
                     }
-                    td2.appendChild(input);
-                    tr.appendChild(td2);
-                    table.appendChild(tr);
+                    div.appendChild(createText(attr + ' ' + nestedAttr, attr + ' ' + nestedAttr));
+                    div.appendChild(input);
+                    div.appendChild(document.createElement('br'));
                 }
             } else {
-                let td1 = document.createElement('td');
-                td1.textContent = attr;
-                tr.appendChild(td1);
-                let td2 = document.createElement('td');
+                // Make inputs for regular objects
+                div.appendChild(createText(attr, attr));
                 let input;
                 if (typeof object[attr] === 'boolean') {
                     input = document.createElement('input');
@@ -162,22 +155,20 @@ function objdataHandling(object,table){
                 } else {
                     input = document.createElement('input');
                     input.placeholder = object[attr];
-                    if (typeof object[attr] === 'number'){
+                    if (typeof object[attr] === 'number') {
                         input.type = 'number';
                     }
                     input.onchange = function() {
                         object[attr] = isNaN(input.value) ? input.value : Number(input.value);
                     };
-                }                
-                td2.appendChild(input);
-                td2.appendChild(input);
-                tr.appendChild(td2);
-
-                table.appendChild(tr);
+                }
+                div.appendChild(input);
+                div.appendChild(document.createElement('br'));
             }
         }
     });
 }
+
 
 let conditionImmunitiesObject = [];
 
@@ -191,20 +182,17 @@ function removeCondition(condition){
     conditionImmunitiesObject = temp;
 }
 
-function conditionFunction(table){
+function conditionFunction(div){
     let allConditions = ["chill","freeze","stun","unsuspendable","stalled","sapped","butter","decaypoison","shrinking","shrunken","gummed","dazeystunned","stackableslow","hypnotized","potiontoughness1","potiontoughness2","potiontoughness3","speeddown1","speeddown2","speeddown3","potionspeed1","potionspeed2","potionspeed3","terrified","hungered","potionsuper1","potionsuper2","potionsuper3","stickybombed","suncarrier50","suncarrier100","suncarrier250"];
     let immuneToSlow = allConditions.slice(0, allConditions.indexOf('potiontoughness1'));
     let immuneToPotions = allConditions.slice(allConditions.indexOf('potiontoughness1') + 1);
-    let trConditionImmunities = document.createElement('tr');
-    let tdConditionImmunitiesLabel = document.createElement('td');
-    tdConditionImmunitiesLabel.textContent = 'ConditionImmunities';
-    trConditionImmunities.appendChild(tdConditionImmunitiesLabel);
-    let tdConditionImmunitiesSelect = document.createElement('td');
-    let selectConditionImmunities = document.createElement('select');
-    selectConditionImmunities.oninput = function() {
-        let selectedCondition = selectConditionImmunities.value;
+    div.appendChild(createText('ConditionImmunities','ConditionImmunities'));
+    let selectTag = document.createElement('select');
+    selectTag.oninput = function() {
+        let conditionDiv = document.createElement('div');
+        let selectedCondition = selectTag.value;
         if (selectedCondition === "-") return;
-
+        conditionDiv.id = selectedCondition;
         let input = document.createElement('input');
         if (immuneToSlow.includes(selectedCondition)) {
             input.classList.add('immuneToSlow');
@@ -223,25 +211,21 @@ function conditionFunction(table){
 
         conditionImmunitiesObject.push({ Condition: selectedCondition, Percent: 1 });
 
-        let tr = document.createElement('tr');
-        let td1 = document.createElement('td');
-        td1.textContent = selectedCondition;
-        tr.appendChild(td1);
-        let td2 = document.createElement('td');
+        conditionDiv.appendChild(createText(selectedCondition,selectedCondition));
         let buttonRemove = document.createElement('button');
         buttonRemove.textContent = 'Remove condition';
         buttonRemove.classList.add('red');
         buttonRemove.dataset.condition = selectedCondition; //  Store the condition in a data attribute
         buttonRemove.onclick = function() {
             removeCondition(selectedCondition);
-            table.removeChild(tr);
+            div.removeChild(conditionDiv);
         };
 
-        td2.appendChild(input);
-        td2.appendChild(buttonRemove);
-        tr.appendChild(td2);
-        tr.id = 'condition row';
-        table.insertBefore(tr, trConditionImmunities.nextSibling);
+        conditionDiv.appendChild(input);
+        conditionDiv.appendChild(buttonRemove);
+        conditionDiv.appendChild(document.createElement('br'));
+
+        div.appendChild(conditionDiv);
     };
 
     let option = document.createElement('option');
@@ -249,19 +233,15 @@ function conditionFunction(table){
     option.textContent = "-";
     option.defaultSelected = true; // Default selected
     option.hidden = true; // Hidden
-    selectConditionImmunities.insertBefore(option, selectConditionImmunities.firstChild);
+    selectTag.insertBefore(option, selectTag.firstChild);
     allConditions.forEach(condition => {
         option = document.createElement('option');
         option.value = condition;
         option.textContent = condition;
-        selectConditionImmunities.appendChild(option);
+        selectTag.appendChild(option);
     });
-    tdConditionImmunitiesSelect.appendChild(selectConditionImmunities);
-    trConditionImmunities.appendChild(tdConditionImmunitiesSelect);
-    table.appendChild(trConditionImmunities);
-    let trButtons = document.createElement('tr');
-    let tdButtons = document.createElement('td');
-    tdButtons.colSpan = 2;
+    div.appendChild(selectTag);
+    div.appendChild(document.createElement('br'));
     let buttonSlow = document.createElement('button');
     buttonSlow.textContent = 'Immune to plants\' conditions';
     buttonSlow.onclick = function() {
@@ -279,7 +259,7 @@ function conditionFunction(table){
             }
         });
     };
-    tdButtons.appendChild(buttonSlow);
+    div.appendChild(buttonSlow);
     let buttonPotions = document.createElement('button');
     buttonPotions.textContent = 'Immune to potions';
     buttonPotions.onclick = function() {
@@ -297,7 +277,7 @@ function conditionFunction(table){
             }
         });
     };
-    tdButtons.appendChild(buttonPotions);
+    div.appendChild(buttonPotions);
     let buttonAll = document.createElement('button');
     buttonAll.textContent = 'all 0';
     buttonAll.onclick = function() {
@@ -312,19 +292,17 @@ function conditionFunction(table){
             });
         });
     };
-    tdButtons.appendChild(buttonPotions);
+    div.appendChild(buttonPotions);
     let all1 = document.createElement('button');
     all1.textContent = 'all 1';
     all1.onclick = function() {
         conditionImmunitiesObject = [];
-        let rows = document.querySelectorAll(`#zombieTable tr[id="condition row"]`);
+        let rows = document.querySelectorAll(`#zombieDiv tr[id="condition row"]`);
         rows.forEach(row => row.remove());
     };
     
-    tdButtons.appendChild(all1);
-    tdButtons.appendChild(buttonAll);
-    trButtons.appendChild(tdButtons);
-    table.appendChild(trButtons);
+    div.appendChild(all1);
+    div.appendChild(buttonAll);
 }
 
 let listOfObjects = new Array(2);
@@ -431,7 +409,7 @@ function findValueByKey(lists, keyToFind) {
 }
 
 function displayHint(targetText,fileName = targetText) {
-    const table = document.getElementById('zombieTable');
+    const table = document.getElementById('zombieDiv');
     if (!table) {
         console.error(`Table with ID "${tableId}" not found.`);
         return;
@@ -494,44 +472,68 @@ function displayHint(targetText,fileName = targetText) {
     });
 }
 
-function createTable(alias, zombieType, zombieProperty) {
+function createText(text,id,element){
+    let p;
+    if (element !== undefined){
+        p = document.createElement(element);
+        p.textContent = text
+        return p;
+    }
+    text = `${text} : `
+    p = document.createTextNode(text);
+    p.id = id;
+    return p;
+}
+
+function createInput(placeholder,type = 'number'){
+    let input = document.createElement('input');
+    input.placeholder = placeholder;
+    input.type = type;
+    return input
+}
+
+function getProp(alias){
+    zombieType = zombieTypesData.find(z => z.aliases.includes(alias));
+    return zombieType.objdata.Properties.slice(zombieType.objdata.Properties.indexOf('(') + 1, zombieType.objdata.Properties.indexOf('@'));
+}
+
+function createDiv(alias, zombieType, zombieProperty) {
     zombieProperty.objdata.ConditionImmunities = [];
-    let table = document.createElement('table');
-    table.id = 'zombieTable';
-    let tr = document.createElement('tr');
-    let th = document.createElement('th');
-    th.colSpan = 2;
-    th.textContent = alias;
-    tr.appendChild(th);
-    table.appendChild(tr);
-    let trCodeName = document.createElement('tr');
-    let tdCodeNameLabel = document.createElement('td');
-    tdCodeNameLabel.textContent = 'Code Name';
-    trCodeName.appendChild(tdCodeNameLabel);
-    let tdCodeNameInput = document.createElement('td');
-    let inputCodeName = document.createElement('input');
-    inputCodeName.value = zombieType.aliases[0];
-    inputCodeName.onchange = function() {
-        zombieType.aliases[0] = inputCodeName.value;
-        th.textContent = inputCodeName.value;
+
+    //Display zombie's alias
+    let div = document.createElement('div');
+    div.classList.add('filename-container');
+    div.id = 'zombieDiv';
+    
+    let zombieName = createText(alias,'zombieName','h1')
+    div.appendChild(zombieName);
+    div.appendChild(document.createElement('br'));
+
+    //Input to change zombie's alias
+    div.appendChild(createText('Code Name','codeName',));
+    let aliasInput = createInput(zombieType.aliases[0],'text');
+    aliasInput.value = zombieType.aliases[0];
+    aliasInput.onchange = function() {
+        zombieType.aliases[0] = aliasInput.value;
+        zombieName.textContent = aliasInput.value;
     };
-    tdCodeNameInput.appendChild(inputCodeName);
-    trCodeName.appendChild(tdCodeNameInput);
-    table.appendChild(trCodeName);
-    let trProps = document.createElement('tr');
-    let tdPropsLabel = document.createElement('td');
-    tdPropsLabel.textContent = 'Props';
-    trProps.appendChild(tdPropsLabel);
-    let tdPropsInput = document.createElement('td');
-    let inputProps = document.createElement('input');
-    inputProps.value = zombieType.objdata.Properties.slice(zombieType.objdata.Properties.indexOf('(') + 1, zombieType.objdata.Properties.indexOf('@'));
-    inputProps.onchange = function() {
+    div.appendChild(aliasInput);
+    div.appendChild(document.createElement('br'));
+
+    //Input to change zombie's props
+    div.appendChild(createText('Props', 'props', ));
+    let propsInput = createInput(getProp(alias),'text');
+    
+    propsInput.value = getProp(alias);
+    propsInput.onchange = function() {
         zombieType.objdata.Properties = rtid(inputProps.value,zombieProperty.aliases);
     };
-    tdPropsInput.appendChild(inputProps);
-    trProps.appendChild(tdPropsInput);
-    table.appendChild(trProps);
-    objdataHandling(zombieProperty.objdata,table);
+    div.appendChild(propsInput);
+    div.appendChild(document.createElement('br'));
+
+    objdataHandling(zombieProperty.objdata,div);
+
+
     for (const key of impType) {
 
         if (zombieProperty.objdata.hasOwnProperty(key)) {
@@ -545,18 +547,10 @@ function createTable(alias, zombieType, zombieProperty) {
             zombieType.objdata.ResourceGroups.push(...resource);
             zombieType.objdata.AudioGroups.push(...audio);
         }
-        let label = document.createElement('label');
-        label.textContent = key;
-        label.style.color = '#e9c67c';
-        let header = createCell('td', label);
-        let data = createCell('td', select);
-        let row = document.createElement('tr')
-        row.appendChild(header);
-        row.appendChild(data);
-        table.appendChild(row);
+        div.appendChild(createText(key,key,));
+        div.appendChild(select)
+        div.appendChild(document.createElement('br'));
         break;
-        } else {
-            console.log(`${key} does not exist in myObject.`);
         }
     }
     if ("JamStyle" in zombieProperty.objdata){
@@ -572,25 +566,15 @@ function createTable(alias, zombieType, zombieProperty) {
         select.onchange = function () {
             zombieProperty.objdata.JamStyle = select.value;
         }
-        let label = document.createElement('label');
-        label.textContent = 'jam';
-        label.style.color = '#e9c67c';
-        let header = createCell('td',label);
-        let data = createCell('td',select);
-        let row = document.createElement('tr')
-        row.appendChild(header);
-        row.appendChild(data);
-        table.appendChild(row);
+        div.appendChild(createText('jam','jam'));
+        div.appendChild(select);
+        div.appendChild(document.createElement('br'));
     }
     extraAttributes.forEach(attrObj => {
         let attr = Object.keys(attrObj)[0];
         let attrValue = attrObj[attr];
         if (!zombieProperty.objdata.hasOwnProperty(attr)) {
-            let tr = document.createElement('tr');
-            let td1 = document.createElement('td');
-            td1.textContent = attr;
-            tr.appendChild(td1);
-            let td2 = document.createElement('td');
+            div.appendChild(createText(attr,attr));
             let input;
             if (typeof attrValue === 'boolean') {
                 input = document.createElement('input');
@@ -607,15 +591,13 @@ function createTable(alias, zombieType, zombieProperty) {
                     zombieProperty.objdata[attr] = isNaN(input.value) ? input.value : Number(input.value);
                 };
             }
-            td2.appendChild(input);
-            tr.appendChild(td2);
-
-            table.appendChild(tr);
+            div.appendChild(input);
+            div.appendChild(document.createElement('br'));
         }
     });
 
     //condition start
-    conditionFunction(table);
+    conditionFunction(div);
     //condition end
 
 
@@ -672,18 +654,18 @@ function createTable(alias, zombieType, zombieProperty) {
                     let actionAlias = zombieProperty.objdata.Actions;
                     let temp = zombieActionsData.find(p => p.aliases.includes(actionAlias[i].slice(actionAlias[i].indexOf('(') + 1,actionAlias[i].indexOf('@'))));
                     magicianObjects[i] = temp;
-                    handleAction(table,zombieProperty,i);
-                    table.removeChild(document.getElementById(`action${i+1}`));
+                    handleAction(div,zombieProperty,i);
+                    div.removeChild(document.getElementById(`action${i+1}`));
                     let copyButton = document.getElementById('copyButton');
                     //yeah i got bored from thinking of variable names so i referenced the id twice
-                    if (table.contains(document.getElementById('ogActions'))){
-                        table.removeChild(document.getElementById('ogActions'));
+                    if (div.contains(document.getElementById('ogActions'))){
+                        div.removeChild(document.getElementById('ogActions'));
                     }
-                    table.appendChild(copyButton);
+                    div.appendChild(copyButton);
                 }
                 magicianTd.appendChild(select);
                 magicianRow.appendChild(magicianTd);
-                table.appendChild(magicianRow);
+                div.appendChild(magicianRow);
             }
             let button = document.createElement('button');
             button.textContent = 'Original magician actions';
@@ -692,10 +674,10 @@ function createTable(alias, zombieType, zombieProperty) {
             let buttonRow = createCell('td',button);
             buttonRow.id = 'ogActions';
             buttonRow.colSpan = 2;
-            table.appendChild(buttonRow);
+            div.appendChild(buttonRow);
         }
         else {
-            handleAction(table,zombieProperty);
+            handleAction(div,zombieProperty);
         };
     }
 
@@ -730,12 +712,10 @@ function createTable(alias, zombieType, zombieProperty) {
             console.error('Could not copy text: ', err);
         });
     };
-    buttonCell.appendChild(button);
-    buttonRow.appendChild(buttonCell);
-    table.appendChild(buttonRow);
+    div.appendChild(button);
     let tableContainer = document.getElementById('tableContainer');
     if (tableContainer) {
-        tableContainer.appendChild(table);
+        tableContainer.appendChild(div);
     } else {
         console.log('Error: Could not find the table container');
     }
@@ -862,7 +842,6 @@ fetchJsonFile('ZOMBIETYPES.json').then(zombieTypes => {
         })
     });
 });
-
 
 
 

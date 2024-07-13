@@ -10,24 +10,24 @@
 
 <body>
     <div class="filename-container">
-        <button id="buttonA" onclick="copyCode()">Copy</button>
-        <button id="buttonA" onclick="startDownload()">Download</button>
+        <p> Options :</p>
         <select onchange="setMod(modOption.value)" name="mod" id="modOption">
             <option value="vnl">VNL</option>
             <option value="rfl">RFL</option>
         </select>
-    </div>
-<div class="filename-container">
+
     <label>Filename: </label><select id="filename"></select>
     <input style="width: 40px;" value="1" type="number" min="1" max="40" id="levelnum">
-    .json
-</div>
-<div class="filename-container">
+    .json<br>
     <label>Stage: </label>
     <select id="stage"></select>
 </div>
+<div class="filename-container">
+    <button id="buttonA" onclick="copyCode()">Copy</button><p> or </p>
+    <button id="buttonA" onclick="startDownload()">Download</button>
+</div>
 
-    <h4><a href="index.html">Home page</a></h4>
+    <h4><a id="home" href="index.html">Home page</a></h4>
     <script>
 
 

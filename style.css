@@ -11,7 +11,6 @@ body {
   background: url('bgA.png') no-repeat center center fixed;
   background-size: cover;
   color: white;
-  overflow-x: hidden;
   font-family: 'PvZ2Regular', sans-serif;
   margin: 0;
   display: flex;
@@ -21,11 +20,6 @@ body {
   text-align: center;
   flex-direction: column;
   position: relative;
-}
-
-#outline {
-    -webkit-text-fill-color: white;
-    -webkit-text-stroke: 1.25px black;
 }
 
 body::before {
@@ -40,17 +34,14 @@ body::before {
 }
 
 /* General Styles */
-input,
-textarea,
-select,
-pre {
+input, textarea, select, pre {
   padding: 10px;
   margin-bottom: 20px;
   border: 2px solid #5a4100;
   border-radius: 5px;
   font-size: 16px;
   font-family: 'PvZ2Regular', sans-serif;
-  width:auto;
+  width: 100%;
   max-width: 400px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -66,17 +57,14 @@ select option {
 }
 
 /* Input Fields */
-input[type="text"]:focus,
-textarea:focus,
-select:focus {
+input[type="text"]:focus, textarea:focus, select:focus {
   border-color: #312300;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   outline: none;
 }
 
 /* Buttons */
-#specialA,button {
-  display: inline-block;
+button {
   padding: 10px 20px;
   font-size: 16px;
   font-family: 'PvZ2Regular', sans-serif;
@@ -87,34 +75,26 @@ select:focus {
   transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
   text-shadow: 1px 1px #000000;
   border: 3px solid white;
-  margin-right: 10px;
 }
 
-#specialA:hover,button:hover {
-  background: #7453c5;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+button:hover {
+  background-color: #21a1f1;
 }
 
 button.red {
-  display: inline-block;
   padding: 10px 20px;
   font-size: 16px;
-  font-family: 'PvZ2Regular', sans-serif;
-  color: whitesmoke;
-  background: linear-gradient(to top, #700000, #a30101);
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
-  text-shadow: 1px 1px #000000;
+  color: #ffffff;
   border: none;
-  margin-right: 10px;
+  border-radius: 5px;
+  background-color: #730000; /* Darker Red */
+  margin: 10px;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
 }
 
 button.red:hover {
-  background: #ff0000;
-  transform: translateY(-2px);
-  box-shadow: none;
-  /* Red */
+  background-color: #ff0000; /* Red */
 }
 
 /* Grid Container */
@@ -123,15 +103,12 @@ button.red:hover {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   width: 100%;
-  max-width: 1600px;
-  /* Set maximum width to limit the number of columns */
-  margin: 0 auto;
-  /* Center the grid */
+  max-width: 1600px; /* Set maximum width to limit the number of columns */
+  margin: 0 auto; /* Center the grid */
 }
 
 /* Box and Info Box */
-.box::before,
-.info-box::before {
+.box::before, .info-box::before {
   content: '';
   position: absolute;
   top: -10px;
@@ -143,8 +120,7 @@ button.red:hover {
   z-index: -1;
 }
 
-.box::after,
-.info-box::after {
+.box::after, .info-box::after {
   content: '';
   position: absolute;
   top: -2px;
@@ -174,7 +150,7 @@ textarea {
   background-color: #a86e42;
   padding: 20px;
   border-radius: 15px;
-  width: 70%;
+  width: 90%;
   max-width: 1200px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin: 20px;
@@ -203,14 +179,11 @@ table {
   text-align: left;
 }
 
-th,
-td {
-  padding: 15px;
-  /* Adjust padding for cells */
-  color: #312300;
+th, td {
+  padding: 15px; /* Adjust padding for cells */
+  color: #d46700;
   background-color: #e2dabd;
   border-radius: solid;
-  border: 1px solid #9b7922;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -220,56 +193,174 @@ th {
   background-color: #e9c67c;
 }
 
+/* Circular Button */
+.circular-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  background: linear-gradient(to top, #493464, #7453c5);
+  border: 2px solid white;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  text-shadow: 1px 1px #000000;
+}
+
+.circular-button:hover {
+  background-color: #21a1f1;
+}
+
+/* Adjust table cell to prevent text overflow */
 td {
+  position: relative; /* Ensure the button stays within the td */
+  overflow: hidden; /* Prevent text overflow */
+  padding: 10px; /* Adjust padding as needed */
   background-color: #4d1f00;
-  /* Consistent background for cells */
   color: #e9c67c;
 }
 
 tr:nth-child(even) {
-  background-color: #282c34;
-  /* Alternating row color */
+  background-color: #282c34; /* Alternating row color */
 }
 
 tr:hover {
-  background-color: #4a4e57;
-  /* Hover effect for rows */
+  background-color: #4a4e57; /* Hover effect for rows */
 }
 
 
 
-/* Results Dropdown */
-#results {
-  border: 1px solid #ffffff;
-  background-color: #3b3b3b40;
-  display: none;
-  max-height: 250px;
+/* Add this to your existing CSS */
+
+.results-div {
+  background-color: #fff;
+  border: 2px solid #e3ad7c;
+  max-height: 150px;
   overflow-y: auto;
+  padding: 10px 10px 10px 10px;
+  color: #ffffff;
 }
 
-#results ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.object-data-div {
+  background-color: #713c24;
+  border: 3px solid #2b0902;
+  padding: 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.results-div {
+  background-color: #fbe89f;
+  border: 2px solid #5a4100;
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 10px 10px 10px 10px;
+  color: #685426;
+}
+.results-div a:hover {
+  color: #78f1dd;
 }
 
-#results li {
+/* General styles for inputs */
+input, textarea, select, pre {
+  background-color: #fbe89f;
+  color: #685426;
+  border: 1px solid #5a4100;
   padding: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: 'PvZ2Regular', sans-serif;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-#results li:hover {
-  background-color: #f0f0f0;
-  /* Hover color */
-}
 /* Links */
 a {
   margin: 0;
-  color: #00f2ff;
+  color: #685426;
   padding: 5px;
 }
 
 a:hover {
-  color: #d07cd7;
+  color: #78f1dd;
 }
+#link {
+  margin: 0;
+  color: #3f60b9;
+  padding: 5px;
+}
+
+#link:hover {
+  color: #78f1dd;
+}
+/* Style for the 'home' a tag */
+#home {
+  display: inline-block;
+  background: linear-gradient(to top, #378158, #5fb957); /* Green background */
+  color: white; /* White text */
+  padding: 10px 20px; /* Padding for spacing */
+  text-align: center; /* Center text */
+  text-decoration: none; /* Remove underline */
+  border: 3px solid white;
+  border-radius: 5px; /* Rounded corners */
+  font-weight: bold; /* Bold text */
+  font-family: 'PvZ2Regular', sans-serif; /* Custom font family */
+  transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+}
+
+/* Hover effect for the 'home' a tag */
+#home:hover {
+  background: linear-gradient(to top, #58b658, #87eb7e); /* Darker green on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+/* Add an icon or a visual indicator for going back */
+#home::before {
+  content: '← '; /* Arrow symbol before the text */
+  font-size: 1.2em; /* Adjust icon size */
+}
+
+#source {
+  display: inline-block;
+  background: linear-gradient(to top, #3a3a3a, #5a5a5a); /* Dark gray background gradient */
+  color: white; /* White text */
+  padding: 10px 20px; /* Padding for spacing */
+  text-align: center; /* Center text */
+  text-decoration: none; /* Remove underline */
+  border: 3px solid white; /* White border */
+  border-radius: 5px; /* Rounded corners */
+  font-weight: bold; /* Bold text */
+  font-family: 'PvZ2Regular', sans-serif; /* Custom font family */
+  transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+}
+
+/* Hover effect for the 'source' a tag */
+#source:hover {
+  background: linear-gradient(to top, #5a5a5a, #7a7a7a); /* Lighter gray on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+/* Add an icon or a visual indicator for the source code link */
+#source::before {
+  content: '🔗 '; /* Link symbol before the text */
+  font-size: 1.2em; /* Adjust icon size */
+}
+/* Footer */
+.footer {
+  background-color: #1f1f1f4d;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
