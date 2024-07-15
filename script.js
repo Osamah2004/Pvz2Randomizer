@@ -652,6 +652,7 @@ function createDiv(alias, zombieType, zombieProperty) {
                     handleAction(div,zombieProperty,i);
                     div.removeChild(document.getElementById(`action${i+1}`));
                     let copyButton = document.getElementById('copyButton');
+                    copyButton.id = "Copy";
                     //yeah i got bored from thinking of variable names so i referenced the id twice
                     if (div.contains(document.getElementById('ogActions'))){
                         div.removeChild(document.getElementById('ogActions'));
