@@ -689,6 +689,7 @@ function createDiv(alias, zombieType, zombieProperty) {
     let button = document.createElement('button');
     button.textContent = 'Copy Zombie';
     button.style.width = '100%';
+    button.id = 'Copy';
     button.onclick = function() {
         zombieProperty.objdata.ConditionImmunities = conditionImmunitiesObject;
         zombieType = {
@@ -842,7 +843,6 @@ fetchJsonFile('ZOMBIETYPES.json').then(zombieTypes => {
         })
     });
 });
-
 
 
 
