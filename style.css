@@ -144,6 +144,60 @@ label {
 textarea {
   resize: vertical;
 }
+/* Outer Div */
+.outer-div {
+  background-color: #a86e42;
+  padding: 20px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 1200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  color: #ffffff;
+  text-align: center;
+  border: 10px solid rgba(0, 0, 0, 0.7);
+}
+
+/* Inner Container */
+.inner-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Inner Div */
+.inner-div {
+  background-color: #d8a872;
+  padding: 15px;
+  border-radius: 10px;
+  width: 45%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #333333;
+  text-align: center;
+  border: 5px solid rgba(0, 0, 0, 0.5);
+}
+
+/* Source Link */
+#source {
+  display: inline-block;
+  background: linear-gradient(to top, #378158, #5fb957);
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: 3px solid white;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  margin-top: 20px;
+}
+
+/* Source Link Hover Effect */
+#source:hover {
+  background: linear-gradient(to top, #58b658, #87eb7e);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 
 /* Filename Container */
 .filename-container {
@@ -178,7 +232,56 @@ table {
   font-size: 18px;
   text-align: left;
 }
+/* Zombie Form Styles */
+.zombie-form {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 600px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.zombie-form input[type="text"],
+.zombie-form input[type="number"],
+.zombie-form select {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.zombie-form input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.zombie-form button {
+  padding: 10px 20px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #5fb957;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.zombie-form button:hover {
+  background-color: #87eb7e;
+}
+
+/* Full-width Button */
+.zombie-form button[style="width: 100%;"] {
+  width: 80%;
+  margin: 10px 0;
+}
 th, td {
   padding: 15px; /* Adjust padding for cells */
   color: #d46700;
@@ -325,6 +428,31 @@ a:hover {
 /* Add an icon or a visual indicator for going back */
 #home::before {
   content: '← '; /* Arrow symbol before the text */
+  font-size: 1.2em; /* Adjust icon size */
+}
+#Copy {
+  display: inline-block;
+  background: linear-gradient(to top, #aa6626, #ffdc68); /* Green background */
+  color: white; /* White text */
+  padding: 10px 20px; /* Padding for spacing */
+  text-align: center; /* Center text */
+  text-decoration: none; /* Remove underline */
+  border: 3px solid white;
+  border-radius: 5px; /* Rounded corners */
+  font-weight: bold; /* Bold text */
+  font-family: 'PvZ2Regular', sans-serif; /* Custom font family */
+  transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+}
+
+/* Hover effect for the 'home' a tag */
+#Copy:hover {
+  background: linear-gradient(to top, #f7c465, #fffd89); /* Darker green on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+/* Add an icon or a visual indicator for going back */
+#Copy::before {
+  content: '📋 '; /* Arrow symbol before the text */
   font-size: 1.2em; /* Adjust icon size */
 }
 
