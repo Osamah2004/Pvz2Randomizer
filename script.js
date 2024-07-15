@@ -684,6 +684,7 @@ function createDiv(alias, zombieType, zombieProperty) {
     buttonCell.style.width = '100%';
     let button = document.createElement('button');
     button.textContent = 'Copy Zombie';
+    button.id = "Copy";
     button.style.width = '100%';
     button.onclick = function() {
         zombieProperty.objdata.ConditionImmunities = conditionImmunitiesObject;
