@@ -408,68 +408,60 @@ function findValueByKey(lists, keyToFind) {
     return null; // Key not found
 }
 
-function displayHint(targetText,fileName = targetText) {
-    const table = document.getElementById('zombieDiv');
-    if (!table) {
-        console.error(`Table with ID "${tableId}" not found.`);
-        return;
-    }
+function displayHint(targetText, fileName = targetText) {
+    const elements = document.querySelectorAll('undefined');
 
-    const tds = table.querySelectorAll('td');
-    tds.forEach((td) => {
-        if (td.textContent.trim() === targetText) {
-            // Create a button with a question mark
-            const button = document.createElement('button');
-            button.textContent = '?';
-            button.style.width = '5%';
-            button.style.position = 'absolute';
-            button.style.top = '0';
-            button.style.right = '0';
-            td.style.position = 'relative'; // Set td's position to relative
-            td.appendChild(button);
-
-            // Add event listener to the button
-            button.addEventListener('click', () => {
-                // Darken the screen
-                const overlay = document.createElement('div');
-                overlay.style.position = 'fixed';
-                overlay.style.top = '0';
-                overlay.style.left = '0';
-                overlay.style.width = '100%';
-                overlay.style.height = '100%';
-                overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-                document.body.appendChild(overlay);
-
-
-                const hintText = hints[targetText] || 'No hint available';
-                const imageSrc = `hints/${fileName}.gif`; // Replace with actual image path
-
-                const hintDiv = document.createElement('div');
-                hintDiv.classList.add('filename-container'); // Set div's position to fixed
-                hintDiv.style.position = 'fixed'; // Set div's position to fixed
-                hintDiv.style.top = '50%';
-                hintDiv.style.left = '50%';
-                hintDiv.style.transform = 'translate(-50%, -50%)';
-                hintDiv.style.padding = '20px';
-                hintDiv.style.color = '#000000';
-                hintDiv.innerHTML = `
-                    <h3 id='outline'>${hintText}</h3>
-                    <img src="${imageSrc}" alt="Hint Image">
-                    <br>
-                `;
-                document.body.appendChild(hintDiv);
-
-                // Create a close button
-                const closeButton = document.createElement('button');
-                closeButton.textContent = 'Close';
-                closeButton.addEventListener('click', () => {
-                    document.body.removeChild(hintDiv);
-                    document.body.removeChild(overlay);
-                });
-                hintDiv.appendChild(closeButton);
-            });
+console.log(`Current text: ${targetText}`);
+    let target;
+    elements.forEach(element => {
+        if (element.textContent.includes(targetText)) {
+            target = element;
         }
     });
+    const button = document.createElement('button');
+    button.textContent = '?';
+    button.style.width = '5%';
+    button.style.position = 'absolute';
+    button.addEventListener('click', () => {
+        // Darken the screen
+        const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        document.body.appendChild(overlay);
+
+
+        const hintText = hints[targetText] || 'No hint available';
+        const imageSrc = `hints/${fileName}.gif`; // Replace with actual image path
+
+        const hintDiv = document.createElement('div');
+        hintDiv.classList.add('filename-container'); // Set div's position to fixed
+        hintDiv.style.position = 'fixed'; // Set div's position to fixed
+        hintDiv.style.top = '50%';
+        hintDiv.style.left = '50%';
+        hintDiv.style.transform = 'translate(-50%, -50%)';
+        hintDiv.style.padding = '20px';
+        hintDiv.style.color = '#000000';
+        hintDiv.innerHTML = `
+            <h3 id='outline'>${hintText}</h3>
+            <img src="${imageSrc}" alt="Hint Image">
+            <br>
+        `;
+        document.body.appendChild(hintDiv);
+
+        // Create a close button
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Close';
+        closeButton.addEventListener('click', () => {
+            document.body.removeChild(hintDiv);
+            document.body.removeChild(overlay);
+        });
+        hintDiv.appendChild(closeButton);
+    });
+    target.appendChild(button);
 }
 
 function createText(text,id,element){
@@ -480,7 +472,9 @@ function createText(text,id,element){
         return p;
     }
     text = `${text} : `
-    p = document.createTextNode(text);
+    ///p = document.createTextNode(text);
+    p = document.createElement('undefined');
+    p.textContent = text;
     p.id = id;
     return p;
 }
@@ -489,7 +483,8 @@ function createInput(placeholder,type = 'number'){
     let input = document.createElement('input');
     input.placeholder = placeholder;
     input.type = type;
-    return input
+    input.id = placeholder;
+    return input;
 }
 
 function getProp(alias){
@@ -689,7 +684,6 @@ function createDiv(alias, zombieType, zombieProperty) {
     let button = document.createElement('button');
     button.textContent = 'Copy Zombie';
     button.style.width = '100%';
-    button.id = 'Copy';
     button.onclick = function() {
         zombieProperty.objdata.ConditionImmunities = conditionImmunitiesObject;
         zombieType = {
@@ -721,6 +715,11 @@ function createDiv(alias, zombieType, zombieProperty) {
         console.log('Error: Could not find the table container');
     }
     Object.keys(hints).forEach(key => {
+        debugger;
+        if (key == 'tomb_raiser'){
+            console.log('tomb raiser found');
+            return;
+        }
         if (key.includes('Flick')){
             displayHint(key,'Flick')
         }
@@ -843,6 +842,7 @@ fetchJsonFile('ZOMBIETYPES.json').then(zombieTypes => {
         })
     });
 });
+
 
 
 
