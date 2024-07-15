@@ -5,7 +5,16 @@
   font-weight: normal;
   font-style: normal;
 }
-
+#outline {
+  color: white;
+  /* Text color */
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  /* Black outline */
+}
 /* Body */
 body {
   background: url('bgA.png') no-repeat center center fixed;
