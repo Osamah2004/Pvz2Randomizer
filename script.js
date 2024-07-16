@@ -183,6 +183,7 @@ function removeCondition(condition){
 }
 
 function conditionFunction(div){
+    let nestedDiv = document.createElement('div');
     let allConditions = ["chill","freeze","stun","unsuspendable","stalled","sapped","butter","decaypoison","shrinking","shrunken","gummed","dazeystunned","stackableslow","hypnotized","potiontoughness1","potiontoughness2","potiontoughness3","speeddown1","speeddown2","speeddown3","potionspeed1","potionspeed2","potionspeed3","terrified","hungered","potionsuper1","potionsuper2","potionsuper3","stickybombed","suncarrier50","suncarrier100","suncarrier250"];
     let immuneToSlow = allConditions.slice(0, allConditions.indexOf('potiontoughness1'));
     let immuneToPotions = allConditions.slice(allConditions.indexOf('potiontoughness1') + 1);
@@ -226,6 +227,7 @@ function conditionFunction(div){
         conditionDiv.appendChild(document.createElement('br'));
 
         div.appendChild(conditionDiv);
+        div.appendChild(document.getElementById('Copy'));
     };
 
     let option = document.createElement('option');
@@ -246,63 +248,167 @@ function conditionFunction(div){
     buttonSlow.textContent = 'Immune to plants\' conditions';
     buttonSlow.onclick = function() {
         immuneToSlow.forEach(condition => {
-            let conditionImmunity = conditionImmunitiesObject.find(ci => ci.Condition === condition);
-            if (conditionImmunity) {
-                conditionImmunity.Percent = 0;
-                // Change the value of all input fields with the corresponding class
-                let inputs = document.querySelectorAll('.immuneToSlow');
-                inputs.forEach(input => {
-                    input.value = 0;
-                });
-            } else {
-                conditionImmunitiesObject.push({ Condition: condition, Percent: 0 });
-            }
+            debugger;
+            removeCondition(condition);
+            let conditionToRemove = document.getElementById(condition);
+            conditionToRemove?.remove();
+            {
+                let conditionDiv = document.createElement('div');
+                let selectedCondition = condition;
+                if (selectedCondition === "-") return;
+                conditionDiv.id = selectedCondition;
+                let input = document.createElement('input');
+                if (immuneToSlow.includes(selectedCondition)) {
+                    input.classList.add('immuneToSlow');
+                } else {
+                    input.classList.add('immuneToPotions');
+                }
+                input.type = 'number';
+                input.min = 0;
+                input.style.width = '30px';
+                input.value = 0;
+                input.dataset.condition = selectedCondition; // Store the condition in a data attribute
+                input.onchange = function () {
+                    let conditionImmunity = conditionImmunitiesObject.find(ci => ci.Condition === selectedCondition);
+                    conditionImmunity.Percent = Number(input.value);
+                };
+
+                conditionImmunitiesObject.push({ Condition: selectedCondition, Percent: 0 });
+
+                conditionDiv.appendChild(createText(selectedCondition, selectedCondition));
+                let buttonRemove = document.createElement('button');
+                buttonRemove.textContent = 'Remove condition';
+                buttonRemove.classList.add('red');
+                buttonRemove.dataset.condition = selectedCondition; //  Store the condition in a data attribute
+                buttonRemove.onclick = function () {
+                    removeCondition(selectedCondition);
+                    div.removeChild(conditionDiv);
+                };
+
+                conditionDiv.appendChild(input);
+                conditionDiv.appendChild(buttonRemove);
+                conditionDiv.appendChild(document.createElement('br'));
+
+                div.appendChild(conditionDiv);
+            };
+            
+
         });
+        div.appendChild(document.getElementById('Copy'));
     };
-    div.appendChild(buttonSlow);
+    nestedDiv.appendChild(buttonSlow);
     let buttonPotions = document.createElement('button');
     buttonPotions.textContent = 'Immune to potions';
     buttonPotions.onclick = function() {
         immuneToPotions.forEach(condition => {
-            let conditionImmunity = conditionImmunitiesObject.find(ci => ci.Condition === condition);
-            if (conditionImmunity) {
-                conditionImmunity.Percent = 0;
-                // Change the value of all input fields with the corresponding class
-                let inputs = document.querySelectorAll('.immuneToPotions');
-                inputs.forEach(input => {
-                    input.value = 0;
-                });
-            } else {
-                conditionImmunitiesObject.push({ Condition: condition, Percent: 0 });
-            }
+            removeCondition(condition);
+            let conditionToRemove = document.getElementById(condition);
+            conditionToRemove?.remove();
+            {
+                let conditionDiv = document.createElement('div');
+                let selectedCondition = condition;
+                if (selectedCondition === "-") return;
+                conditionDiv.id = selectedCondition;
+                let input = document.createElement('input');
+                if (immuneToSlow.includes(selectedCondition)) {
+                    input.classList.add('immuneToSlow');
+                } else {
+                    input.classList.add('immuneToPotions');
+                }
+                input.type = 'number';
+                input.min = 0;
+                input.style.width = '30px';
+                input.value = 0;
+                input.dataset.condition = selectedCondition; // Store the condition in a data attribute
+                input.onchange = function () {
+                    let conditionImmunity = conditionImmunitiesObject.find(ci => ci.Condition === selectedCondition);
+                    conditionImmunity.Percent = Number(input.value);
+                };
+
+                conditionImmunitiesObject.push({ Condition: selectedCondition, Percent: 0 });
+
+                conditionDiv.appendChild(createText(selectedCondition, selectedCondition));
+                let buttonRemove = document.createElement('button');
+                buttonRemove.textContent = 'Remove condition';
+                buttonRemove.classList.add('red');
+                buttonRemove.dataset.condition = selectedCondition; //  Store the condition in a data attribute
+                buttonRemove.onclick = function () {
+                    removeCondition(selectedCondition);
+                    div.removeChild(conditionDiv);
+                };
+
+                conditionDiv.appendChild(input);
+                conditionDiv.appendChild(buttonRemove);
+                conditionDiv.appendChild(document.createElement('br'));
+
+                div.appendChild(conditionDiv);
+            };
         });
+        div.appendChild(document.getElementById('Copy'));
     };
-    div.appendChild(buttonPotions);
+    nestedDiv.appendChild(buttonPotions);
     let buttonAll = document.createElement('button');
     buttonAll.textContent = 'all 0';
     buttonAll.onclick = function() {
         allConditions.forEach(condition => {
-            if (!conditionImmunitiesObject.find(ci => ci.Condition === condition)) {
-                conditionImmunitiesObject.push({ Condition: condition, Percent: 0 });
-            }
-            // Change the value of all input fields
-            let inputs = document.querySelectorAll('.immuneToSlow, .immuneToPotions');
-            inputs.forEach(input => {
+            removeCondition(condition);
+            let conditionToRemove = document.getElementById(condition);
+            conditionToRemove?.remove();
+            {
+                let conditionDiv = document.createElement('div');
+                let selectedCondition = condition;
+                if (selectedCondition === "-") return;
+                conditionDiv.id = selectedCondition;
+                let input = document.createElement('input');
+                if (immuneToSlow.includes(selectedCondition)) {
+                    input.classList.add('immuneToSlow');
+                } else {
+                    input.classList.add('immuneToPotions');
+                }
+                input.type = 'number';
+                input.min = 0;
+                input.style.width = '30px';
                 input.value = 0;
-            });
+                input.dataset.condition = selectedCondition; // Store the condition in a data attribute
+                input.onchange = function () {
+                    let conditionImmunity = conditionImmunitiesObject.find(ci => ci.Condition === selectedCondition);
+                    conditionImmunity.Percent = Number(input.value);
+                };
+
+                conditionImmunitiesObject.push({ Condition: selectedCondition, Percent: 0 });
+
+                conditionDiv.appendChild(createText(selectedCondition, selectedCondition));
+                let buttonRemove = document.createElement('button');
+                buttonRemove.textContent = 'Remove condition';
+                buttonRemove.classList.add('red');
+                buttonRemove.dataset.condition = selectedCondition; //  Store the condition in a data attribute
+                buttonRemove.onclick = function () {
+                    removeCondition(selectedCondition);
+                    div.removeChild(conditionDiv);
+                };
+
+                conditionDiv.appendChild(input);
+                conditionDiv.appendChild(buttonRemove);
+                conditionDiv.appendChild(document.createElement('br'));
+
+                div.appendChild(conditionDiv);
+            };
         });
+        div.appendChild(document.getElementById('Copy'));
     };
-    div.appendChild(buttonPotions);
     let all1 = document.createElement('button');
     all1.textContent = 'all 1';
     all1.onclick = function() {
+        conditionImmunitiesObject.forEach(condition => {
+            div.removeChild(document.getElementById(condition.Condition));
+        })
         conditionImmunitiesObject = [];
-        let rows = document.querySelectorAll(`#zombieDiv tr[id="condition row"]`);
-        rows.forEach(row => row.remove());
     };
     
-    div.appendChild(all1);
-    div.appendChild(buttonAll);
+    nestedDiv.appendChild(all1);
+    nestedDiv.appendChild(buttonAll);
+    nestedDiv.id = 'rowOfButtons';
+    div.appendChild(nestedDiv);
 }
 
 let listOfObjects = new Array(2);
@@ -406,101 +512,114 @@ function findValueByKey(lists, keyToFind) {
         }
     }
     return null; // Key not found
-}
-
-function displayHint(targetText, fileName = targetText) {
-    const elements = document.querySelectorAll('undefined');
-    let target;
-    elements.forEach(element => {
-        if (element.textContent.includes(targetText)) {
-            target = element;
-        }
-    });
-    const button = document.createElement('button');
-    button.textContent = '?';
-    button.style.width = '5%';
-    button.style.position = 'absolute';
-    button.addEventListener('click', () => {
-        // Darken the screen
-        const overlay = document.createElement('div');
-        overlay.style.position = 'fixed';
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.width = '100%';
-        overlay.style.height = '100%';
-        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-        document.body.appendChild(overlay);
-
-
-        const hintText = hints[targetText] || 'No hint available';
-        const imageSrc = `hints/${fileName}.gif`; // Replace with actual image path
-
-        const hintDiv = document.createElement('div');
-        hintDiv.classList.add('filename-container'); // Set div's position to fixed
-        hintDiv.style.position = 'fixed'; // Set div's position to fixed
-        hintDiv.style.top = '50%';
-        hintDiv.style.left = '50%';
-        hintDiv.style.transform = 'translate(-50%, -50%)';
-        hintDiv.style.padding = '20px';
-        hintDiv.style.color = '#000000';
-        hintDiv.innerHTML = `
-            <h3 id='outline'>${hintText}</h3>
-            <img src="${imageSrc}" alt="Hint Image">
-            <br>
-        `;
-        document.body.appendChild(hintDiv);
-
-        // Create a close button
-        const closeButton = document.createElement('button');
-        closeButton.textContent = 'Close';
-        closeButton.addEventListener('click', () => {
-            document.body.removeChild(hintDiv);
-            document.body.removeChild(overlay);
+    }
+    
+    function displayHint(targetText, fileName = targetText) {
+        const elements = document.querySelectorAll('undefined');
+    
+        console.log(`Current text: ${targetText}`);
+        let target;
+        elements.forEach(element => {
+            if (element.textContent.includes(targetText)) {
+                target = element;
+            }
         });
-        hintDiv.appendChild(closeButton);
-    });
-    target.appendChild(button);
-}
-
-function createText(text,id,element){
-    let p;
-    if (element !== undefined){
-        p = document.createElement(element);
-        p.textContent = text
+        if (!target) {
+            console.error('Target element not found');
+            return;
+        }
+    
+        // Ensure target element has relative positioning
+        target.style.position = 'relative';
+    
+        const button = document.createElement('button');
+        button.textContent = '?';
+        button.style.width = '5%';
+        button.id = 'hint';
+        button.style.position = 'absolute';
+        button.style.top = '0'; // Adjust this value as needed
+        button.style.right = '0'; // Align to the right
+        button.style.margin = '5px'; // Add some margin to avoid overlapping
+    
+        button.addEventListener('click', () => {
+            // Darken the screen
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            document.body.appendChild(overlay);
+    
+            const hintText = hints[targetText] || 'No hint available';
+            const imageSrc = `hints/${fileName}.gif`; // Replace with actual image path
+    
+            const hintDiv = document.createElement('div');
+            hintDiv.classList.add('filename-container');
+            hintDiv.style.position = 'fixed';
+            hintDiv.style.top = '50%';
+            hintDiv.style.left = '50%';
+            hintDiv.style.transform = 'translate(-50%, -50%)';
+            hintDiv.style.padding = '20px';
+            hintDiv.style.color = '#000000';
+            hintDiv.innerHTML = `
+                <h3 id='outline'>${hintText}</h3>
+                <img src="${imageSrc}" alt="Hint Image">
+                <br>
+            `;
+            document.body.appendChild(hintDiv);
+    
+            // Create a close button
+            const closeButton = document.createElement('button');
+            closeButton.textContent = 'Close';
+            closeButton.addEventListener('click', () => {
+                document.body.removeChild(hintDiv);
+                document.body.removeChild(overlay);
+            });
+            hintDiv.appendChild(closeButton);
+        });
+        target.appendChild(button);
+    }
+    
+    function createText(text, id, element) {
+        let p;
+        if (element !== undefined) {
+            p = document.createElement(element);
+            p.textContent = text;
+            return p;
+        }
+        text = `${text} : `;
+        p = document.createElement('undefined');
+        p.textContent = text;
+        p.id = "Texte";
         return p;
     }
-    text = `${text} : `
-    ///p = document.createTextNode(text);
-    p = document.createElement('undefined');
-    p.textContent = text;
-    p.id = id;
-    return p;
-}
-
-function createInput(placeholder,type = 'number'){
-    let input = document.createElement('input');
-    input.placeholder = placeholder;
-    input.type = type;
-    input.id = placeholder;
-    return input;
-}
-
-function getProp(alias){
-    zombieType = zombieTypesData.find(z => z.aliases.includes(alias));
-    return zombieType.objdata.Properties.slice(zombieType.objdata.Properties.indexOf('(') + 1, zombieType.objdata.Properties.indexOf('@'));
-}
-
-function createDiv(alias, zombieType, zombieProperty) {
-    zombieProperty.objdata.ConditionImmunities = [];
-
-    //Display zombie's alias
-    let div = document.createElement('div');
-    div.classList.add('filename-container');
-    div.id = 'zombieDiv';
     
-    let zombieName = createText(alias,'zombieName','h1')
-    div.appendChild(zombieName);
-    div.appendChild(document.createElement('br'));
+    function createInput(placeholder, type = 'number') {
+        let input = document.createElement('input');
+        input.placeholder = placeholder;
+        input.type = type;
+        input.id = placeholder;
+        return input;
+    }
+    
+    function getProp(alias) {
+        zombieType = zombieTypesData.find(z => z.aliases.includes(alias));
+        return zombieType.objdata.Properties.slice(zombieType.objdata.Properties.indexOf('(') + 1, zombieType.objdata.Properties.indexOf('@'));
+    }
+    
+    function createDiv(alias, zombieType, zombieProperty) {
+        zombieProperty.objdata.ConditionImmunities = [];
+    
+        // Display zombie's alias
+        let div = document.createElement('div');
+        div.classList.add('filename-container');
+        div.id = 'zombieDiv';
+        
+        let zombieName = createText(alias, 'zombieName', 'h1');
+        div.appendChild(zombieName);
+        div.appendChild(document.createElement('br'));
 
     //Input to change zombie's alias
     div.appendChild(createText('Code Name','codeName',));
@@ -650,6 +769,7 @@ function createDiv(alias, zombieType, zombieProperty) {
                     handleAction(div,zombieProperty,i);
                     div.removeChild(document.getElementById(`action${i+1}`));
                     let copyButton = document.getElementById('copyButton');
+                    copyButton.id = "Copy";
                     //yeah i got bored from thinking of variable names so i referenced the id twice
                     if (div.contains(document.getElementById('ogActions'))){
                         div.removeChild(document.getElementById('ogActions'));
@@ -681,7 +801,7 @@ function createDiv(alias, zombieType, zombieProperty) {
     buttonCell.style.width = '100%';
     let button = document.createElement('button');
     button.textContent = 'Copy Zombie';
-    button.id = 'Copy'
+    button.id = "Copy";
     button.style.width = '100%';
     button.onclick = function() {
         zombieProperty.objdata.ConditionImmunities = conditionImmunitiesObject;
@@ -701,8 +821,8 @@ function createDiv(alias, zombieType, zombieProperty) {
             else pushObject(zombieAction,2)
         }
         let zombieDataString = listOfObjects;
-        for (let key in zombieDataString){
-            if (zombieDataString[key].includes('$')){
+        for (let key in zombieDataString) {
+            if (zombieDataString[key].includes('$')) {
                 console.log('the key has a dollar sign $')
                 zombieDataString[key] = zombieDataString[key].replace('$', '');
             }
@@ -846,7 +966,6 @@ fetchJsonFile('ZOMBIETYPES.json').then(zombieTypes => {
         })
     });
 });
-
 
 
 
