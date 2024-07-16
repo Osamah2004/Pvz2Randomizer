@@ -406,114 +406,101 @@ function findValueByKey(lists, keyToFind) {
         }
     }
     return null; // Key not found
-    }
-    
-    function displayHint(targetText, fileName = targetText) {
-        const elements = document.querySelectorAll('undefined');
-    
-        console.log(`Current text: ${targetText}`);
-        let target;
-        elements.forEach(element => {
-            if (element.textContent.includes(targetText)) {
-                target = element;
-            }
-        });
-        if (!target) {
-            console.error('Target element not found');
-            return;
+}
+
+function displayHint(targetText, fileName = targetText) {
+    const elements = document.querySelectorAll('undefined');
+    let target;
+    elements.forEach(element => {
+        if (element.textContent.includes(targetText)) {
+            target = element;
         }
-    
-        // Ensure target element has relative positioning
-        target.style.position = 'relative';
-    
-        const button = document.createElement('button');
-        button.textContent = '?';
-        button.style.width = '5%';
-        button.id = 'hint';
-        button.style.position = 'absolute';
-        button.style.top = '0'; // Adjust this value as needed
-        button.style.right = '0'; // Align to the right
-        button.style.margin = '5px'; // Add some margin to avoid overlapping
-    
-        button.addEventListener('click', () => {
-            // Darken the screen
-            const overlay = document.createElement('div');
-            overlay.style.position = 'fixed';
-            overlay.style.top = '0';
-            overlay.style.left = '0';
-            overlay.style.width = '100%';
-            overlay.style.height = '100%';
-            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-            document.body.appendChild(overlay);
-    
-            const hintText = hints[targetText] || 'No hint available';
-            const imageSrc = `hints/${fileName}.gif`; // Replace with actual image path
-    
-            const hintDiv = document.createElement('div');
-            hintDiv.classList.add('filename-container');
-            hintDiv.style.position = 'fixed';
-            hintDiv.style.top = '50%';
-            hintDiv.style.left = '50%';
-            hintDiv.style.transform = 'translate(-50%, -50%)';
-            hintDiv.style.padding = '20px';
-            hintDiv.style.color = '#000000';
-            hintDiv.innerHTML = `
-                <h3 id='outline'>${hintText}</h3>
-                <img src="${imageSrc}" alt="Hint Image">
-                <br>
-            `;
-            document.body.appendChild(hintDiv);
-    
-            // Create a close button
-            const closeButton = document.createElement('button');
-            closeButton.textContent = 'Close';
-            closeButton.addEventListener('click', () => {
-                document.body.removeChild(hintDiv);
-                document.body.removeChild(overlay);
-            });
-            hintDiv.appendChild(closeButton);
+    });
+    const button = document.createElement('button');
+    button.textContent = '?';
+    button.style.width = '5%';
+    button.style.position = 'absolute';
+    button.addEventListener('click', () => {
+        // Darken the screen
+        const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        document.body.appendChild(overlay);
+
+
+        const hintText = hints[targetText] || 'No hint available';
+        const imageSrc = `hints/${fileName}.gif`; // Replace with actual image path
+
+        const hintDiv = document.createElement('div');
+        hintDiv.classList.add('filename-container'); // Set div's position to fixed
+        hintDiv.style.position = 'fixed'; // Set div's position to fixed
+        hintDiv.style.top = '50%';
+        hintDiv.style.left = '50%';
+        hintDiv.style.transform = 'translate(-50%, -50%)';
+        hintDiv.style.padding = '20px';
+        hintDiv.style.color = '#000000';
+        hintDiv.innerHTML = `
+            <h3 id='outline'>${hintText}</h3>
+            <img src="${imageSrc}" alt="Hint Image">
+            <br>
+        `;
+        document.body.appendChild(hintDiv);
+
+        // Create a close button
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Close';
+        closeButton.addEventListener('click', () => {
+            document.body.removeChild(hintDiv);
+            document.body.removeChild(overlay);
         });
-        target.appendChild(button);
-    }
-    
-    function createText(text, id, element) {
-        let p;
-        if (element !== undefined) {
-            p = document.createElement(element);
-            p.textContent = text;
-            return p;
-        }
-        text = `${text} : `;
-        p = document.createElement('undefined');
-        p.textContent = text;
-        p.id = "Texte";
+        hintDiv.appendChild(closeButton);
+    });
+    target.appendChild(button);
+}
+
+function createText(text,id,element){
+    let p;
+    if (element !== undefined){
+        p = document.createElement(element);
+        p.textContent = text
         return p;
     }
+    text = `${text} : `
+    ///p = document.createTextNode(text);
+    p = document.createElement('undefined');
+    p.textContent = text;
+    p.id = id;
+    return p;
+}
+
+function createInput(placeholder,type = 'number'){
+    let input = document.createElement('input');
+    input.placeholder = placeholder;
+    input.type = type;
+    input.id = placeholder;
+    return input;
+}
+
+function getProp(alias){
+    zombieType = zombieTypesData.find(z => z.aliases.includes(alias));
+    return zombieType.objdata.Properties.slice(zombieType.objdata.Properties.indexOf('(') + 1, zombieType.objdata.Properties.indexOf('@'));
+}
+
+function createDiv(alias, zombieType, zombieProperty) {
+    zombieProperty.objdata.ConditionImmunities = [];
+
+    //Display zombie's alias
+    let div = document.createElement('div');
+    div.classList.add('filename-container');
+    div.id = 'zombieDiv';
     
-    function createInput(placeholder, type = 'number') {
-        let input = document.createElement('input');
-        input.placeholder = placeholder;
-        input.type = type;
-        input.id = placeholder;
-        return input;
-    }
-    
-    function getProp(alias) {
-        zombieType = zombieTypesData.find(z => z.aliases.includes(alias));
-        return zombieType.objdata.Properties.slice(zombieType.objdata.Properties.indexOf('(') + 1, zombieType.objdata.Properties.indexOf('@'));
-    }
-    
-    function createDiv(alias, zombieType, zombieProperty) {
-        zombieProperty.objdata.ConditionImmunities = [];
-    
-        // Display zombie's alias
-        let div = document.createElement('div');
-        div.classList.add('filename-container');
-        div.id = 'zombieDiv';
-        
-        let zombieName = createText(alias, 'zombieName', 'h1');
-        div.appendChild(zombieName);
-        div.appendChild(document.createElement('br'));
+    let zombieName = createText(alias,'zombieName','h1')
+    div.appendChild(zombieName);
+    div.appendChild(document.createElement('br'));
 
     //Input to change zombie's alias
     div.appendChild(createText('Code Name','codeName',));
@@ -663,7 +650,6 @@ function findValueByKey(lists, keyToFind) {
                     handleAction(div,zombieProperty,i);
                     div.removeChild(document.getElementById(`action${i+1}`));
                     let copyButton = document.getElementById('copyButton');
-                    copyButton.id = "Copy";
                     //yeah i got bored from thinking of variable names so i referenced the id twice
                     if (div.contains(document.getElementById('ogActions'))){
                         div.removeChild(document.getElementById('ogActions'));
@@ -695,7 +681,7 @@ function findValueByKey(lists, keyToFind) {
     buttonCell.style.width = '100%';
     let button = document.createElement('button');
     button.textContent = 'Copy Zombie';
-    button.id = "Copy";
+    button.id = 'Copy'
     button.style.width = '100%';
     button.onclick = function() {
         zombieProperty.objdata.ConditionImmunities = conditionImmunitiesObject;
@@ -715,7 +701,13 @@ function findValueByKey(lists, keyToFind) {
             else pushObject(zombieAction,2)
         }
         let zombieDataString = listOfObjects;
-        navigator.clipboard.writeText(zombieDataString.replace(/\$/g, '')).then(function() {
+        for (let key in zombieDataString){
+            if (zombieDataString[key].includes('$')){
+                console.log('the key has a dollar sign $')
+                zombieDataString[key] = zombieDataString[key].replace('$', '');
+            }
+        }
+        navigator.clipboard.writeText(zombieDataString).then(function() {
         }, function(err) {
             console.error('Could not copy text: ', err);
         });
@@ -728,7 +720,6 @@ function findValueByKey(lists, keyToFind) {
         console.log('Error: Could not find the table container');
     }
     Object.keys(hints).forEach(key => {
-        debugger;
         if (key == 'tomb_raiser'){
             console.log('tomb raiser found');
             return;
@@ -855,6 +846,7 @@ fetchJsonFile('ZOMBIETYPES.json').then(zombieTypes => {
         })
     });
 });
+
 
 
 
