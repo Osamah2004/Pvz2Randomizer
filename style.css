@@ -5,16 +5,7 @@
   font-weight: normal;
   font-style: normal;
 }
-#outline {
-  color: white;
-  /* Text color */
-  text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
-  /* Black outline */
-}
+
 /* Body */
 body {
   background: url('bgA.png') no-repeat center center fixed;
@@ -64,6 +55,21 @@ select option {
   background-color: #282c34;
   color: #5bd8fa;
 }
+/* CSS file or <style> block */
+#Texte {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  padding: 10px;
+}
+
+#Texte > * {
+  display: table-cell;
+  padding: 5px;
+  vertical-align: middle;
+}
+
+
 
 /* Input Fields */
 input[type="text"]:focus, textarea:focus, select:focus {
@@ -84,6 +90,7 @@ button {
   transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
   text-shadow: 1px 1px #000000;
   border: 3px solid white;
+  margin: 10px 10px 10px 10px;
 }
 
 button:hover {
@@ -479,18 +486,19 @@ a:hover {
   transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
 }
 
-/* Hover effect for the 'source' a tag */
+
 #source:hover {
-  background: linear-gradient(to top, #5a5a5a, #7a7a7a); /* Lighter gray on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+  background: linear-gradient(to top, #5a5a5a, #7a7a7a); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
-/* Add an icon or a visual indicator for the source code link */
+
 #source::before {
-  content: '🔗 '; /* Link symbol before the text */
-  font-size: 1.2em; /* Adjust icon size */
+  content: '🔗 '; 
+  font-size: 1.2em; 
 }
-/* Footer */
+
+
 .footer {
   background-color: #1f1f1f4d;
   color: white;
@@ -500,4 +508,3 @@ a:hover {
   bottom: 0;
   width: 100%;
 }
-

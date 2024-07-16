@@ -406,103 +406,114 @@ function findValueByKey(lists, keyToFind) {
         }
     }
     return null; // Key not found
-}
-
-function displayHint(targetText, fileName = targetText) {
-    const elements = document.querySelectorAll('undefined');
-
-console.log(`Current text: ${targetText}`);
-    let target;
-    elements.forEach(element => {
-        if (element.textContent.includes(targetText)) {
-            target = element;
-        }
-    });
-    const button = document.createElement('button');
-    button.textContent = '?';
-    button.style.width = '5%';
-    button.style.position = 'absolute';
-    button.addEventListener('click', () => {
-        // Darken the screen
-        const overlay = document.createElement('div');
-        overlay.style.position = 'fixed';
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.width = '100%';
-        overlay.style.height = '100%';
-        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-        document.body.appendChild(overlay);
-
-
-        const hintText = hints[targetText] || 'No hint available';
-        const imageSrc = `hints/${fileName}.gif`; // Replace with actual image path
-
-        const hintDiv = document.createElement('div');
-        hintDiv.classList.add('filename-container'); // Set div's position to fixed
-        hintDiv.style.position = 'fixed'; // Set div's position to fixed
-        hintDiv.style.top = '50%';
-        hintDiv.style.left = '50%';
-        hintDiv.style.transform = 'translate(-50%, -50%)';
-        hintDiv.style.padding = '20px';
-        hintDiv.style.color = '#000000';
-        hintDiv.innerHTML = `
-            <h3 id='outline'>${hintText}</h3>
-            <img src="${imageSrc}" alt="Hint Image">
-            <br>
-        `;
-        document.body.appendChild(hintDiv);
-
-        // Create a close button
-        const closeButton = document.createElement('button');
-        closeButton.textContent = 'Close';
-        closeButton.addEventListener('click', () => {
-            document.body.removeChild(hintDiv);
-            document.body.removeChild(overlay);
+    }
+    
+    function displayHint(targetText, fileName = targetText) {
+        const elements = document.querySelectorAll('undefined');
+    
+        console.log(`Current text: ${targetText}`);
+        let target;
+        elements.forEach(element => {
+            if (element.textContent.includes(targetText)) {
+                target = element;
+            }
         });
-        hintDiv.appendChild(closeButton);
-    });
-    target.appendChild(button);
-}
-
-function createText(text,id,element){
-    let p;
-    if (element !== undefined){
-        p = document.createElement(element);
-        p.textContent = text
+        if (!target) {
+            console.error('Target element not found');
+            return;
+        }
+    
+        // Ensure target element has relative positioning
+        target.style.position = 'relative';
+    
+        const button = document.createElement('button');
+        button.textContent = '?';
+        button.style.width = '5%';
+        button.id = 'hint';
+        button.style.position = 'absolute';
+        button.style.top = '0'; // Adjust this value as needed
+        button.style.right = '0'; // Align to the right
+        button.style.margin = '5px'; // Add some margin to avoid overlapping
+    
+        button.addEventListener('click', () => {
+            // Darken the screen
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            document.body.appendChild(overlay);
+    
+            const hintText = hints[targetText] || 'No hint available';
+            const imageSrc = `hints/${fileName}.gif`; // Replace with actual image path
+    
+            const hintDiv = document.createElement('div');
+            hintDiv.classList.add('filename-container');
+            hintDiv.style.position = 'fixed';
+            hintDiv.style.top = '50%';
+            hintDiv.style.left = '50%';
+            hintDiv.style.transform = 'translate(-50%, -50%)';
+            hintDiv.style.padding = '20px';
+            hintDiv.style.color = '#000000';
+            hintDiv.innerHTML = `
+                <h3 id='outline'>${hintText}</h3>
+                <img src="${imageSrc}" alt="Hint Image">
+                <br>
+            `;
+            document.body.appendChild(hintDiv);
+    
+            // Create a close button
+            const closeButton = document.createElement('button');
+            closeButton.textContent = 'Close';
+            closeButton.addEventListener('click', () => {
+                document.body.removeChild(hintDiv);
+                document.body.removeChild(overlay);
+            });
+            hintDiv.appendChild(closeButton);
+        });
+        target.appendChild(button);
+    }
+    
+    function createText(text, id, element) {
+        let p;
+        if (element !== undefined) {
+            p = document.createElement(element);
+            p.textContent = text;
+            return p;
+        }
+        text = `${text} : `;
+        p = document.createElement('undefined');
+        p.textContent = text;
+        p.id = "Texte";
         return p;
     }
-    text = `${text} : `
-    ///p = document.createTextNode(text);
-    p = document.createElement('undefined');
-    p.textContent = text;
-    p.id = id;
-    return p;
-}
-
-function createInput(placeholder,type = 'number'){
-    let input = document.createElement('input');
-    input.placeholder = placeholder;
-    input.type = type;
-    input.id = placeholder;
-    return input;
-}
-
-function getProp(alias){
-    zombieType = zombieTypesData.find(z => z.aliases.includes(alias));
-    return zombieType.objdata.Properties.slice(zombieType.objdata.Properties.indexOf('(') + 1, zombieType.objdata.Properties.indexOf('@'));
-}
-
-function createDiv(alias, zombieType, zombieProperty) {
-    zombieProperty.objdata.ConditionImmunities = [];
-
-    //Display zombie's alias
-    let div = document.createElement('div');
-    div.classList.add('filename-container');
-    div.id = 'zombieDiv';
     
-    let zombieName = createText(alias,'zombieName','h1')
-    div.appendChild(zombieName);
-    div.appendChild(document.createElement('br'));
+    function createInput(placeholder, type = 'number') {
+        let input = document.createElement('input');
+        input.placeholder = placeholder;
+        input.type = type;
+        input.id = placeholder;
+        return input;
+    }
+    
+    function getProp(alias) {
+        zombieType = zombieTypesData.find(z => z.aliases.includes(alias));
+        return zombieType.objdata.Properties.slice(zombieType.objdata.Properties.indexOf('(') + 1, zombieType.objdata.Properties.indexOf('@'));
+    }
+    
+    function createDiv(alias, zombieType, zombieProperty) {
+        zombieProperty.objdata.ConditionImmunities = [];
+    
+        // Display zombie's alias
+        let div = document.createElement('div');
+        div.classList.add('filename-container');
+        div.id = 'zombieDiv';
+        
+        let zombieName = createText(alias, 'zombieName', 'h1');
+        div.appendChild(zombieName);
+        div.appendChild(document.createElement('br'));
 
     //Input to change zombie's alias
     div.appendChild(createText('Code Name','codeName',));
@@ -844,7 +855,6 @@ fetchJsonFile('ZOMBIETYPES.json').then(zombieTypes => {
         })
     });
 });
-
 
 
 
