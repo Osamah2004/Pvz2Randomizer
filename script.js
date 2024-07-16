@@ -715,7 +715,7 @@ function findValueByKey(lists, keyToFind) {
             else pushObject(zombieAction,2)
         }
         let zombieDataString = listOfObjects;
-        navigator.clipboard.writeText(zombieDataString).then(function() {
+        navigator.clipboard.writeText(zombieDataString.replace(/\$/g, '')).then(function() {
         }, function(err) {
             console.error('Could not copy text: ', err);
         });
