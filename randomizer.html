@@ -10,7 +10,7 @@
 
 <body>
     <div class="filename-container">
-        <p> Options :</p>
+        <label> Options :</label>
         <select onchange="setMod(modOption.value)" name="mod" id="modOption">
             <option value="vnl">VNL</option>
             <option value="rfl">RFL</option>
@@ -23,7 +23,7 @@
     <select id="stage"></select>
 </div>
 <div class="filename-container">
-    <button id="buttonA" onclick="copyCode()">Copy</button><p> or </p>
+    <button id="Copy" onclick="copyCode()">Copy</button><p> or </p>
     <button id="buttonA" onclick="startDownload()">Download</button>
 </div>
 
@@ -188,13 +188,16 @@
             basics = ['cowboy'];
         }
 
-        pool.push(choice(basics));
-        pool.push(choice(basics) + '_armor1');
-        pool.push(choice(basics) + '_armor2');
         if (mod == 'vnl') {
-            pool.push(choice(validArmor4) + '_armor4')
+            pool.unshift(choice(validArmor4) + '_armor4')
         }
-        else pool.push(choice(basics) + '_armor4');
+        else pool.unshift(choice(basics) + '_armor4');
+        pool.unshift(choice(basics) + '_armor2');
+        pool.unshift(choice(basics) + '_armor1');
+        pool.unshift(choice(basics));
+        if (pool[0] == 'summer'){
+            pool[0] = 'summer_basic';
+        }
 
 
 
@@ -244,6 +247,7 @@
             for (let i = 1; i < total + 1; i++) {
                 if (nonAmbush.includes(stage)) { waveOfEmptyWaves.push(emptyWave); continue; }
                 if (i % interval == 0) {
+                    debugger;
                     waveOfEmptyWaves.push([rtid(`wave${i}ambush`, '.')]);
                     ambush(i);
                     if (['Dark', 'Iceage'].includes(stage)) { waveOfEmptyWaves[i - 1].push(rtid(`wave${i}ambushExtra`, '.')) }
@@ -827,7 +831,6 @@
                     raidingParty(wave, violence);
                     break;
                 case 'Future':
-                    break;
                 case 'LostCity':
                     rain(wave, violence);
                     break;
