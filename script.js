@@ -638,7 +638,7 @@ function findValueByKey(lists, keyToFind) {
     
     propsInput.value = getProp(alias);
     propsInput.onchange = function() {
-        zombieType.objdata.Properties = rtid(inputProps.value,zombieProperty.aliases);
+        zombieType.objdata.Properties = rtid(propsInput.value,zombieProperty.aliases);
     };
     div.appendChild(propsInput);
     div.appendChild(document.createElement('br'));
