@@ -423,22 +423,20 @@ function rtid(value,object2){
 }
 
 let zombieAction;
-function handleAction(table,zombieProperty,index = 0){
+function handleAction(div,zombieProperty,index = 0){
     listOfObjects = new Array(2 + zombieProperty.objdata.Actions.length);
     let actionTr = document.createElement('tr');
-    let actionTh = document.createElement('th');
     let actionAlias = zombieProperty.objdata.Actions[index];
     zombieAction = zombieActionsData.find(p => p.aliases.includes(actionAlias.slice(actionAlias.indexOf('(') + 1,actionAlias.indexOf('@'))));
-    actionTh.textContent = zombieAction.aliases[0];
-    actionTh.colSpan = 2;
-    actionTr.appendChild(actionTh);
+    let aliasText = createText(zombieAction.aliases[0],'actionalias','h1');
+    actionTr.appendChild(aliasText);
     let inputRow = document.createElement('tr');
-    let inputLabel = document.createElement('td');
-    inputLabel.textContent = 'Action alias';
+    let inputLabel = createText(zombieAction.aliases[0], 'actionalias');
+    inputLabel.textContent = 'Action alias :';
     let inputContainer = document.createElement('td');
     let inputField = document.createElement('input');
     inputField.onchange = function() {
-        actionTh.textContent = inputField.value;
+        aliasText.textContent = inputField.value;
         if (zombieProperty.objclass === 'ZombieCarnieMagicianProps') {
             zombieProperty.objdata.Actions[index] = rtid(inputField.value, magicianObjects[index].aliases);
         }
@@ -448,12 +446,14 @@ function handleAction(table,zombieProperty,index = 0){
     inputContainer.appendChild(inputField);
     inputRow.appendChild(inputLabel);
     inputRow.appendChild(inputContainer);
-    table.appendChild(actionTr);
-    table.appendChild(inputRow);
+    div.appendChild(aliasText);
+    div.appendChild(document.createElement('br'));
+    div.appendChild(inputLabel);
+    div.appendChild(inputField);
     if (zombieProperty.objclass === 'ZombieCarnieMagicianProps'){
-        objdataHandling(magicianObjects[index].objdata, table);
+        objdataHandling(magicianObjects[index].objdata, div);
     }
-    else objdataHandling(zombieAction.objdata,table);
+    else objdataHandling(zombieAction.objdata,div);
 }
 
 function createCell(cellType,cellComponent){
@@ -718,6 +718,7 @@ function findValueByKey(lists, keyToFind) {
         //(zombieType.objdata.Properties.slice(zombieType.objdata.Properties.indexOf('(') + 1, zombieType.objdata.Properties.indexOf('@'))));
         let len = zombieProperty.objdata.Actions.length;
         if (len === 3){
+            let magicianTable = document.createElement('table');
             let massiveList = [];
             zombieActionsData.forEach(object => {
                 if (object.aliases[0] == "ZombieDarkWizardZap" || object.aliases[0].includes("Caesar")){
@@ -767,18 +768,16 @@ function findValueByKey(lists, keyToFind) {
                     let temp = zombieActionsData.find(p => p.aliases.includes(actionAlias[i].slice(actionAlias[i].indexOf('(') + 1,actionAlias[i].indexOf('@'))));
                     magicianObjects[i] = temp;
                     handleAction(div,zombieProperty,i);
-                    div.removeChild(document.getElementById(`action${i+1}`));
-                    let copyButton = document.getElementById('copyButton');
-                    copyButton.id = "Copy";
-                    //yeah i got bored from thinking of variable names so i referenced the id twice
-                    if (div.contains(document.getElementById('ogActions'))){
-                        div.removeChild(document.getElementById('ogActions'));
+                    magicianTable.removeChild(document.getElementById(`action${i+1}`));
+                    let copyButton = document.getElementById('Copy');
+                    if (magicianTable.contains(document.getElementById('ogActions'))){
+                        magicianTable.removeChild(document.getElementById('ogActions'));
                     }
                     div.appendChild(copyButton);
                 }
                 magicianTd.appendChild(select);
                 magicianRow.appendChild(magicianTd);
-                div.appendChild(magicianRow);
+                magicianTable.appendChild(magicianRow);
             }
             let button = document.createElement('button');
             button.textContent = 'Original magician actions';
@@ -787,7 +786,9 @@ function findValueByKey(lists, keyToFind) {
             let buttonRow = createCell('td',button);
             buttonRow.id = 'ogActions';
             buttonRow.colSpan = 2;
-            div.appendChild(buttonRow);
+            magicianTable.appendChild(buttonRow);
+            magicianTable.id = 'magician table';
+            div.appendChild(magicianTable);
         }
         else {
             handleAction(div,zombieProperty);
@@ -966,6 +967,5 @@ fetchJsonFile('ZOMBIETYPES.json').then(zombieTypes => {
         })
     });
 });
-
 
 
