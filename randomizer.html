@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <div class="filename-container">
+    <div id="snackbar">Some text some message..</div>
+    <div id="div1" class="filename-container">
         <label> Options :</label>
         <select onchange="setMod(modOption.value)" name="mod" id="modOption">
             <option value="vnl">VNL</option>
@@ -21,6 +22,9 @@
     .json<br>
     <label>Stage: </label>
     <select id="stage"></select>
+    <label>Custom list: </label>
+    <input type="checkbox" onclick="customList()" id="customList">
+    <br>
 </div>
 <div class="filename-container">
     <button id="Copy" onclick="copyCode()">Copy</button><p> or </p>
@@ -30,12 +34,21 @@
     <h4><a id="home" href="index.html">Home page</a></h4>
     <script>
 
+        function snackbar(text){
+            var x = document.getElementById("snackbar")
+            x.textContent = text;
+            // Add the "show" class to DIV
+            x.className = "show";
+
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function () { x.className = x.className.replace("show", ""); reload();}, 3000);
+        }
+
 
         function copyCode() {
             const text = JSON.stringify(level, null, 2); // Converts the object to a formatted JSON string
             navigator.clipboard.writeText(text);
-            alert("Level generated, press ok to copy.");
-            reload();
+            snackbar("Level code copied.");
         }
 
         function startDownload() {
@@ -67,8 +80,7 @@
             // Remove the link from the body
             document.body.removeChild(link);
 
-            alert("Level downloaded.")
-            reload();
+            snackbar('Level downloaded.')
 
 
         }
@@ -127,8 +139,21 @@
                 "eighties_boombox", "dino_bully", "modern_newspaper", "modern_balloon", "modern_allstar",
                 "prospector", "west_bull", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack",
             ];
+        function createOptions(arr) {
+                const selectElement = document.createElement('select');
+
+                arr.forEach((value) => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = value;
+                    optionElement.textContent = value;
+                    selectElement.appendChild(optionElement);
+                });
+
+                return selectElement;
+            }
+
         specials.push(...extraSpecials());
-        let basics = ["tutorial", "mummy", "pirate", "cowboy", "future", "dark", "beach", "iceage", "lostcity", "eighties", "dino"];
+        let basics = ["tutorial", "mummy", "pirate", "cowboy", "future", "dark", "beach", "iceage", "lostcity", "eighties", "dino", "summer"];
         let validArmor4 = ["tutorial", "mummy", "pirate", "cowboy", "future", "dino"]
         let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran"];
         let stage = ["Egypt", "Pirate", "West", "Future", "Dark", "Beach", "Iceage", "LostCity", "Eighties", "Dino"];
@@ -195,6 +220,79 @@
         pool.unshift(choice(basics) + '_armor2');
         pool.unshift(choice(basics) + '_armor1');
         pool.unshift(choice(basics));
+        if (pool[0] == 'summer'){
+            pool[0] = 'summer_basic';
+        }
+        let basicPool = pool.toSpliced(4,pool.length);
+        basicPool[0] = rtid(basicPool[0],'ZombieTypes')
+        basicPool[1] = rtid(basicPool[1],'ZombieTypes')
+        basicPool[2] = rtid(basicPool[2],'ZombieTypes')
+        basicPool[3] = rtid(basicPool[3],'ZombieTypes')
+        let table = document.createElement('table');
+        table.style.width = '50%';
+        table.style.margin = '0 auto'; // Center horizontally
+        function addRow(cellType, text) {
+            let row = document.createElement('tr'); // Create a new row
+            let cell = document.createElement(cellType); // Create a new cell
+            cell.textContent = text; // Set the cell's text content
+            row.appendChild(cell); // Append the cell to the row
+            table.appendChild(row); // Append the row to the table
+        }
+
+
+
+        function customList() {
+            let levelPool = level.objects[3].objdata.ZombiePool;
+            levelPool = [];
+            levelPool.push(...basicPool);
+            let div1 = document.getElementById('div1');
+            if (document.getElementById('customList').checked == false) {
+                div1.removeChild(document.getElementById('selectTag'));
+                table.innerHTML = '';
+                div1.removeChild(table);
+                levelPool.push(...sample(specials, randint(2, 4)));
+                if (stage == 'Pirate'){
+                    levelPool.push(...sample(flyingUnits,randint(1,3)))
+                }
+                for (let i = 0; i < levelPool.length; i++) {
+                    levelPool[i] = rtid(levelPool[i], 'ZombieTypes');
+                }
+                level.objects[3].objdata.ZombiePool = levelPool;
+                return;
+            }
+            let select = createOptions(specials);
+            select.id = 'selectTag';
+            let option = document.createElement('option');
+            option.value = "";
+            option.textContent = "-";
+            option.defaultSelected = true; // Default selected
+            option.hidden = true; // Hidden
+            select.insertBefore(option, select.firstChild);
+            select.oninput = function () {
+                addRow('td',select.value);
+                switch (select.value) {
+                    case 'piano':
+                        levelPool[0] = rtid('cowboy','zombieTypes')
+                        levelPool[1] = rtid('cowboy_armor1','zombieTypes')
+                        levelPool[2] = rtid('cowboy_armor2','zombieTypes')
+                        levelPool[3] = rtid('cowboy_armor4','zombieTypes')
+                        break;
+                    case 'dark_king':
+                        levelPool[0] = rtid('dark', 'zombieTypes')
+                        levelPool[1] = rtid('dark_armor1', 'zombieTypes')
+                        levelPool[2] = rtid('dark_armor2', 'zombieTypes')
+                        levelPool[3] = rtid('dark_armor3', 'zombieTypes')
+                        break;
+                    default:
+                        break;
+                }
+                levelPool.push(rtid(select.value,'ZombieTypes'));
+                level.objects[3].objdata.ZombiePool = levelPool;
+            }
+        //let basicPool = pool.toSpliced(4,pool.length);
+            div1.appendChild(select);
+            div1.appendChild(table);
+        }
 
 
         function choice(arr) {
@@ -236,12 +334,12 @@
         let nonAmbush = ['West','Summer']
 
         function waveArray() {
+            debugger;
             let emptyWave = [];
             let waveOfEmptyWaves = [];
             for (let i = 1; i < total + 1; i++) {
                 if (nonAmbush.includes(stage)) { waveOfEmptyWaves.push(emptyWave); continue; }
                 if (i % interval == 0) {
-                    debugger;
                     waveOfEmptyWaves.push([rtid(`wave${i}ambush`, '.')]);
                     ambush(i);
                     if (['Dark', 'Iceage'].includes(stage)) { waveOfEmptyWaves[i - 1].push(rtid(`wave${i}ambushExtra`, '.')) }
@@ -262,6 +360,7 @@
                 case 1: k = randint(1, 2); break;
                 case 2: k = randint(2, 3); break;
                 case 3: k = randint(3, 5); break;
+                case 4: k = 5; break;
             }
             let dinos = sample(["raptor", "ptero", "stego", "tyranno", "ankylo"], k);
 
@@ -760,10 +859,9 @@
             let objdata = new Object();
             objdata.ColumnStart = start;
             objdata.ColumnEnd = end;
-            objdata.GroupSize = 1;
             objdata.SpiderCount = num;
             objdata.TimeBetweenGroups = `${time}`;
-            objdata.ZombieFallTime = '6';
+            objdata.ZombieFallTime = `${time}`;
             objdata.SpiderZombieName = name;
             objdata.WaveStartMessage = message;
             append0(objdata, objclass, `wave${wave}ambush`);
