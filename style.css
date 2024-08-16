@@ -452,9 +452,12 @@ tr:hover {
   border: 2px solid #e3ad7c;
   max-height: 150px;
   overflow-y: auto;
-  padding: 10px 10px 10px 10px;
-  color: #ffffff;
+  padding: 10px;
+  color: #000; /* Change text color to ensure readability */
+  display: none; /* Initially hidden */
+  width: 200px; /* Match the width of the input field */
 }
+
 
 .object-data-div {
   background-color: #713c24;

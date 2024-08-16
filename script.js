@@ -10,7 +10,6 @@ let searchArray = [];
 let table = document.createElement('table');
 table.id = 'zombieDiv'; // Add an id to the table
 
-
 function adjustResultsWidth() {
     let search = document.getElementById('search');
     let results = document.getElementById('results');
@@ -21,18 +20,18 @@ function adjustResultsWidth() {
     // Add an event listener to adjust the width of the results div whenever the window is resized
     window.addEventListener('resize', function() {
         results.style.width = window.getComputedStyle(search).width;
-        });
-        }
-        
-const inputElement = document.querySelector('input'); // Replace with your actual input element
+    });
+}
+
+const inputElement = document.getElementById('search'); // Ensure this targets your input element
 inputElement.addEventListener('keyup', function(event) {
     if (event.key === 'Escape') {
-        // Call your hideResults() function here
         hideResults();
     }
 });
 
 let resultsDiv = document.getElementById('results');
+
 function hideResults() {
     resultsDiv.style.display = 'none';
 }
@@ -52,9 +51,6 @@ function handleClick(alias, resultsDiv, zombieTypesData, zombiePropertiesObjects
     createDiv(alias, zombieType, zombieProperty);
 }
 
-
-
-        
 function showResults() {
     let resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = ''; // Clear previous results
@@ -81,7 +77,6 @@ function showResults() {
 function searchAliases() {
     let input = document.getElementById('search').value.toLowerCase();
     let resultsDiv = document.getElementById('results');
-    resultsDiv.focus();
 
     // Clear previous results
     resultsDiv.innerHTML = '';
@@ -93,7 +88,6 @@ function searchAliases() {
             let a = document.createElement('a');
             a.textContent = alias;
             a.href = '#'; // Prevent the page from refreshing when the link is clicked
-            // Modify the onclick function in showResults
             a.onclick = function() {
                 handleClick(alias, resultsDiv, zombieTypesData, zombiePropertiesObjectsData);
                 return false; // Prevent the default action
