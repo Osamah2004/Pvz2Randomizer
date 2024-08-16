@@ -599,3 +599,45 @@ a:hover {
   bottom: 0;
   width: 100%;
 }
+#ref {
+  background: linear-gradient(to top, #493464, #7453c5);
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: 'PvZ2Regular', sans-serif;
+  color: whitesmoke;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  text-shadow: 1px 1px #000000;
+  border: 3px solid white;
+  margin-right: 10px;
+}
+
+#new {
+  background: linear-gradient(to top, #346434, #77c553);
+  margin-right: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: 'PvZ2Regular', sans-serif;
+  color: whitesmoke;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  text-shadow: 1px 1px #000000;
+  border: 3px solid white;
+  margin-right: 10px;
+}
+#newer {
+  background: linear-gradient(to top, #603464, #b253c5);
+  margin-right: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: 'PvZ2Regular', sans-serif;
+  color: whitesmoke;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  text-shadow: 1px 1px #000000;
+  border: 3px solid white;
+  margin-right: 10px;
+}
