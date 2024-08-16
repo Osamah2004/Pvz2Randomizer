@@ -595,10 +595,37 @@ a:hover {
   color: white;
   text-align: center;
   padding: 10px 0;
-  position: absolute;
-  bottom: 0;
+  position: relative; /* Change to relative to avoid overlap issues */
   width: 100%;
 }
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 15px 10px; /* Increase padding for better touch experience */
+    font-size: 14px; /* Slightly reduce font size for mobile */
+  }
+}
+
+.nav-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Adjust this to your preference */
+    background-color: #00000054; /* Optional: Adjust the background color */
+    padding: 10px; /* Optional: Add padding */
+}
+
+nav a {
+    flex: 1 1 auto; /* Flex properties to distribute links evenly */
+    text-align: center;
+    margin: 5px;
+    text-decoration: none;
+}
+
 #ref {
   background: linear-gradient(to top, #493464, #7453c5);
   padding: 10px 20px;
@@ -615,7 +642,6 @@ a:hover {
 
 #new {
   background: linear-gradient(to top, #346434, #77c553);
-  margin-right: 10px;
   padding: 10px 20px;
   font-size: 16px;
   font-family: 'PvZ2Regular', sans-serif;
@@ -627,9 +653,9 @@ a:hover {
   border: 3px solid white;
   margin-right: 10px;
 }
+
 #newer {
   background: linear-gradient(to top, #603464, #b253c5);
-  margin-right: 10px;
   padding: 10px 20px;
   font-size: 16px;
   font-family: 'PvZ2Regular', sans-serif;
@@ -640,4 +666,17 @@ a:hover {
   text-shadow: 1px 1px #000000;
   border: 3px solid white;
   margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    nav a {
+        flex-basis: 100%; /* Each link will take up the full width */
+        margin: 5px 0; /* Adjust margins for better spacing */
+    }
+
+    #ref, #new, #newer {
+        margin-right: 0; /* Remove right margin for better fit on small screens */
+        padding: 8px 15px; /* Adjust padding for smaller screens */
+        font-size: 14px; /* Slightly smaller font size for mobile */
+    }
 }
