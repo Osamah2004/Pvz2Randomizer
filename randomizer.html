@@ -34,35 +34,23 @@
             <option value="3">Normal</option>
             <option value="5">Inzane</option>
             <option value="6">CRAAAZY!</option>
-            <option value="60">Johan 💀 (do not try)</option>
+            <option value="60">Johan :skull: (do not try )</option>
         </select>
     </div><br>
-
-    <div class="filename-container">
-        <button id="Copy" onclick="copyCode()">Copy</button><p> or </p>
-        <button id="buttonA" onclick="startDownload()">Download</button>
-    </div>
+</div>
+<div class="filename-container">
+    <button id="Copy" onclick="copyCode()">Copy</button><p> or </p>
+    <button id="buttonA" onclick="startDownload()">Download</button>
+</div>
 
     <h4><a id="home" href="index.html">Home page</a></h4>
-
     <script>
-        // Function to update difficulty and reload the page
         function updateDifficultyText(value) {
-            localStorage.setItem('difficulty', value);
-            location.reload();
+            // Convert the selected value to a number
+            let numericValue = Number(value);
+            difficulty = numericValue;
         }
-
-        // Function to initialize difficulty on page load
-        function initializeDifficulty() {
-            let storedDifficulty = localStorage.getItem('difficulty');
-            if (storedDifficulty) {
-                document.getElementById('difficulty').value = storedDifficulty;
-            }
-        }
-
-        // Call initializeDifficulty when the page loads
-        window.onload = initializeDifficulty;
-
+        let difficulty = 30; 
 
         function snackbar(text){
             var x = document.getElementById("snackbar")
@@ -319,9 +307,7 @@
 
         // Special logic for difficulty higher than 40
         console.log(difficulty)
-        console.log(difficulty > 40)
         if (difficulty > 40) {
-            let randomChance = randint(1, 100);  // Random chance from 1 to 100
             pool.push("hero_zmech")
             if (randomChance <= 50) {  // 50% chance to use the miniboss pool
                 pool = minibossPool;
