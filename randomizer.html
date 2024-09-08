@@ -18,40 +18,51 @@
             <option value="rfl">RFL</option>
         </select>
 
-    <label>Filename: </label><select id="filename"></select>
-    <input style="width: 40px;" value="1" type="number" min="1" max="40" id="levelnum">
-    .json<br>
-    <label>Stage: </label>
-    <select id="stage"></select>
-    <label>Custom list: </label>
-    <input type="checkbox" onclick="customList()" id="customList">
-    <br>
-    <h2>Select Difficulty</h2>
-    <div class="select-container">
-        <label for="difficulty">Difficulty Level:</label>
-        <select id="difficulty" name="difficulty" onchange="updateDifficultyText(this.value)">
-            <option value="1">Easy</option>
-            <option value="3">Normal</option>
-            <option value="5">Inzane</option>
-            <option value="6">CRAAAZY!</option>
-            <option value="60">Johan :skull: (do not try )</option>
-        </select>
-    </div><br>
-</div>
-<div class="filename-container">
-    <button id="Copy" onclick="copyCode()">Copy</button><p> or </p>
-    <button id="buttonA" onclick="startDownload()">Download</button>
-</div>
+        <label>Filename: </label><select id="filename"></select>
+        <input style="width: 40px;" value="1" type="number" min="1" max="40" id="levelnum">
+        .json<br>
+        <label>Stage: </label>
+        <select id="stage"></select>
+        <label>Custom list: </label>
+        <input type="checkbox" onclick="customList()" id="customList">
+        <br>
+        <h2>Select Difficulty</h2>
+        <div class="select-container">
+            <label for="difficulty">Difficulty Level:</label>
+            <select id="difficulty" name="difficulty" onchange="updateDifficultyText(this.value)">
+                <option hidden defaultSelected>-</option>
+                <option value="1">Easy</option>
+                <option value="2">Normal</option>
+                <option value="3">Inzane</option>
+                <option value="4">CRAAAZY!</option>
+                <option value="50">Johan</option>
+            </select>
+        </div><br>
+    </div>
+    <div class="filename-container">
+        <button id="Copy" onclick="copyCode()">Copy</button>
+        <p> or </p>
+        <button id="buttonA" onclick="startDownload()">Download</button>
+    </div>
 
     <h4><a id="home" href="index.html">Home page</a></h4>
     <script>
-        function updateDifficultyText(value) {
-            // Convert the selected value to a number
-            let numericValue = Number(value);
-            difficulty = numericValue;
+        let difficulty = localStorage.getItem('difficulty');
+        let difficultyText = document.getElementById("difficulty").options[document.getElementById("difficulty").selectedIndex].text;
+        if (localStorage.getItem('difficulty') != null){
+            document.getElementById('difficulty').selectedIndex = localStorage.getItem('difficulty')
         }
-        let difficulty = 30; 
+        function updateDifficultyText(value){
+            localStorage.setItem('difficulty',value);
+            reload();
+        }
+        console.log(difficulty)
 
+        function copyCode() {
+            const text = JSON.stringify(level, null, 2); // Converts the object to a formatted JSON string
+            navigator.clipboard.writeText(text);
+            snackbar("Level code copied.");
+        }
         function snackbar(text){
             var x = document.getElementById("snackbar")
             x.textContent = text;
@@ -60,13 +71,6 @@
 
             // After 3 seconds, remove the show class from DIV
             setTimeout(function () { x.className = x.className.replace("show", ""); reload();}, 3000);
-        }
-
-
-        function copyCode() {
-            const text = JSON.stringify(level, null, 2); // Converts the object to a formatted JSON string
-            navigator.clipboard.writeText(text);
-            snackbar("Level code copied.");
         }
 
         function startDownload() {
@@ -104,7 +108,7 @@
 
         }
 
-        
+
         let mod = localStorage.getItem('mod');
         if (mod == null) { mod = 'vnl' }
         document.getElementById('modOption').value = mod;
@@ -118,27 +122,32 @@
             return `RTID(${str}@${module})`;
         }
 
-        let difficultyText = document.getElementById("difficulty").value;
-        
-        let interval = Math.min(10,randint(8,2 * difficulty));
-        let flags = Math.min(6,randint(difficulty-1,2*difficulty));
+
+        let interval = Math.min(10, randint(8, 2 * difficulty));
+        let minWaves = 3;
+        let maxWaves = 6;
+
+        // Formula to calculate flags based on difficulty
+        let flags = Math.min(maxWaves, minWaves + Math.floor(difficulty * Math.random()));
+
+        // Calculate the total based on interval and flags
         let total = interval * flags;
 
         function extraSpecials() {
             switch (mod) {
                 case 'rfl':
                     return [
-                    "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus","beach_snorkel",
-                    "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite","beach_surfer",
-                    "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser",
-                    "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler","zcorp_racer_chair","zcorp_consultant",
-                    "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1",
-                    "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter","iceage_dodo_veteran","iceage_hunter_veteran",
-                    "eighties_arcade","eighties_arcade_basic","iceage_weaselhoarder_veteran","iceage_chief","iceage_chief_veteran",
-                    "eighties_boombox", "dino_bully","dino_bully_veteran","dino_bully_blue","dino_pterry","iceage_troglobite_basic", "modern_newspaper", "modern_balloon", "modern_allstar",
-                    "prospector", "west_bull","west_bull_veteran", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack","future_jetpack_disco","dark_explorer","explorer_veteran",
-                    "lostcity_explorer","barrelroller_explosive","ghost_scare","halloween_ghost","halloween_crow","future_protector_generator","general_treadmill_phase2","steam_repairimp","steam_inventor","steam_gentleman","steam_mechanic",
-                    "egypt_gargantuar","cowboy_gargantuar","future_gargantuar","dark_gargantuar","beach_gargantuar","iceage_gargantuar","lostcity_gargantuar","dino_gargantuar","tutorial_gargantuar","summer_gargantuar","steam_gargantuar"
+                        "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel",
+                        "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer",
+                        "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser",
+                        "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler", "zcorp_racer_chair", "zcorp_consultant",
+                        "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1",
+                        "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter", "iceage_dodo_veteran", "iceage_hunter_veteran",
+                        "eighties_arcade", "eighties_arcade_basic", "iceage_weaselhoarder_veteran", "iceage_chief", "iceage_chief_veteran",
+                        "eighties_boombox", "dino_bully", "dino_bully_veteran", "dino_bully_blue", "dino_pterry", "iceage_troglobite_basic", "modern_newspaper", "modern_balloon", "modern_allstar",
+                        "prospector", "west_bull", "west_bull_veteran", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack", "future_jetpack_disco", "dark_explorer", "explorer_veteran",
+                        "lostcity_explorer", "barrelroller_explosive", "ghost_scare", "halloween_ghost", "halloween_crow", "future_protector_generator", "general_treadmill_phase2", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic",
+                        "egypt_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar"
                     ];
                     break;
                 default:
@@ -147,33 +156,33 @@
             }
         }
 
-        function extraStages(){
+        function extraStages() {
             switch (mod) {
                 case 'rfl':
                     return ['Summer'];
                     break;
-            
+
                 default:
                     return [];
                     break;
             }
         }
         let specials = []
-        switch(mod) {
+        switch (mod) {
             case 'rfl':
                 specials = [
-                    "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus","beach_snorkel",
-                    "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite","beach_surfer",
-                    "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser","pumpkin_scarecrow",
-                    "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler","zcorp_racer_chair","zcorp_consultant",
-                    "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1",
-                    "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter","iceage_dodo_veteran","iceage_hunter_veteran",
-                    "eighties_arcade","eighties_arcade_basic","iceage_weaselhoarder_veteran","iceage_chief","iceage_chief_veteran",
-                    "eighties_boombox", "dino_bully","dino_bully_veteran","dino_bully_blue","dino_pterry","iceage_troglobite_basic", "modern_newspaper", "modern_balloon", "modern_allstar",
-                    "prospector", "west_bull","west_bull_veteran", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack","future_jetpack_disco","dark_explorer","explorer_veteran",
-                    "lostcity_explorer","barrelroller_explosive","ghost_scare","halloween_ghost","halloween_crow","future_protector_generator","general_treadmill_phase2","steam_repairimp","steam_inventor","steam_gentleman","steam_mechanic"
+                    "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel","roman_medusa","steam_furnace",
+                    "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer","roman_healer","roman_shield_pair",
+                    "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser", "pumpkin_scarecrow","roman_shield_pair",
+                    "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler", "zcorp_racer_chair", "zcorp_consultant",
+                    "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1","roman_ballista",
+                    "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter", "iceage_dodo_veteran", "iceage_hunter_veteran",
+                    "eighties_arcade", "eighties_arcade_basic", "iceage_weaselhoarder_veteran", "iceage_chief", "iceage_chief_veteran",
+                    "eighties_boombox", "dino_bully", "dino_bully_veteran", "dino_bully_blue", "dino_pterry", "iceage_troglobite_basic", "modern_newspaper", "modern_balloon", "modern_allstar",
+                    "prospector", "west_bull", "west_bull_veteran", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack", "future_jetpack_disco", "dark_explorer", "explorer_veteran",
+                    "lostcity_explorer", "barrelroller_explosive", "ghost_scare", "halloween_ghost", "halloween_crow", "future_protector_generator", "general_treadmill_phase2", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic"
                 ];
-                default:
+            default:
                 specials = [
                     "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus",
                     "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite",
@@ -182,29 +191,29 @@
                     "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1",
                     "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter",
                     "eighties_boombox", "dino_bully", "modern_newspaper", "modern_balloon", "modern_allstar",
-                    "prospector", "west_bull", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack","future_jetpack_disco"
+                    "prospector", "west_bull", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack", "future_jetpack_disco"
                 ];
         }
         function createOptions(arr) {
-                const selectElement = document.createElement('select');
+            const selectElement = document.createElement('select');
 
-                arr.forEach((value) => {
-                    const optionElement = document.createElement('option');
-                    optionElement.value = value;
-                    optionElement.textContent = value;
-                    selectElement.appendChild(optionElement);
-                });
+            arr.forEach((value) => {
+                const optionElement = document.createElement('option');
+                optionElement.value = value;
+                optionElement.textContent = value;
+                selectElement.appendChild(optionElement);
+            });
 
-                return selectElement;
-            }
+            return selectElement;
+        }
 
         specials.push(...extraSpecials());
-        let basics = ["tutorial", "mummy", "pirate", "cowboy", "future", "dark", "beach","beach_fem", "iceage", "lostcity", "eighties", "dino", "summer","zcorp","zcorp_fem","zcorp","zcorp_fem","zcorp","zcorp_fem","zcorp","zcorp_fem","zcorp","zcorp_fem","steam_miner","steam"];
-        let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp","steam_imp"];
-        let gargs = ["egypt_gargantuar","cowboy_gargantuar","future_gargantuar","dark_gargantuar","beach_gargantuar","iceage_gargantuar","lostcity_gargantuar","dino_gargantuar","tutorial_gargantuar","summer_gargantuar","steam_gargantuar"]
-        let validArmor4 = ["tutorial", "mummy", "pirate", "cowboy", "future", "dino","dark"]
-        let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran","spongebob_vi","spongebob_vi_armor1","spongebob_vi_armor2","seagull","steam_inventor"];
-        let stage = ["Modern","Egypt", "Pirate", "West", "Future", "Dark", "Beach", "Iceage", "LostCity", "Eighties", "Dino"];
+        let basics = ["tutorial","carnie","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", "steam_miner", "steam","hero"];
+        let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp","zcorp_imp","zcorp_imp"];
+        let gargs = ["egypt_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar","zcorp_gargantuar","zcorp_gargantuar",,"zcorp_gargantuar",,"zcorp_gargantuar","zcorp_gargantuar"]
+        let validArmor4 = ["tutorial", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
+        let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran", "spongebob_vi", "spongebob_vi_armor1", "spongebob_vi_armor2", "seagull", "steam_inventor"];
+        let stage = ["Modern", "Egypt", "Pirate", "West", "Future", "Dark", "Beach", "Iceage", "LostCity", "Eighties", "Dino"];
         stage.push(...extraStages());
         let stageBtn = localStorage.getItem('selectedStage');
 
@@ -226,8 +235,6 @@
             return array;
         }
 
-
-        linearSearchAndRemove(stage, 'Eighties')
 
 
         stage.unshift('random');
@@ -260,16 +267,17 @@
         } else if (difficulty <= 6) { // Insane difficulty (4-6)
             maxSpecials = randint(25, 35);  // 25-35 specials
         } else if (difficulty <= 9) { // Crazy difficulty (7-9)
-            maxSpecials = randint(45, 60);  // 50-70 specials
+            maxSpecials = randint(45, 60);  
         } else { // Johan difficulty (10+)
-            maxSpecials = randint(80,specials.length);  // No limit (all specials)
+            maxSpecials = randint(80, specials.length);  // No limit (all specials)
         }
 
         console.log("Max Specials:", maxSpecials);  // Debugging output
 
         // Scale the number of specials to pick based on difficulty, capped by maxSpecials
         let numSpecials = Math.min(randint(1, difficulty * 5), maxSpecials);
-        console.log("Number of Specials to Pick:", numSpecials);  // Debugging output
+        console.log("Number of Specials to Pick:", numSpecials);
+        // Debugging output
 
         // Select the actual specials based on the final number
         let pool = sample(specials, numSpecials);
@@ -298,7 +306,6 @@
             "hero_rustbolt",
             "hero_superbrainz",
             "hero_weaselhoarder",
-            "hero_weasel",
             "galaxy_dodo",
             "hero_barrelroller",
             "hero_barrel",
@@ -306,10 +313,10 @@
         ];
 
         // Special logic for difficulty higher than 40
-        console.log(difficulty)
+        
         if (difficulty > 40) {
-            pool.push("hero_zmech")
-            if (randomChance <= 50) {  // 50% chance to use the miniboss pool
+            pool.push("hero_zmech");
+            if (Math.random()*10 <= 50) {  // 50% chance to use the miniboss pool
                 pool = minibossPool;
             }
         }
@@ -323,7 +330,7 @@
 
         // Check if the stage is 'Beach'
         if (stage == 'Beach') {
-            basics = ['beach','beach_fem'];
+            basics = ['beach', 'beach_fem'];
             pool.push("beach_snorkel");
 
             // 50% chance to add "beach_fisherman"
@@ -340,12 +347,12 @@
                 }
                 return item;
             });
-        if (stage == 'Dino') {
-            basics = ['dino'];
-            if (Math.random() < 0.5) {
-                pool.push("dino_imp");
+            if (stage == 'Dino') {
+                basics = ['dino'];
+                if (Math.random() < 0.5) {
+                    pool.push("dino_imp");
+                }
             }
-        }
         } else if (pool.includes("piano")) {
             basics = ['cowboy'];
         }
@@ -365,14 +372,17 @@
         pool.unshift(choice(basics) + '_armor2');
         pool.unshift(choice(basics) + '_armor1');
         pool.unshift(choice(basics));
-        if (pool[0] == 'summer'){
+        if (pool[0] == 'summer') {
             pool[0] = 'summer_basic';
         }
-        let basicPool = pool.toSpliced(4,pool.length);
-        basicPool[0] = rtid(basicPool[0],'ZombieTypes')
-        basicPool[1] = rtid(basicPool[1],'ZombieTypes')
-        basicPool[2] = rtid(basicPool[2],'ZombieTypes')
-        basicPool[3] = rtid(basicPool[3],'ZombieTypes')
+        if (pool[0] == 'hero') {
+            pool[0] = 'hero_electricboogaloo';
+        }
+        let basicPool = pool.toSpliced(4, pool.length);
+        basicPool[0] = rtid(basicPool[0], 'ZombieTypes')
+        basicPool[1] = rtid(basicPool[1], 'ZombieTypes')
+        basicPool[2] = rtid(basicPool[2], 'ZombieTypes')
+        basicPool[3] = rtid(basicPool[3], 'ZombieTypes')
         let table = document.createElement('table');
         table.style.width = '50%';
         table.style.margin = '0 auto'; // Center horizontally
@@ -396,8 +406,8 @@
                 table.innerHTML = '';
                 div1.removeChild(table);
                 levelPool.push(...sample(specials, randint(2, 4)));
-                if (stage == 'Pirate'){
-                    levelPool.push(...sample(flyingUnits,randint(1,3)))
+                if (stage == 'Pirate') {
+                    levelPool.push(...sample(flyingUnits, randint(1, 3)))
                 }
                 for (let i = 0; i < levelPool.length; i++) {
                     levelPool[i] = rtid(levelPool[i], 'ZombieTypes');
@@ -414,13 +424,13 @@
             option.hidden = true; // Hidden
             select.insertBefore(option, select.firstChild);
             select.oninput = function () {
-                addRow('td',select.value);
+                addRow('td', select.value);
                 switch (select.value) {
                     case 'piano':
-                        levelPool[0] = rtid('cowboy','zombieTypes')
-                        levelPool[1] = rtid('cowboy_armor1','zombieTypes')
-                        levelPool[2] = rtid('cowboy_armor2','zombieTypes')
-                        levelPool[3] = rtid('cowboy_armor4','zombieTypes')
+                        levelPool[0] = rtid('cowboy', 'zombieTypes')
+                        levelPool[1] = rtid('cowboy_armor1', 'zombieTypes')
+                        levelPool[2] = rtid('cowboy_armor2', 'zombieTypes')
+                        levelPool[3] = rtid('cowboy_armor4', 'zombieTypes')
                         break;
                     case 'dark_king':
                         levelPool[0] = rtid('dark', 'zombieTypes')
@@ -431,10 +441,10 @@
                     default:
                         break;
                 }
-                levelPool.push(rtid(select.value,'ZombieTypes'));
+                levelPool.push(rtid(select.value, 'ZombieTypes'));
                 level.objects[3].objdata.ZombiePool = levelPool;
             }
-        //let basicPool = pool.toSpliced(4,pool.length);
+            //let basicPool = pool.toSpliced(4,pool.length);
             div1.appendChild(select);
             div1.appendChild(table);
         }
@@ -476,7 +486,7 @@
         var waveManager = new Object();
         let escalation = new Object();
 
-        let nonAmbush = ['West','Modern','Summer']
+        let nonAmbush = ['West', 'Modern', 'Summer', 'Eighties']
         function waveArray() {
             let emptyWave = [];
             let waveOfEmptyWaves = [];
@@ -554,21 +564,21 @@
 
         // Define cap values for normal difficulties
         // Set default cap values for easier difficulties (normal levels)
-let capStartingPoints = randint(100, 100 * difficulty);  // Default scaling for normal difficulties
-let capPointIncrement = randint(50, 50 * difficulty);    // Default point increment for normal difficulties
+        let capStartingPoints = randint(500+difficulty, 500 * difficulty);  // Default scaling for normal difficulties
+        let capPointIncrement = randint(300+difficulty, 600 * difficulty);    // Default point increment for normal difficulties
 
-// Determine the base values for escalation (default for normal levels)
-let baseStartingPoints = randint(1, difficulty <= 3 ? 4 : 8) * 25;
-let basePointIncrement = randint(1, difficulty <= 3 ? 2 : 4) * 25;
+        // Determine the base values for escalation (default for normal levels)
+        let baseStartingPoints = randint(1, difficulty <= 3 ? 4 : 10) * 25;
+        let basePointIncrement = randint(1, difficulty <= 3 ? 2 : 7) * 25;
 
-// If difficulty is hard (threshold 4 or above), apply more aggressive scaling
-if (difficulty > 3) {
-    capStartingPoints = randint(1000, 1000 * difficulty);  // Aggressive scaling for hard levels
-    capPointIncrement = randint(100, 100 * difficulty);    // Aggressive point increment scaling for hard levels
+        // If difficulty is hard (threshold 4 or above), apply more aggressive scaling
+        if (difficulty > 3) {
+            capStartingPoints = randint(1000+difficulty, 1000 * difficulty);  // Aggressive scaling for hard levels
+            capPointIncrement = randint(1000+difficulty, 3000 * difficulty);    // Aggressive point increment scaling for hard levels
 
-    baseStartingPoints = randint(4, 12) * 100;  // Higher base values for hard difficulties
-    basePointIncrement = randint(2, 10) * 100;  // Higher increments for hard difficulties
-}
+            baseStartingPoints = randint(4, 12) * 100;  // Higher base values for hard difficulties
+            basePointIncrement = randint(2, 10) * 100;  // Higher increments for hard difficulties
+        }
 
         // Cap the values for easier difficulties, progressively less restrictive for harder ones
         let cappedStartingPoints = (difficulty <= 3) ? Math.min(baseStartingPoints, capStartingPoints) : baseStartingPoints;
@@ -579,11 +589,11 @@ if (difficulty > 3) {
 
         // Adjust plant food spawn rate based on difficulty
         let plantfoodScaleFactor = difficulty <= 3 ? 1 / difficulty : difficulty / 1.5;  // Default scaling
-        let plantfoodToSpawnCount = Math.max(1, Math.floor(5 / plantfoodScaleFactor));  // Ensure minimum of 1 plant food
+        let plantfoodToSpawnCount = Math.max(1, Math.floor(4 / plantfoodScaleFactor));  // Ensure minimum of 1 plant food
 
         // For hard levels, increase plant food count by 2 if there are at least 3 plant foods
         if (difficulty > 3 && plantfoodToSpawnCount >= 3) {
-            plantfoodToSpawnCount += 2;
+            plantfoodToSpawnCount = Math.min(10,difficulty);
         }
 
         console.log("Plantfood To Spawn:", plantfoodToSpawnCount);
@@ -632,11 +642,11 @@ if (difficulty > 3) {
         objdata.Description = "Inszanity on a next level";
         objdata.Loot = "RTID(DefaultLoot@LevelModules)";
         objdata.Modules = modules;
-        objdata.Name = choice(["Inzanity -","Inzanity supreeme - ","A Henry hell - ","Planktontip : use winter mellon -","This is not endless - "]) + stage + " -";
-        if (difficulty > 2 ) {
+        objdata.Name = choice(["Inzanity -", "Inzanity supreeme - ", "A Henry hell - ", "Planktontip : use winter mellon -", "This is not endless - "]) + stage + " -" + difficultyText + " Difficulty " ;
+        if (difficulty > 2) {
             if (stage === "Iceage") {
                 objdata.StageModule = `RTID(${stage}VeteranStage@LevelModules)`;
-                objdata.MusicType = choice([`MiniGame_B`,`MiniGame_A`,`MiniGame_MiniBoss`])
+                objdata.MusicType = choice([`MiniGame_B`, `MiniGame_A`, `MiniGame_MiniBoss`])
             }
             else {
                 objdata.StageModule = `RTID(${stage}Stage@LevelModules)`;
@@ -647,11 +657,11 @@ if (difficulty > 3) {
         }
         if (stage === 'Modern') {
             objdata.ResourceGroupNames = [
-            "DelayLoad_Background_Beach",
-            "DelayLoad_Background_Beach_Compressed",
-            "Tombstone_Dark_Special",
-            "Tombstone_Dark_Effects"
-        ]
+                "DelayLoad_Background_Beach",
+                "DelayLoad_Background_Beach_Compressed",
+                "Tombstone_Dark_Special",
+                "Tombstone_Dark_Effects"
+            ]
         }
 
 
@@ -682,7 +692,7 @@ if (difficulty > 3) {
                 chessboard(2, 8, 'gravestone_egypt');
                 break;
             case 'Modern':
-                chessboard(2, 8, ['gravestone_tutorial', 'gravestoneSunOnDestruction']);
+                chessboard(2, 8, ['goldtile','gravestone_tutorial','surfboard', 'gravestoneSunOnDestruction','bufftile_attack','bufftile_speed','bufftile_shield',]);
                 break;
             case 'Pirate':
                 append({ "PlankRows": sample([0, 1, 2, 3, 4], randint(1, 5)).sort() }, "PiratePlankProperties", "PiratePlanks");
@@ -732,7 +742,7 @@ if (difficulty > 3) {
                 // Single object to store both power and buff tile placements
                 var obj = new Object();
                 obj.InitialGridItemPlacements = InitialGridItemPlacements;
-                
+
                 // Append to the 'GI' module just once
                 append(obj, 'InitialGridItemProperties', 'GI');
                 break;
@@ -745,7 +755,7 @@ if (difficulty > 3) {
                 let index = randint(0, 5);
 
                 // Add Initial Tide setup
-                append({ 
+                append({
                     "StartingWaveLocation": columns[index],  // Random column for the tide to start
                     "ShowTideMarker": true                   // Show the tide marker
                 }, "TideProperties", "InitialTide");
@@ -755,16 +765,16 @@ if (difficulty > 3) {
 
                 break;
             case 'Iceage':
-                chessboard(3, 7, ['slider_up', 'slider_down'],randint(4,5));
+                chessboard(3, 7, ['slider_up', 'slider_down'], randint(4, 5));
                 break;
             case 'Dino':
-                chessboard(3, 7, ['crater', 'tar','rock'],randint(3,7));
+                chessboard(3, 7, ['crater', 'tar', 'rock'], randint(3, 7));
                 break;
             case 'Eighties':
-                chessboard(3, 7, ['eightiesarcadecabinet', 'bufftile_shield','speaker'],randint(2,4));
+                chessboard(3, 7, ['eightiesarcadecabinet', 'bufftile_shield', 'speaker'], randint(2, 4));
                 break;
             case 'LostCity':
-                chessboard(0,5,['goldtile','goldtile','goldtile','gravestone_lostcity','boulder_trap_falling_forward','flame_spreader_trap'],randint(1,7));
+                chessboard(0, 5, ['goldtile', 'goldtile', 'goldtile', 'gravestone_lostcity', 'boulder_trap_falling_forward', 'flame_spreader_trap'], randint(1, 7));
             default:
                 break;
         }
@@ -835,32 +845,61 @@ if (difficulty > 3) {
             return index;
         }
 
-        function chessboard(start, end, typeName,num = randint(0,20)) {
+        function chessboard(start, end, typeName, num = randint(0, 20)) {
             let grids = [];
+            
             while (grids.length < num) {
-                let i = randint(0, 4);
-                let j = randint(start, end);
+                let i = randint(0, 4);  // Row (Y-coordinate)
+                let j = randint(start, end);  // Column (X-coordinate)
                 let pos = { "GridX": j, "GridY": i };
                 let posStr = JSON.stringify(pos);
+
                 if (!occupied.has(posStr)) {
                     occupied.add(posStr);
-                    if (stage == 'Iceage' && i == 0){
-                        grids.push({ ...pos, "TypeName": 'slider_down' });
+
+                    // Iceage sliders (Frostbite Caves)
+                    if (stage === 'Iceage') {
+                        if (i === 0) {
+                            grids.push({ ...pos, "TypeName": 'slider_down' });  // Iceage Slider Down
+                        } else if (i === 4) {
+                            grids.push({ ...pos, "TypeName": 'slider_up' });  // Iceage Slider Up
+                        }
                     }
-                    else if (stage == 'Iceage' && i == 4){
-                        grids.push({ ...pos, "TypeName": 'slider_up' });
+
+                    // Modern sliders and regular items (Modern Day)
+                    else if (stage === 'Modern') {
+                        let randomType = Math.random();  // Random value for slider or regular item
+
+                        if (randomType < 0.5) {  // 50% chance to place sliders
+                            if (i === 0) {
+                                grids.push({ ...pos, "TypeName": 'slider_down_modern' });  // Modern Slider Down
+                            } else if (i === 4) {
+                                grids.push({ ...pos, "TypeName": 'slider_up_modern' });  // Modern Slider Up
+                            } else {
+                                grids.push({ ...pos, "TypeName": choice(typeName) });  // Regular item in Modern
+                            }
+                        } else {
+                            grids.push({ ...pos, "TypeName": choice(typeName) });  // Regular grid item
+                        }
                     }
-                    else if (Array.isArray(typeName)){
+
+                    // If not Iceage or Modern, use provided typeName
+                    else if (Array.isArray(typeName)) {
                         grids.push({ ...pos, "TypeName": choice(typeName) });
+                    } else {
+                        grids.push({ ...pos, "TypeName": typeName });
                     }
-                    else grids.push({ ...pos, "TypeName": typeName });
                 }
             }
+
+            // Finalize grid placements
             let objdata = new Object();
             objdata.InitialGridItemPlacements = grids;
             append(objdata, "InitialGridItemProperties", "GI");
         }
-    
+
+
+
 
 
 
@@ -957,7 +996,7 @@ if (difficulty > 3) {
         */
         function stormAmbush(wave, type, violence) {
             let pool = [];
-            var basic,imp, conhead, buckethead, brickhead, garg;
+            var basic, imp, conhead, buckethead, brickhead, garg;
             switch (type) {
                 case 'sand':
                     basic = "mummy";
@@ -1023,7 +1062,7 @@ if (difficulty > 3) {
             let start = 0;
             let num = 0;
             let end = 0;
-            
+
             switch (violence) {
                 case 0:
                     pool = [basic];
@@ -1032,28 +1071,28 @@ if (difficulty > 3) {
                     num = 1;
                     break;
                 case 1:
-                    pool = [basic,imp, conehead];
+                    pool = [basic, imp, conehead];
                     start = 5;
                     end = 7;
                     num = randint(1, difficulty);
                     break;
                 case 2:
-                    pool = [basic, imp,imp, conehead];
+                    pool = [basic, imp, imp, conehead];
                     start = 4;
                     end = 7;
-                    num = randint(2, difficulty+1);
+                    num = randint(2, difficulty + 1);
                     break;
                 case 3:
                     pool = [conehead, conehead, imp, buckethead, garg];
                     start = 3;
                     end = 6;
-                    num = randint(3, difficulty+2);
+                    num = randint(3, difficulty + 2);
                     break;
                 case 4:
                     pool = [buckethead, basic, buckethead, brickhead, brickhead, brickhead, garg];
                     start = 2;
                     end = 6;
-                    num = randint(4, difficulty+4);
+                    num = randint(4, difficulty + 4);
                     break;
             }
             let objdata = new Object();
@@ -1084,7 +1123,7 @@ if (difficulty > 3) {
             let objdata = new Object();
             let times = [1.5, 1.25, 1.0, 0.75, 0.5, 0.25, 0.1];
 
-            objdata.GroupSize = randint(1,3);
+            objdata.GroupSize = randint(1, 3);
             switch (violence) {
                 case 0:
                     objdata.TimeBetweenGroups = times[0];
@@ -1096,15 +1135,15 @@ if (difficulty > 3) {
                     break;
                 case 2:
                     objdata.TimeBetweenGroups = times[randint(3, 5)];
-                    objdata.SwashbucklerCount = randint(3, difficulty+2);
+                    objdata.SwashbucklerCount = randint(3, difficulty + 2);
                     break;
                 case 3:
                     objdata.TimeBetweenGroups = times[randint(5, 6)];
-                    objdata.SwashbucklerCount = randint(9, difficulty+12);
+                    objdata.SwashbucklerCount = randint(9, difficulty + 12);
                     break;
                 case 4:
                     objdata.TimeBetweenGroups = times[6];
-                    objdata.SwashbucklerCount = randint(10, difficulty+13);
+                    objdata.SwashbucklerCount = randint(10, difficulty + 13);
                     break;
             }
             append0(objdata, 'RaidingPartyZombieSpawnerProps', `wave${wave}ambush`);
@@ -1152,7 +1191,7 @@ if (difficulty > 3) {
                 case 'Future':
                     objclass = 'SpiderRainZombieSpawnerProps'
                     name = 'future_imp'
-                    message = choice(['Bot Swarm!','Fallen Technologie!'])
+                    message = choice(['Bot Swarm!', 'Fallen Technologie!'])
                     break;
                 case 'LostCity':
                     objclass = 'ParachuteRainZombieSpawnerProps'
@@ -1166,10 +1205,10 @@ if (difficulty > 3) {
                     break;
 
                 default:
-                    if (Math.random()<0.2){
+                    if (Math.random() < 0.2) {
                         objclass = 'ParachuteRainZombieSpawnerProps'
                         name = 'zcorp_helpdesk'
-                        message = 'inzanity support!' 
+                        message = 'inzanity support!'
                     }
                     break;
             }
@@ -1252,7 +1291,7 @@ if (difficulty > 3) {
                     let index = randint(0, columns.length - 1);
 
                     // Random zombie selection based on violence level
-                    let zombies = ['beach', 'beach_imp', 'beach_fem_armor1','beach_fem']; // Replace with actual zombie types
+                    let zombies = ['beach', 'beach_imp', 'beach_fem_armor1', 'beach_fem']; // Replace with actual zombie types
                     let zombieCount = randint(1, 3) + violence; // Randomize number of zombies based on violence
                     let selectedZombies = [];
 
@@ -1306,41 +1345,41 @@ if (difficulty > 3) {
             let diceRoll;
             if (violence > 1) { diceRoll = randint(1, 3); }
             else diceRoll = randint(1, 2);
-        switch (diceRoll) {
-            case 1:
-                let violence1 = Math.max(0, violence - 3 + difficulty);
-                if (stage == 'Dark') { 
-                    graveSpawn(wave, violence1); 
-                } else { 
-                    stormAmbush(wave, 'snow', violence);
-                }
-                append0({ "Zombies": [] }, "SpawnZombiesJitteredWaveActionProps", `wave${wave}ambushExtra`);
-                break;
+            switch (diceRoll) {
+                case 1:
+                    let violence1 = Math.max(0, violence - 3 + difficulty);
+                    if (stage == 'Dark') {
+                        graveSpawn(wave, violence1);
+                    } else {
+                        stormAmbush(wave, 'snow', violence);
+                    }
+                    append0({ "Zombies": [] }, "SpawnZombiesJitteredWaveActionProps", `wave${wave}ambushExtra`);
+                    break;
 
-            case 2:
-                let violence2 = Math.max(0, violence - 3 + difficulty);
-                if (stage == 'Dark') { 
-                    necromancy(wave, violence2);
-                } else { 
-                    winds(wave, violence);
-                }
-                append0({ "Zombies": [] }, "SpawnZombiesJitteredWaveActionProps", `wave${wave}ambush`);
-                break;
+                case 2:
+                    let violence2 = Math.max(0, violence - 3 + difficulty);
+                    if (stage == 'Dark') {
+                        necromancy(wave, violence2);
+                    } else {
+                        winds(wave, violence);
+                    }
+                    append0({ "Zombies": [] }, "SpawnZombiesJitteredWaveActionProps", `wave${wave}ambush`);
+                    break;
 
-            case 3:
-                let violence3 = Math.max(0, violence - 5 + difficulty);
-                if (stage == 'Dark') { 
-                    graveSpawn(wave, violence3); 
-                    necromancy(wave, Math.max(0, violence - 5 + difficulty));
-                } else { 
-                    stormAmbush(wave, 'snow', Math.max(0, violence - 5 + difficulty));
-                    winds(wave, violence);
-                }
-                break;
+                case 3:
+                    let violence3 = Math.max(0, violence - 5 + difficulty);
+                    if (stage == 'Dark') {
+                        graveSpawn(wave, violence3);
+                        necromancy(wave, Math.max(0, violence - 5 + difficulty));
+                    } else {
+                        stormAmbush(wave, 'snow', Math.max(0, violence - 5 + difficulty));
+                        winds(wave, violence);
+                    }
+                    break;
 
-            default:
-                break;
-        }
+                default:
+                    break;
+            }
 
         }
 
