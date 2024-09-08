@@ -35,7 +35,7 @@
                 <option value="2">Normal</option>
                 <option value="3">Inzane</option>
                 <option value="4">CRAAAZY!</option>
-                <option value="50">Johan</option>
+                <option value="5">Johan</option>
             </select>
         </div><br>
     </div>
@@ -48,29 +48,19 @@
     <h4><a id="home" href="index.html">Home page</a></h4>
     <script>
         let difficulty = localStorage.getItem('difficulty');
-        let difficultyText = document.getElementById("difficulty").options[document.getElementById("difficulty").selectedIndex].text;
+        console.log(difficulty)
         if (localStorage.getItem('difficulty') != null){
+            debugger;
             document.getElementById('difficulty').selectedIndex = localStorage.getItem('difficulty')
         }
         function updateDifficultyText(value){
             localStorage.setItem('difficulty',value);
-            reload();
         }
-        console.log(difficulty)
 
         function copyCode() {
             const text = JSON.stringify(level, null, 2); // Converts the object to a formatted JSON string
             navigator.clipboard.writeText(text);
             snackbar("Level code copied.");
-        }
-        function snackbar(text){
-            var x = document.getElementById("snackbar")
-            x.textContent = text;
-            // Add the "show" class to DIV
-            x.className = "show";
-
-            // After 3 seconds, remove the show class from DIV
-            setTimeout(function () { x.className = x.className.replace("show", ""); reload();}, 3000);
         }
 
         function startDownload() {
@@ -122,15 +112,10 @@
             return `RTID(${str}@${module})`;
         }
 
+        let difficultyText = document.getElementById("difficulty").value;
 
         let interval = Math.min(10, randint(8, 2 * difficulty));
-        let minWaves = 3;
-        let maxWaves = 6;
-
-        // Formula to calculate flags based on difficulty
-        let flags = Math.min(maxWaves, minWaves + Math.floor(difficulty * Math.random()));
-
-        // Calculate the total based on interval and flags
+        let flags = Math.min(6, randint(difficulty - 1, 2 * difficulty));
         let total = interval * flags;
 
         function extraSpecials() {
@@ -171,11 +156,11 @@
         switch (mod) {
             case 'rfl':
                 specials = [
-                    "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel","roman_medusa","steam_furnace",
-                    "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer","roman_healer","roman_shield_pair",
-                    "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser", "pumpkin_scarecrow","roman_shield_pair",
+                    "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel",
+                    "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer",
+                    "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser", "pumpkin_scarecrow",
                     "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler", "zcorp_racer_chair", "zcorp_consultant",
-                    "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1","roman_ballista",
+                    "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1",
                     "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter", "iceage_dodo_veteran", "iceage_hunter_veteran",
                     "eighties_arcade", "eighties_arcade_basic", "iceage_weaselhoarder_veteran", "iceage_chief", "iceage_chief_veteran",
                     "eighties_boombox", "dino_bully", "dino_bully_veteran", "dino_bully_blue", "dino_pterry", "iceage_troglobite_basic", "modern_newspaper", "modern_balloon", "modern_allstar",
@@ -208,9 +193,9 @@
         }
 
         specials.push(...extraSpecials());
-        let basics = ["tutorial","carnie","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", "steam_miner", "steam","hero"];
-        let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp","zcorp_imp","zcorp_imp"];
-        let gargs = ["egypt_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar","zcorp_gargantuar","zcorp_gargantuar",,"zcorp_gargantuar",,"zcorp_gargantuar","zcorp_gargantuar"]
+        let basics = ["tutorial", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", "steam_miner", "steam"];
+        let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp"];
+        let gargs = ["egypt_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar"]
         let validArmor4 = ["tutorial", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
         let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran", "spongebob_vi", "spongebob_vi_armor1", "spongebob_vi_armor2", "seagull", "steam_inventor"];
         let stage = ["Modern", "Egypt", "Pirate", "West", "Future", "Dark", "Beach", "Iceage", "LostCity", "Eighties", "Dino"];
@@ -267,7 +252,7 @@
         } else if (difficulty <= 6) { // Insane difficulty (4-6)
             maxSpecials = randint(25, 35);  // 25-35 specials
         } else if (difficulty <= 9) { // Crazy difficulty (7-9)
-            maxSpecials = randint(45, 60);  
+            maxSpecials = randint(45, 60);  // 50-70 specials
         } else { // Johan difficulty (10+)
             maxSpecials = randint(80, specials.length);  // No limit (all specials)
         }
@@ -276,8 +261,7 @@
 
         // Scale the number of specials to pick based on difficulty, capped by maxSpecials
         let numSpecials = Math.min(randint(1, difficulty * 5), maxSpecials);
-        console.log("Number of Specials to Pick:", numSpecials);
-        // Debugging output
+        console.log("Number of Specials to Pick:", numSpecials);  // Debugging output
 
         // Select the actual specials based on the final number
         let pool = sample(specials, numSpecials);
@@ -306,6 +290,7 @@
             "hero_rustbolt",
             "hero_superbrainz",
             "hero_weaselhoarder",
+            "hero_weasel",
             "galaxy_dodo",
             "hero_barrelroller",
             "hero_barrel",
@@ -313,10 +298,10 @@
         ];
 
         // Special logic for difficulty higher than 40
-        
+        console.log(difficulty)
         if (difficulty > 40) {
-            pool.push("hero_zmech");
-            if (Math.random()*10 <= 50) {  // 50% chance to use the miniboss pool
+            pool.push("hero_zmech")
+            if (randomChance <= 50) {  // 50% chance to use the miniboss pool
                 pool = minibossPool;
             }
         }
@@ -374,9 +359,6 @@
         pool.unshift(choice(basics));
         if (pool[0] == 'summer') {
             pool[0] = 'summer_basic';
-        }
-        if (pool[0] == 'hero') {
-            pool[0] = 'hero_electricboogaloo';
         }
         let basicPool = pool.toSpliced(4, pool.length);
         basicPool[0] = rtid(basicPool[0], 'ZombieTypes')
@@ -564,17 +546,17 @@
 
         // Define cap values for normal difficulties
         // Set default cap values for easier difficulties (normal levels)
-        let capStartingPoints = randint(500+difficulty, 500 * difficulty);  // Default scaling for normal difficulties
-        let capPointIncrement = randint(300+difficulty, 600 * difficulty);    // Default point increment for normal difficulties
+        let capStartingPoints = randint(100, 100 * difficulty);  // Default scaling for normal difficulties
+        let capPointIncrement = randint(50, 50 * difficulty);    // Default point increment for normal difficulties
 
         // Determine the base values for escalation (default for normal levels)
-        let baseStartingPoints = randint(1, difficulty <= 3 ? 4 : 10) * 25;
-        let basePointIncrement = randint(1, difficulty <= 3 ? 2 : 7) * 25;
+        let baseStartingPoints = randint(1, difficulty <= 3 ? 4 : 8) * 25;
+        let basePointIncrement = randint(1, difficulty <= 3 ? 2 : 4) * 25;
 
         // If difficulty is hard (threshold 4 or above), apply more aggressive scaling
         if (difficulty > 3) {
-            capStartingPoints = randint(1000+difficulty, 1000 * difficulty);  // Aggressive scaling for hard levels
-            capPointIncrement = randint(1000+difficulty, 3000 * difficulty);    // Aggressive point increment scaling for hard levels
+            capStartingPoints = randint(1000, 1000 * difficulty);  // Aggressive scaling for hard levels
+            capPointIncrement = randint(100, 100 * difficulty);    // Aggressive point increment scaling for hard levels
 
             baseStartingPoints = randint(4, 12) * 100;  // Higher base values for hard difficulties
             basePointIncrement = randint(2, 10) * 100;  // Higher increments for hard difficulties
@@ -589,11 +571,11 @@
 
         // Adjust plant food spawn rate based on difficulty
         let plantfoodScaleFactor = difficulty <= 3 ? 1 / difficulty : difficulty / 1.5;  // Default scaling
-        let plantfoodToSpawnCount = Math.max(1, Math.floor(4 / plantfoodScaleFactor));  // Ensure minimum of 1 plant food
+        let plantfoodToSpawnCount = Math.max(1, Math.floor(5 / plantfoodScaleFactor));  // Ensure minimum of 1 plant food
 
         // For hard levels, increase plant food count by 2 if there are at least 3 plant foods
         if (difficulty > 3 && plantfoodToSpawnCount >= 3) {
-            plantfoodToSpawnCount = Math.min(10,difficulty);
+            plantfoodToSpawnCount += 2;
         }
 
         console.log("Plantfood To Spawn:", plantfoodToSpawnCount);
@@ -642,7 +624,7 @@
         objdata.Description = "Inszanity on a next level";
         objdata.Loot = "RTID(DefaultLoot@LevelModules)";
         objdata.Modules = modules;
-        objdata.Name = choice(["Inzanity -", "Inzanity supreeme - ", "A Henry hell - ", "Planktontip : use winter mellon -", "This is not endless - "]) + stage + " -" + difficultyText + " Difficulty " ;
+        objdata.Name = choice(["Inzanity -", "Inzanity supreeme - ", "A Henry hell - ", "Planktontip : use winter mellon -", "This is not endless - "]) + stage + " -";
         if (difficulty > 2) {
             if (stage === "Iceage") {
                 objdata.StageModule = `RTID(${stage}VeteranStage@LevelModules)`;
@@ -692,7 +674,7 @@
                 chessboard(2, 8, 'gravestone_egypt');
                 break;
             case 'Modern':
-                chessboard(2, 8, ['goldtile','gravestone_tutorial','surfboard', 'gravestoneSunOnDestruction','bufftile_attack','bufftile_speed','bufftile_shield',]);
+                chessboard(2, 8, ['gravestone_tutorial', 'gravestoneSunOnDestruction']);
                 break;
             case 'Pirate':
                 append({ "PlankRows": sample([0, 1, 2, 3, 4], randint(1, 5)).sort() }, "PiratePlankProperties", "PiratePlanks");
@@ -847,58 +829,29 @@
 
         function chessboard(start, end, typeName, num = randint(0, 20)) {
             let grids = [];
-            
             while (grids.length < num) {
-                let i = randint(0, 4);  // Row (Y-coordinate)
-                let j = randint(start, end);  // Column (X-coordinate)
+                let i = randint(0, 4);
+                let j = randint(start, end);
                 let pos = { "GridX": j, "GridY": i };
                 let posStr = JSON.stringify(pos);
-
                 if (!occupied.has(posStr)) {
                     occupied.add(posStr);
-
-                    // Iceage sliders (Frostbite Caves)
-                    if (stage === 'Iceage') {
-                        if (i === 0) {
-                            grids.push({ ...pos, "TypeName": 'slider_down' });  // Iceage Slider Down
-                        } else if (i === 4) {
-                            grids.push({ ...pos, "TypeName": 'slider_up' });  // Iceage Slider Up
-                        }
+                    if (stage == 'Iceage' && i == 0) {
+                        grids.push({ ...pos, "TypeName": 'slider_down' });
                     }
-
-                    // Modern sliders and regular items (Modern Day)
-                    else if (stage === 'Modern') {
-                        let randomType = Math.random();  // Random value for slider or regular item
-
-                        if (randomType < 0.5) {  // 50% chance to place sliders
-                            if (i === 0) {
-                                grids.push({ ...pos, "TypeName": 'slider_down_modern' });  // Modern Slider Down
-                            } else if (i === 4) {
-                                grids.push({ ...pos, "TypeName": 'slider_up_modern' });  // Modern Slider Up
-                            } else {
-                                grids.push({ ...pos, "TypeName": choice(typeName) });  // Regular item in Modern
-                            }
-                        } else {
-                            grids.push({ ...pos, "TypeName": choice(typeName) });  // Regular grid item
-                        }
+                    else if (stage == 'Iceage' && i == 4) {
+                        grids.push({ ...pos, "TypeName": 'slider_up' });
                     }
-
-                    // If not Iceage or Modern, use provided typeName
                     else if (Array.isArray(typeName)) {
                         grids.push({ ...pos, "TypeName": choice(typeName) });
-                    } else {
-                        grids.push({ ...pos, "TypeName": typeName });
                     }
+                    else grids.push({ ...pos, "TypeName": typeName });
                 }
             }
-
-            // Finalize grid placements
             let objdata = new Object();
             objdata.InitialGridItemPlacements = grids;
             append(objdata, "InitialGridItemProperties", "GI");
         }
-
-
 
 
 
