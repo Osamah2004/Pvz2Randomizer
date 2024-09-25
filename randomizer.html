@@ -7,6 +7,26 @@
     <title>PvZ2 level randomizer</title>
     <link rel="stylesheet" href="style.css">
     <script src="randombg.js"></script>
+    <style>
+        .level-preview {
+            border: 2px solid #333;
+            padding: 10px;
+            width: 300px;
+            margin: 10px;
+        }
+        .level-preview .variable {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #333;
+        }
+        .variable-name {
+            font-weight: bold;
+        }
+        .variable-value {
+            text-align: right;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,14 +59,57 @@
             </select>
         </div><br>
     </div>
+    
     <div class="filename-container">
+        <h2>PvZ2 Level Preview</h2>
+    
+        <div id="levelPreview" class="inner-container">
+            <!-- This is where the preview will appear -->
+        </div>
+        <button onclick="generatePreview()">Preview Variables</button><br>
         <button id="Copy" onclick="copyCode()">Copy</button>
         <p> or </p>
         <button id="buttonA" onclick="startDownload()">Download</button>
     </div>
 
+    
+
     <h4><a id="home" href="index.html">Home page</a></h4>
+
     <script>
+        let violence = 1;
+
+        // Generate preview for level variables
+        function generatePreview() {
+            
+            let previewContainer = document.getElementById('levelPreview');
+            previewContainer.innerHTML = '';
+
+            let variablesHTML = `
+
+                <div class="inner-div">
+                    <div class="variable-name">Special Pool</div>
+                    <div class="variable-value">${pool.join(', ')}</div>
+                </div>
+                <div class="inner-div">
+                    <div class="variable-name">Starting Points</div>
+                    <div class="variable-value">${cappedStartingPoints}</div>
+                </div>
+                <div class="inner-div">
+                    <div class="variable-name">Points Increment</div>
+                    <div class="variable-value">${cappedPointIncrement}</div>
+                </div>
+                <div class="inner-div">
+                    <div class="variable-name">Plant Food to Spawn</div>
+                    <div class="variable-value">${plantfoodToSpawnCount}</div>
+                </div>
+                <div class="inner-div">
+                    <div class="variable-name">Flags</div>
+                    <div class="variable-value">${flags}</div>
+                </div>`;
+
+            previewContainer.innerHTML = variablesHTML;
+        }
         let difficulty = localStorage.getItem('difficulty');
         let difficultyText = document.getElementById("difficulty").options[document.getElementById("difficulty").selectedIndex].text;
         if (localStorage.getItem('difficulty') != null){
@@ -122,12 +185,12 @@
         }
 
 
-        let interval = randint(4,9);
+        let interval = Math.min(15,randint(5,difficulty+1));
         let minWaves = 3;
         let maxWaves = 5;
 
         // Formula to calculate flags based on difficulty
-        let flags =randint(2,4);
+        let flags =randint(3,5);
 
         // Calculate the total based on interval and flags
         let total = interval * flags;
@@ -136,19 +199,22 @@
             switch (mod) {
                 case 'rfl':
                     return [
-                        "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel",
-                        "iceage_hunter","feastivus_troglobite", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer",
-                        "spring_camel_onehump", "lunar_camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser",
-                        "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler", "zcorp_racer_chair", "zcorp_consultant",
-                        "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1",
-                        "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter", "iceage_dodo_veteran", "iceage_hunter_veteran",
-                        "eighties_arcade", "eighties_arcade_basic", "iceage_weaselhoarder_veteran", "iceage_chief", "iceage_chief_veteran",
-                        "eighties_boombox", "dino_bully", "dino_bully_veteran", "dino_bully_blue", "dino_pterry", "iceage_troglobite_basic", "modern_newspaper", "modern_balloon", "modern_allstar",
-                        "prospector", "west_bull", "west_bull_veteran", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack", "future_jetpack_disco", "dark_explorer", "explorer_veteran",
-                        "lostcity_explorer", "barrelroller_explosive", "ghost_scare", "halloween_ghost", "halloween_crow", "future_protector_generator", "general_treadmill_phase2", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic",
-                        "egypt_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar",
-                        "carnie_stiltwalker","carnie_firebreather","carnie_cannon","carnie_magician","carnie_imp_twins"
-                    ];
+                            "fire_ball","ice_ball","iceage_charred",
+                            "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel","roman_medusa","steam_furnace",
+                            "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer","roman_healer","roman_shield_pair",
+                            "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser", "pumpkin_scarecrow","roman_shield_pair",
+                            "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler", "zcorp_racer_chair", "zcorp_consultant","eighties_breakdancer",
+                            "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1","roman_ballista","eighties_mc",
+                            "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter", "iceage_dodo_veteran", "iceage_hunter_veteran","eighties_glitter",
+                            "eighties_arcade", "eighties_arcade_basic", "iceage_weaselhoarder_veteran", "iceage_chief", "iceage_chief_veteran","eighties_punk",
+                            "eighties_boombox", "dino_bully", "dino_bully_veteran", "dino_bully_blue", "dino_pterry", "iceage_troglobite_basic", "modern_newspaper", "modern_balloon", "modern_allstar",
+                            "prospector", "west_bull", "west_bull_veteran", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack", "future_jetpack_disco", "dark_explorer", "explorer_veteran",
+                            "lostcity_explorer", "barrelroller_explosive", "ghost_scare", "halloween_ghost", "future_protector_generator", "general_treadmill_phase2", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic",
+                            "carnie_stiltwalker","carnie_firebreather","carnie_cannon","carnie_magician","carnie_imp_twins","harvest_outhouse","harvest_pitchfork","harvest_eggstealer","harvest_pterry","foodfight_gobbler_king",
+                            "eighties_punk_veteran",
+                            "eighties_breakdancer",
+                            "eighties_arcade"
+                        ];
                     break;
                 default:
                     return [];
@@ -181,8 +247,8 @@
                     "eighties_arcade", "eighties_arcade_basic", "iceage_weaselhoarder_veteran", "iceage_chief", "iceage_chief_veteran","eighties_punk",
                     "eighties_boombox", "dino_bully", "dino_bully_veteran", "dino_bully_blue", "dino_pterry", "iceage_troglobite_basic", "modern_newspaper", "modern_balloon", "modern_allstar",
                     "prospector", "west_bull", "west_bull_veteran", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack", "future_jetpack_disco", "dark_explorer", "explorer_veteran",
-                    "lostcity_explorer", "barrelroller_explosive", "ghost_scare", "halloween_ghost", "halloween_crow", "future_protector_generator", "general_treadmill_phase2", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic",
-                    "carnie_stiltwalker","carnie_firebreather","carnie_cannon","carnie_magician","carnie_imp_twins"
+                    "lostcity_explorer", "barrelroller_explosive", "ghost_scare", "halloween_ghost", "future_protector_generator", "general_treadmill_phase2", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic",
+                    "carnie_stiltwalker","carnie_firebreather","carnie_cannon","carnie_magician","carnie_imp_twins","harvest_outhouse","harvest_pitchfork","harvest_eggstealer","harvest_pterry","foodfight_gobbler_king"
                 ];
             default:
                 specials = [
@@ -210,15 +276,15 @@
         }
 
         specials.push(...extraSpecials());
-        let part ="carny";
+        let part ="harvest";
         let bots = ["steam_clockwork","iceage_dodo_veteran","hero_zmech","steam_mechanic","steam_repairimp","future_imp","future_protector_generator","future_gargantuar","mech_cone","disco_mech","future_protector","west_bull","west_bull_veteran"]
-        let basics = ["tutorial","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", part,part,part,part, "steam_miner", "steam"];
+        let basics = ["tutorial","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", part,part,part,part, part,part,part,part, "steam_miner", "steam"];
         let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp","zcorp_imp","zcorp_imp"];
         let gargs = ["egypt_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar"]
         let validArmor4 = ["tutorial","iceage","eighties","beach","zcorp", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
         
         let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran", "spongebob_vi", "spongebob_vi_armor1", "spongebob_vi_armor2", "seagull", "steam_inventor"];
-        let stage = ["Modern", "Egypt", "Pirate", "West", "Future", "Dark", "Beach", "Iceage", "LostCity", "Eighties", "Dino"];
+        let stage = ["Modern", "Egypt", "Pirate", "West", "Future", "Beach", "Iceage", "LostCity", "Eighties", "Dino","Harvest"];
         stage.push(...extraStages());
         let stageBtn = localStorage.getItem('selectedStage');
 
@@ -365,8 +431,9 @@
         if (stage === "Future") {
             if (coinFlip()) {
                 pool.push("steam_repairimp");
+                pool.push(...sample(bots, randint(2, Math.min(difficulty,bots.length))));
             }
-            pool.push(...sample(bots, randint(0, Math.min(difficulty,bots.length))));
+            pool.push(...sample(bots, randint(2, Math.min(difficulty,bots.length))));
         }
         if (pool.includes("dark_king")) {
             basics = ['dark'];
@@ -402,21 +469,72 @@
         else if (pool.includes("piano")) {
             basics = ['cowboy'];
         }
-        if (stage != 'Future') {
-            if (Math.random() < (0.01 * difficulty)) {
+        if (Math.random() < (0.3 * difficulty)) {
                 pool.push(...sample(gargs, randint(0, 2)));  // Higher chance of adding Gargantuars
-            }
-
         }
 
-        if (Math.random() < (0.01 * difficulty)) {
+        if (Math.random() < (0.5 * difficulty)) {
             pool.push(...sample(imps, randint(0, 3)));   // Higher chance of adding Imps
         }
+        const jamers = [
+            "eighties_punk",
+            "eighties_punk_veteran",
+            "eighties_glitter",
+            "eighties_mc",
+            "eighties_breakdancer",
+            "eighties_arcade",
+            "eighties_boombox",
+            "eighties_gargantuar",
+            "eighties_punk_8bit",
+            "eighties_punk_veteran_8bit",
+            "stpatrick_punk",
+            "stpatrick_punk_punk",
+            "eighties_glitter_8bit",
+            "stpatrick_glitter",
+            "stpatrick_glitter_pop",
+            "eighties_mc_8bit",
+            "eighties_breakdancer_8bit",
+            "halloween_breakdancer",
+            "stpatrick_breakdancer",
+            "space_dancer",
+            "space_dancer_8bit",
+            "eighties_gargantuar_8bit",
+            "stpatrick_gargantuar_metal",
+            "eighties_boombox_8bit",
+            "summer_boombox",
+            "summer_boombox_ballad",
+            "mashup_arcade",
+            "mashup_arcade_spongebob"
 
-        if (mod == 'vnl') {
-            pool.unshift(choice(validArmor4) + '_armor4')
+        ];
+
+        // Helper function to filter out conflicting zombies
+        function filterConflictingZombies(selectedZombies) {
+            const filtered = selectedZombies.filter(zombie => {
+                const baseName = zombie.replace(/_8bit$/, ''); // Remove _8bit suffix to find the base
+                const is8Bit = zombie.endsWith('_8bit');
+                return !selectedZombies.some(selected => {
+                    return (selected === baseName || selected === `${baseName}_8bit`) && selected !== zombie;
+                });
+            });
+            return filtered;
         }
-        else pool.unshift(choice(basics) + '_armor4');
+
+        // Main selection function
+        function selectJamers(stage) {
+            if (stage === 'Eighties') {
+                let selectedJamers = sample(jamers, randint(6, jamers.length)); // Randomly select jamers
+                
+                // Filter the selected jamers to remove conflicts
+                selectedJamers = filterConflictingZombies(selectedJamers);
+                
+                pool.push(...selectedJamers);
+            }
+        }
+        selectJamers('Eighties');
+
+
+        pool.unshift(choice(validArmor4) + '_armor4');
         pool.unshift(choice(basics) + '_armor2');
         pool.unshift(choice(basics) + '_armor1');
         pool.unshift(choice(basics));
@@ -533,27 +651,110 @@
         var waveManager = new Object();
         let escalation = new Object();
 
-        let nonAmbush = ['West', 'Eighties'];
+        // Define weights for each jam event
+        const jamWeights = {
+            'jam_rap': 2,
+            'jam_punk': 3,
+            'jam_metal': 1,
+            'jam_ballad': 1,
+            'jam_8bit': 4,
+            'jam_pop': 3
+        };
 
+        // Function to pick a weighted random jam event
+        function weightedRandom(jamWeights) {
+            const events = Object.keys(jamWeights);
+            const weights = Object.values(jamWeights);
+            
+            // Calculate total weight
+            const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+            
+            // Generate a random number between 0 and totalWeight
+            const random = Math.random() * totalWeight;
+            
+            // Determine which event is selected
+            let cumulativeWeight = 0;
+            for (let i = 0; i < events.length; i++) {
+                cumulativeWeight += weights[i];
+                if (random < cumulativeWeight) {
+                    return events[i];  // Return the selected event
+                }
+            }
+        }
+
+        // Function to add jam objects to the core structure
+        function addJamObjects() {
+            // Jam event types to insert into the core structure
+            const jamTypes = Object.keys(jamWeights); // Get jam types from weights
+
+            // Core structure that remains the same
+            const baseStructure = { 
+                "aliases": [""], 
+                "objclass": "SpawnZombiesJitteredWaveActionProps", 
+                "objdata": { "NotificationEvents": [""] }
+            };
+
+            // Loop through each jam type and create an object with the correct aliases and NotificationEvents
+            for (let jamType of jamTypes) {
+                let jamEvent = JSON.parse(JSON.stringify(baseStructure));  // Create a copy of the base structure
+                jamEvent.aliases[0] = jamType;  // Set the alias
+                jamEvent.objdata.NotificationEvents[0] = jamType;  // Set the NotificationEvent
+
+                // Append the jam event
+                objects.push(jamEvent);
+            }
+        }
+
+        // Call the function to add jam objects if the stage is 'Eighties'
+        if (stage === 'Eighties') {
+            addJamObjects();
+        }
+
+        let nonAmbush = ['West', 'Eighties'];
         function waveArray() {
             let emptyWave = [];
             let waveOfEmptyWaves = [];
             for (let i = 1; i < total + 1; i++) {
-                if (nonAmbush.includes(stage)) { waveOfEmptyWaves.push(emptyWave); continue; }
-                if (i % interval == 0) {
+                if (nonAmbush.includes(stage)) {
+                    // Add jams for Eighties stage
+                    if (stage === 'Eighties') {
+                        let jamEvent = null;
+                        if (i % interval == 0 || (i % (interval / 2) == 0 || Math.random()<0.1)) {
+                            // Randomly pick one of the jam events based on weight
+                            jamEvent = weightedRandom(jamWeights);
+                            waveOfEmptyWaves.push([rtid(jamEvent, '.')]);
+                        } else {
+                            waveOfEmptyWaves.push(emptyWave);
+                        }
+                    } else {
+                        waveOfEmptyWaves.push(emptyWave);
+                    }
+                    continue;
+                }
+
+                // Existing logic for handling ambushes
+                if (i % interval === 0) {
                     waveOfEmptyWaves.push([rtid(`wave${i}ambush`, '.')]);
                     ambush(i);
-                    if (['Dark', 'Iceage'].includes(stage)) { waveOfEmptyWaves[i - 1].push(rtid(`wave${i}ambushExtra`, '.')) }
-                }
-                else if (randint(1, 3) == 3) {
+                    if (['Dark', 'Iceage'].includes(stage)) {
+                        waveOfEmptyWaves[i - 1].push(rtid(`wave${i}ambushExtra`, '.'));
+                    }
+                } else if (randint(1, 3) === 3) {
                     waveOfEmptyWaves.push([rtid(`wave${i}ambush`, '.')]);
                     ambush(i);
-                    if (['Dark', 'Iceage'].includes(stage)) { waveOfEmptyWaves[i - 1].push(rtid(`wave${i}ambushExtra`, '.')) }
+                    if (['Dark', 'Iceage', 'Beach'].includes(stage)) {
+                        waveOfEmptyWaves[i - 1].push(rtid(`wave${i}ambushExtra`, '.'));
+                    }
+                } else {
+                    waveOfEmptyWaves.push(emptyWave);
                 }
-                else waveOfEmptyWaves.push(emptyWave);
             }
             return waveOfEmptyWaves;
         }
+
+
+
+
         function dinoStage() {
             let k;
             // Extend switch to handle cases beyond 4 flags
@@ -562,7 +763,7 @@
                 case 2: k = randint(2, 3); break;
                 case 3: k = randint(3, 5); break;
                 case 4: k = 5; break;
-                default: k = 5; // For any flags greater than 4, set k to the max 5 dinos
+                default: k = 5; break; // For any flags greater than 4, set k to the max 5 dinos
             }
 
             // Select dinos from the pool
@@ -668,12 +869,13 @@
             "veteran_dino", "veteran_lostcity", "veteran_iceage", "veteran_beach",
             "veteran_dark", "veteran_future", "modern_rally", "eighties_8bit"
         ];
-        function portalSpawn(difficulty, violence) {
+        function portalSpawn(wav) {
             let row = randint(0, 8);
             let portals = [];
             let column = [];
-            let maxportal = difficulty;
+            let maxportal = randint(1,difficulty);
             let portalNum = 1;  // Default to 1 portal if not specified
+            let violence = getViolence(wav);
 
             switch (violence) {
                 case 0:
@@ -695,12 +897,11 @@
                     break;
                 default:
                     portals = sample(hardPortalTypes.concat(veteranPortalTypes), randint(7, 12));
-                    portalNum = randint(0,difficulty/2);
+                    portalNum = randint(0,6);
                     break;
             }
-
-
-            return {portals, portalNum };
+            portalNum=Math.min(portalNum,maxportal);
+            return {portals,  portalNum};
         }
 
         // Function to create and configure the modern stage
@@ -731,8 +932,6 @@
                             "PortalColumn": column,
                             "PortalRow": row,
                             "PortalType": portals[randint(0,portals.length-1)],
-                            "SpawnEffectAnimID": "", // Add appropriate spawn effect animation ID
-                            "SpawnSoundID": "" // Add appropriate spawn sound ID
                         }, 'SpawnModernPortalsWaveActionProps', portalId);
                     }
 
@@ -753,15 +952,11 @@
                                 "PortalColumn": column,
                                 "PortalRow": row,
                                 "PortalType": portals[randint(0,portals.length-1)],
-                                "SpawnEffectAnimID": "", // Add appropriate spawn effect animation ID
-                                "SpawnSoundID": "" // Add appropriate spawn sound ID
                             }, 'SpawnModernPortalsWaveActionProps', portalId);
                         }
                     }
                 }
             }
-
-            // Update WaveManager with the final wave configurations
             updateWaveManager(waveConfigs);
         }
 
@@ -769,14 +964,7 @@
 
 
 
-
-
-
-
-        // Function to update the WaveManager with the new wave configurations
         function updateWaveManager(waveConfigs) {
-            // Here we assume that WaveManager is already set up and can be updated.
-            // Example code to update wave data
             append0({
                 "Waves": waveConfigs
             }, 'WaveManagerProperties', 'WaveManager');
@@ -785,12 +973,6 @@
 
 
 
-
-
-        // Helper functions
-        function choice(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
 
         function sample(arr, k) {
             let result = [];
@@ -802,17 +984,11 @@
             return result;
         }
 
-
-        // Placeholder functions
         function getWaveManagerConfig() {
-            // Implement according to your system
-            // Example placeholder:
             return { "objdata": { "Waves": [] } };
         }
 
         function setWaveManagerConfig(config) {
-            // Implement according to your system
-            // Example placeholder:
             console.log("WaveManager configuration updated:", config);
         }
 
@@ -825,32 +1001,23 @@
             } else if (wave < 10) {
                 return randint(2, 3);
             } else if (wave < 16) {
-                return randint(3, 5);
+                return randint(4, 6);
             }
-            else return randint(3, 7);
+            else return randint(1, 8);
         }
 
-        let cappedStartingPoints = randint(difficulty*100,difficulty*300);
-        let cappedPointIncrement = randint(100,300*difficulty);
+        let cappedStartingPoints = randint(150,difficulty*50);
+        let cappedPointIncrement = randint(10,70*difficulty);
 
-        console.log("Capped Starting Points:", cappedStartingPoints);
-        console.log("Capped Point Increment:", cappedPointIncrement);
 
-        // Adjust plant food spawn rate based on difficulty
-        let plantfoodScaleFactor = difficulty <= 3 ? 1 / difficulty : difficulty / 1.5;  // Default scaling
-        let plantfoodToSpawnCount = Math.max(1, Math.floor(5 / plantfoodScaleFactor));  // Ensure minimum of 1 plant food
 
-        // For hard levels, increase plant food count by 2 if there are at least 3 plant foods
-        if (difficulty > 3 && plantfoodToSpawnCount >= 3) {
-            plantfoodToSpawnCount += 2;
-        }
+        let plantfoodToSpawnCount =randint(3,difficulty);
 
-        console.log("Plantfood To Spawn:", plantfoodToSpawnCount);
 
-        // Assign properties to escalation
+        
         escalation.FlagCount = flags;
         escalation.WavesPerFlag = interval;
-        escalation.PlantfoodToSpawnCount = plantfoodToSpawnCount;  // Adjusted spawn count
+        escalation.PlantfoodToSpawnCount = plantfoodToSpawnCount;  
         escalation.StartingPoints = cappedStartingPoints;
         escalation.PointIncrementPerWave = cappedPointIncrement;
         escalation.WaveManagerProps = "RTID(WaveManager@CurrentLevel)";
@@ -886,7 +1053,13 @@
         modules.push("RTID(DefaultZombieWinCondition@LevelModules)");
         let mowers = false;
         if (coinFlip()) {
-            modules.push(`RTID(${stage}Mowers@LevelModules)`) ;
+            if (stage ==`Harvest` || stage ==`Summer`){
+                modules.push(`RTID(HolidayMowers@LevelModules)`) ;
+            }
+            else {
+                modules.push(`RTID(${stage}Mowers@LevelModules)`) ;
+            }
+            
             mowers = true;
              
         }
@@ -915,8 +1088,10 @@
         "Winter Melon saves the day -", 
         "Doomed from the start -", 
         "Zombot's sanity -", 
-        "The last stand -"
-    ]) + stage + " -" + difficultyText + " Difficulty";
+        "The last stand -",
+        "balls -",
+        "no idea for level name -"
+    ]) + stage + " " + difficultyText + " Difficulty";
 
         if (difficulty > 3) {
             if (stage === "Iceage") {
@@ -924,8 +1099,12 @@
                 objdata.MusicType = choice([`MiniGame_B`, `MiniGame_A`, `MiniGame_MiniBoss`])
             }
             if (stage === 'Modern' ) {
-                objdata.StageModule = `RTID(${stage}NightStage@LevelModules)`
-                objdata.MusicType = choice([`MiniGame_B`, `MiniGame_A`])
+                objdata.StageModule = `RTID(${stage}NightStage@LevelModules)`;
+                objdata.MusicType = choice([`MiniGame_B`, `MiniGame_A`]);
+            }
+            if (stage === 'Harvest' ){
+                objdata.MusicType = choice([`MiniGame_MiniBoss`])
+                objdata.StageModule = `RTID(${stage}Stage@LevelModules)`;
             }
             else {
                 objdata.StageModule = `RTID(${stage}Stage@LevelModules)`;
@@ -939,6 +1118,7 @@
         }
         } else {
             objdata.StageModule = `RTID(${stage}Stage@LevelModules)`;
+            modules.push("RTID(DefaultSunDropper@LevelModules)") ;
         }
         if (stage === 'Modern') {
             objdata.ResourceGroupNames = [
@@ -981,13 +1161,16 @@
                 if (coinFlip()){
                     initialZombiePlacement(3, 7, pool, randint(2, 3));
                 }
-                chessboard(1, 8, ['goldtile','tar','goldtile','goldtile','gravestone_tutorial','surfboard', 'gravestoneSunOnDestruction','bufftile_attack','bufftile_speed','bufftile_shield']);
+                chessboard(1, 8, ['goldtile','tar','goldtile','goldtile','gravestone_tutorial','gravestone_tutorial','gravestone_tutorial','gravestone_tutorial','gravestone_tutorial','surfboard', 'gravestoneSunOnDestruction','bufftile_attack','bufftile_speed','bufftile_shield']);
                 break;
             case 'Pirate':
                 append({ "PlankRows": sample([0, 1, 2, 3, 4], randint(1, 5)).sort() }, "PiratePlankProperties", "PiratePlanks");
                 pool.push(...sample(flyingUnits, randint(2, 4)));
                 break;
             case 'West':
+                railCarts();
+                break;
+            case 'Harvest':
                 railCarts();
                 break;
             case 'Summer':
@@ -1047,14 +1230,14 @@
 
                 break;
             case 'Iceage':
-                chessboard(3, 7, ['slider_up', 'slider_down','gravestone_iceage'], randint(4, 5));
+                chessboard(3, 7, ['gravestone_iceage'], randint(4, 5));
                 initialZombiePlacement(3, 7, pool, randint(4, 6));
                 break;
             case 'Dino':
-                chessboard(3, 7, ['crater', 'tar', 'rock'], randint(3, 7));
+                chessboard(1, 8, ['crater', 'tar', 'rock'], randint(3, 7));
                 break;
             case 'Eighties':
-                chessboard(3, 7, ['eightiesarcadecabinet', 'bufftile_shield', 'speaker'], randint(2, 4));
+                chessboard(2, 8, ['eightiesarcadecabinet', 'bufftile_shield','bufftile_speed', 'speaker', 'speaker', 'speaker'], randint(4, 7));
                 break;
             case 'LostCity':
                 chessboard(0, 5, ['goldtile', 'goldtile', 'goldtile', 'gravestone_lostcity', 'boulder_trap_falling_forward', 'flame_spreader_trap'], randint(1, 7));
@@ -1238,10 +1421,27 @@
 
         function railCarts() {
             let objdata = new Object();
-            objdata.RailcartType = "railcart_cowboy";
+
+            // Available minecart types
+            let railcartTypes = [
+                "railcart_tutorial", // Modern
+                "railcart_cowboy",   // Cowboy
+                "railcart_egypt",    // Egypt
+                "railcart_pirate",   // Pirate
+                "railcart_future",   // Future
+                "railcart_steam"     // Steam Age
+            ];
+
+            // Randomly select a railcart type for this wave
+            objdata.RailcartType = sample(railcartTypes, 1)[0];
+
             let rails = [];
             let carts = [];
+            let cartCount = 0;  // Track the total number of railcarts
+
             for (let i = 0; i < 8; i++) {
+                if (cartCount >= 4) break;  // Stop if the max of 4 railcarts is reached
+
                 var diceRoll = randint(1, 6);
                 var rows = sample([0, 1, 2, 3, 4], 2);
                 var end = Math.max(...rows);
@@ -1252,33 +1452,55 @@
                     case 6:
                         continue;
                     case 2:
-                        rails.push({ "RowEnd": 4, "RowStart": 0, "Column": i });
-                        carts.push({ "Column": i, "Row": randint(0, 4) });
+                        if (cartCount < 4) {
+                            rails.push({ "RowEnd": 4, "RowStart": 0, "Column": i });
+                            carts.push({ "Column": i, "Row": randint(0, 4) });
+                            cartCount++;
+                        }
                         break;
                     case 3:
-                        rails.push({ "RowEnd": end, "RowStart": start, "Column": i });
-                        carts.push({ "Column": i, "Row": randint(start, end) });
+                        if (cartCount < 4) {
+                            rails.push({ "RowEnd": end, "RowStart": start, "Column": i });
+                            carts.push({ "Column": i, "Row": randint(start, end) });
+                            cartCount++;
+                        }
                         break;
                     case 4:
-                        rails.push({ "RowEnd": 4, "RowStart": 3, "Column": i });
-                        rails.push({ "RowEnd": 1, "RowStart": 0, "Column": i });
-                        carts.push({ "Column": i, "Row": randint(3, 4) });
-                        carts.push({ "Column": i, "Row": randint(0, 1) });
+                        if (cartCount < 4) {
+                            rails.push({ "RowEnd": 4, "RowStart": 3, "Column": i });
+                            rails.push({ "RowEnd": 1, "RowStart": 0, "Column": i });
+
+                            if (cartCount < 4) {
+                                carts.push({ "Column": i, "Row": randint(3, 4) });
+                                cartCount++;
+                            }
+                            if (cartCount < 4) {
+                                carts.push({ "Column": i, "Row": randint(0, 1) });
+                                cartCount++;
+                            }
+                        }
                         break;
                     case 5:
-                        rails.push({ "RowEnd": 4, "RowStart": 0, "Column": i });
-                        carts.push({ "Column": i, "Row": start });
-                        carts.push({ "Column": i, "Row": end });
+                        if (cartCount < 4) {
+                            rails.push({ "RowEnd": 4, "RowStart": 0, "Column": i });
+                            carts.push({ "Column": i, "Row": start });
+                            cartCount++;
+                        }
+                        if (cartCount < 4) {
+                            carts.push({ "Column": i, "Row": end });
+                            cartCount++;
+                        }
                         break;
                     default:
                         break;
                 }
             }
-            objdata.RailcartType = "railcart_cowboy";
+
             objdata.Rails = rails;
             objdata.Railcarts = carts;
             append(objdata, "RailcartProperties", "CowboyRails");
         }
+
 
 
 
@@ -1322,7 +1544,8 @@
                 });
             }
         }
-        function stormAmbush(wave, type, violence) {
+        function stormAmbush(wave, type) {
+            let violence= getViolence(wave);
             let pool = [];
             var basic, imp, conhead, buckethead, brickhead, garg;
             switch (type) {
@@ -1332,7 +1555,7 @@
                     conehead = "mummy_armor1";
                     buckethead = "mummy_armor2";
                     brickhead = "mummy_armor4";
-                    garg = "egypt_gargantuar";
+                    garg = "tomb_raiser";
                     break;
                 case 'pirate':
                     imp = "pirate_imp"
@@ -1454,7 +1677,8 @@
         "TimeBetweenGroups": 1
         */
 
-        function raidingParty(wave, violence) {
+        function raidingParty(wave) {
+            let violence= getViolence(wave);
             let objdata = new Object();
             let times = [1.5, 1.25, 1.0, 0.75, 0.5, 0.25, 0.1];
 
@@ -1484,11 +1708,12 @@
             append0(objdata, 'RaidingPartyZombieSpawnerProps', `wave${wave}ambush`);
         }
 
-        function rain(wave, violence) {
+        function rain(wave) {
             var num = 0;
             var start = 0;
             var end = 0;
             var time = 0;
+            let violence= getViolence(wave);
             switch (violence) {
                 case 0:
                     time = 1.0;
@@ -1533,6 +1758,11 @@
                     name = 'future_imp'
                     message = choice(['Bot Swarm!', 'Fallen Technologie!'])
                     break;
+                case 'Harvest':
+                    objclass = 'SpiderRainZombieSpawnerProps'
+                    name = 'harvest_imp'
+                    message = 'Feather Falling!'
+                    break;
                 case 'LostCity':
                     objclass = 'ParachuteRainZombieSpawnerProps'
                     name = 'lostcity_lostpilot'
@@ -1566,7 +1796,7 @@
         function necromancy(wave, violence) {
             let objdata = new Object();
             objdata.AdditionalPlantfood = '0';
-            objdata.GridTypes = ["RTID(gravestone_dark@GridItemTypes)", "RTID(gravestoneSunOnDestruction@GridItemTypes)"];
+            objdata.GridTypes = ["RTID(gravestone_dark@GridItemTypes)"];
             objdata.WaveStartMessage = '[WARNING_GRAVESTONE_SPAWN]';
             objdata.ZombieSpawnWaitTime = '1';
             objdata.Zombies = stormAmbush(wave, 'dark', violence);
@@ -1597,8 +1827,7 @@
             let objdata = new Object();
             objdata.GravestonePool = [
                 { "Count": Math.abs(regular), "Type": "RTID(gravestone_dark@GridItemTypes)" },
-                { "Count": Math.abs(sun), "Type": "RTID(gravestoneSunOnDestruction@GridItemTypes)" },
-                { "Count": Math.abs(sun), "Type": "RTID(gravestonePlantfoodOnDestruction@GridItemTypes)" }
+                { "Count": Math.abs(sun), "Type": "RTID(gravestoneSunOnDestruction@GridItemTypes)" }
             ]
             objdata.SpawnEffectAnimID = 'POPANIM_EFFECTS_TOMBSTONE_DARK_SPAWN_EFFECT';
             objdata.SpawnPositionsPool = [{ "mX": 1, "mY": 0 }, { "mX": 1, "mY": 1 }, { "mX": 1, "mY": 2 }, { "mX": 1, "mY": 3 }, { "mX": 1, "mY": 4 }, { "mX": 2, "mY": 0 }, { "mX": 2, "mY": 1 }, { "mX": 2, "mY": 2 }, { "mX": 2, "mY": 3 }, { "mX": 2, "mY": 4 }, { "mX": 3, "mY": 0 }, { "mX": 3, "mY": 1 }, { "mX": 3, "mY": 2 }, { "mX": 3, "mY": 3 }, { "mX": 3, "mY": 4 }, { "mX": 4, "mY": 0 }, { "mX": 4, "mY": 1 }, { "mX": 4, "mY": 2 }, { "mX": 4, "mY": 3 }, { "mX": 4, "mY": 4 }, { "mX": 5, "mY": 0 }, { "mX": 5, "mY": 1 }, { "mX": 5, "mY": 2 }, { "mX": 5, "mY": 3 }, { "mX": 5, "mY": 4 }, { "mX": 6, "mY": 0 }, { "mX": 6, "mY": 1 }, { "mX": 6, "mY": 2 }, { "mX": 6, "mY": 3 }, { "mX": 6, "mY": 4 }, { "mX": 7, "mY": 0 }, { "mX": 7, "mY": 1 }, { "mX": 7, "mY": 2 }, { "mX": 7, "mY": 3 }, { "mX": 7, "mY": 4 }, { "mX": 8, "mY": 0 }, { "mX": 8, "mY": 1 }, { "mX": 8, "mY": 2 }, { "mX": 8, "mY": 3 }, { "mX": 8, "mY": 4 }];
@@ -1618,55 +1847,66 @@
             if (stage === 'West') {
                 return;
             }
-            let violence;
-            if (wave < 3) {
-                violence = 0;
-            } else if (wave < 6) {
-                violence = 1;
-            } else if (wave < 10) {
-                violence = 2;
-            } else if (wave < 16) {
-                violence = 3;
-            }
-            else violence = 4;
+
             switch (stage) {
                 case 'Modern':
-                    portalSpawn(wave,violence);
+                    portalSpawn(wave);
                     break;
                 case 'Iceage':
-                    ambushRoulette(wave, violence);
+                    ambushRoulette(wave);
                     break;
                 case 'Egypt':
-                    stormAmbush(wave, 'sand', violence);
+                    stormAmbush(wave, 'sand');
                     break;
                 case 'Pirate':
-                    raidingParty(wave, violence);
-                    break;
-                case 'Future':
-                case 'LostCity':
-                    rain(wave, violence);
-                    break;
-                case 'Dark':
-                    ambushRoulette(wave, violence);
+                    raidingParty(wave);
                     break;
                 case `Summer`:
-                    rain(wave, violence)
+                case `Harvest`:
+                case 'Future':
+                case 'LostCity':
+                    rain(wave);
+                    break;
+                case 'Dark':
+                    ambushRoulette(wave);
                     break;
                 case 'Beach':
                     let columns = [9, 8, 7, 6, 5, 4, 3, 2, 1];
                     let index = randint(0, columns.length - 1);
 
-                    // Random zombie selection based on violence level
-                    let zombies = ['beach', 'beach_imp', 'beach_fem_armor1', 'beach_fem']; // Replace with actual zombie types
-                    let zombieCount = randint(1, 3) + violence; // Randomize number of zombies based on violence
-                    let selectedZombies = [];
+                    // Get the violence level based on the wave index
+                    let violence = getViolence(wave); 
 
-                    for (let i = 0; i < zombieCount; i++) {
-                        let zombieIndex = randint(0, zombies.length - 1);
-                        selectedZombies.push(zombies[zombieIndex]);
-                    }
+                    // Random zombie selection based on violence level
+                    let zombies = ['beach_armor1', 'beach_fem']; // Replace with actual zombie types
+                    let zombieCount = 1; // Randomize number of zombies based on violence
+                    let selectedZombies = choice(zombies); // Select a random zombie type
+
+                    // Apply tidal changes for specific waves
+                    append0({
+                        "TidalChange": {
+                            "ChangeAmount": columns[index],  // Change tide based on random column
+                            "ChangeType": "absolute"         // Absolute change type
+                        },
+                    }, 'TidalChangeWaveActionProps', `wave${wave}ambush`);
+
+                    // Spawn zombies with low tide event
+                    append0({
+                        "objclass": "BeachStageEventZombieSpawnerProps",
+                        "objdata": {
+                            "ColumnStart": 5,
+                            "ColumnEnd": 7,
+                            "ZombieCount": zombieCount,      // Number of zombies based on violence level
+                            "GroupSize": 1,
+                            "TimeBetweenGroups": "0.05",
+                            "ZombieName": `${selectedZombies}`, // Selected zombie type
+                            "WaveStartMessage": "Low Tide!"
+                        }
+                    }, 'BeachStageEventZombieSpawnerProps', `wave${wave}ambushExtra`);
 
                     break;
+
+
                 default:
                     break;
             }
@@ -1688,8 +1928,9 @@
             append0(objdata, 'FrostWindWaveActionProps', `wave${wave}ambushExtra`)
         }
 
-        function ambushRoulette(wave, violence) {
+        function ambushRoulette(wave) {
             let diceRoll;
+            let violence= getViolence(wave);
             if (violence > 1) { diceRoll = randint(1, 3); }
             else diceRoll = randint(1, 2);
             switch (diceRoll) {
