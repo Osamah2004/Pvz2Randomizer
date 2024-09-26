@@ -202,7 +202,7 @@
                             "fire_ball","ice_ball","iceage_charred",
                             "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel","roman_medusa","steam_furnace",
                             "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer","roman_healer","roman_shield_pair",
-                            "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser", "pumpkin_scarecrow","roman_shield_pair",
+                            "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser","roman_shield_pair",
                             "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler", "zcorp_racer_chair", "zcorp_consultant","eighties_breakdancer",
                             "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1","roman_ballista","eighties_mc",
                             "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter", "iceage_dodo_veteran", "iceage_hunter_veteran","eighties_glitter",
@@ -240,7 +240,7 @@
                     "fire_ball","ice_ball","iceage_charred",
                     "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel","roman_medusa","steam_furnace",
                     "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer","roman_healer","roman_shield_pair",
-                    "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser", "pumpkin_scarecrow","roman_shield_pair",
+                    "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser","roman_shield_pair",
                     "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler", "zcorp_racer_chair", "zcorp_consultant","eighties_breakdancer",
                     "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1","roman_ballista","eighties_mc",
                     "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter", "iceage_dodo_veteran", "iceage_hunter_veteran","eighties_glitter",
@@ -411,6 +411,10 @@
         }
         if (pool.includes("ra")) {
             basics = ['mummy'];
+        }
+        if (pool.includes("tomb_raiser")) {
+           pool.push("pharaoh");
+           pool.push("explorer");
         }
         if (pool.includes("iceage_hunter")) {
             pool.push("iceage_troglobite");
@@ -1171,6 +1175,7 @@
                 railCarts();
                 break;
             case 'Harvest':
+                chessboard(3,7,["pumpkin_scarecrow","crater",'presentSunOnDestruction','presentPlantfoodOnDestruction','presentPlantOnDestruction','presentPlantOnDestruction_valentines']);
                 railCarts();
                 break;
             case 'Summer':
@@ -1703,6 +1708,10 @@
                 case 4:
                     objdata.TimeBetweenGroups = times[6];
                     objdata.SwashbucklerCount = randint(10, difficulty/2 + 13);
+                    break;
+                default:
+                    objdata.TimeBetweenGroups = times[6];
+                    objdata.SwashbucklerCount = randint(2, difficulty/2 + 14);
                     break;
             }
             append0(objdata, 'RaidingPartyZombieSpawnerProps', `wave${wave}ambush`);
