@@ -443,6 +443,13 @@ tr:hover {
   background-color: #4a4e57; /* Hover effect for rows */
 }
 
+.variable-value {
+  text-align: center;
+  color: #4f210c;
+}
+.variable-name {
+  color: #311800;
+}
 
 
 /* Add this to your existing CSS */
