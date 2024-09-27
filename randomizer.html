@@ -185,7 +185,7 @@
         }
 
 
-        let interval = Math.min(15,randint(5,difficulty+1));
+        let interval = Math.min(8,15);
         let minWaves = 3;
         let maxWaves = 5;
 
@@ -874,9 +874,7 @@
             "veteran_dark", "veteran_future", "modern_rally", "eighties_8bit"
         ];
         function portalSpawn(wav) {
-            let row = randint(0, 8);
             let portals = [];
-            let column = [];
             let maxportal = randint(1,difficulty);
             let portalNum = 1;  // Default to 1 portal if not specified
             let violence = getViolence(wav);
@@ -889,19 +887,19 @@
                     portals = sample(easyPortalTypes.concat(normalPortalTypes), randint(1, 2));
                     break;
                 case 2:
-                    portals = sample(easyPortalTypes.concat(normalPortalTypes), randint(2, 3));
+                    portals = sample(easyPortalTypes.concat(normalPortalTypes), randint(1, 3));
                     break;
                 case 3:
                     portals = sample(easyPortalTypes.concat(normalPortalTypes), randint(3, 4));
-                    portalNum = randint(0, 4);
+                    portalNum = randint(0, 2);
                     break;
                 case 4:
-                    portals = sample(easyPortalTypes.concat(hardPortalTypes), randint(4, 6));
-                    portalNum = randint(3, 6);
+                    portals = sample(easyPortalTypes.concat(hardPortalTypes), randint(2, 4));
+                    portalNum = randint(1, 3);
                     break;
                 default:
-                    portals = sample(hardPortalTypes.concat(veteranPortalTypes), randint(7, 12));
-                    portalNum = randint(0,6);
+                    portals = sample(hardPortalTypes.concat(veteranPortalTypes), randint(5, 9));
+                    portalNum = randint(0,difficulty);
                     break;
             }
             portalNum=Math.min(portalNum,maxportal);
@@ -911,58 +909,144 @@
         // Function to create and configure the modern stage
         function modernStage() {
             const waveConfigs = Array(total).fill([]);  // Initialize waves as empty arrays
-            let row=8;
-            let column = 2;
+            let row, column;
+            let portalCooldown = 0;  // Cooldown to prevent portals from spawning too often
+
             for (let waveIndex = 1; waveIndex < total; waveIndex++) {  // Start from wave 1
                 let violence = getViolence(waveIndex) / 7;  // Scale violence
-                const {portals, portalNum } = portalSpawn(violence);
 
-                // Determine the number of portals to add based on waveIndex and difficulty
-                let numPortalsToAdd = Math.min(10,portalNum); // Scale from 3 portals upwards as waveIndex and violence increase
+                // Coinflip decides whether to spawn rain or portals
+                if (coinFlip()) {
+                    // If Coinflip returns true, spawn rain for the wave
+                    const rainConfig = modernRain(waveIndex);  // Generate the rain configuration
 
-                // Ensure at least 1 portal spawns if the wave is over the interval or difficulty is high enough
-                if (waveIndex >= interval || violence >= Math.random()) {
-                    const wavePortals = [];
+                    // Store the rain for this wave (similar to how portals are stored)
+                    waveConfigs[waveIndex] = rainConfig;
+                } else {
+                    // Otherwise, proceed with portal spawning logic
+                    const { portals, portalNum } = portalSpawn(violence);
 
-                    // Add portals to this wave
-                    for (let i = 0; i < numPortalsToAdd; i++) {
-                        row = randint(0,4);
-                        column = randint(4,8);
-                        const portalId = `PortalSpawn${waveIndex}_${column}${row}`;
-                        wavePortals.push(`RTID(${portalId}@.)`);
+                    // Adjust how often portals spawn by adding a cooldown and adjusting the threshold
+                    let numPortalsToAdd = Math.min(10, portalNum); // Cap portal numbers
+                    let portalThreshold = violence * 0.75;  // Make violence threshold higher to reduce portal spawn
 
-                        // Append new portal configuration for spawning
-                        append0({
-                            "PortalColumn": column,
-                            "PortalRow": row,
-                            "PortalType": portals[randint(0,portals.length-1)],
-                        }, 'SpawnModernPortalsWaveActionProps', portalId);
+                    // If portalCooldown is active, skip portal spawning this wave
+                    if (portalCooldown > 0) {
+                        portalCooldown--;
+                        continue;
                     }
 
-                    // Add the portals generated to the waveConfigs
-                    waveConfigs[waveIndex] = wavePortals;
+                    // Conditionally spawn portals based on violence level and cooldown
+                    if ((waveIndex >= interval || violence >= Math.random()) && violence > portalThreshold) {
+                        const wavePortals = generatePortals(waveIndex, portals, numPortalsToAdd);
 
-                    // Chance to append additional portals if the difficulty and wave index are high enough
-                    if (waveIndex > Math.floor(total / 2) && violence > Math.random()) {
-                        let extraPortals = Math.floor(Math.random() * (10 - numPortalsToAdd));  // Chance to add more portals
-                        for (let i = 0; i < numPortalsToAdd; i++) {
-                            row = randint(0,4);
-                            column = randint(3,8);
-                            const portalId = `PortalSpawn${waveIndex}_${column}${row}`;
-                            wavePortals.push(`RTID(${portalId}@.)`);
+                        // Store the portals for this wave
+                        waveConfigs[waveIndex] = wavePortals;
 
-                            // Append new portal configuration for spawning
-                            append0({
-                                "PortalColumn": column,
-                                "PortalRow": row,
-                                "PortalType": portals[randint(0,portals.length-1)],
-                            }, 'SpawnModernPortalsWaveActionProps', portalId);
+                        // Apply a cooldown of 2-3 waves before portals can spawn again
+                        portalCooldown = randint(0, 3);
+
+                        // Chance for additional portals if in second half of the stage
+                        if (waveIndex > Math.floor(total / 2) && violence > Math.random()) {
+                            let extraPortals = Math.floor(Math.random() * (5 - numPortalsToAdd));  // Reduced extra portals
+                            wavePortals.push(...generatePortals(waveIndex, portals, extraPortals));
                         }
                     }
                 }
             }
-            updateWaveManager(waveConfigs);
+            updateWaveManager(waveConfigs);  // Update wave manager with wave configurations
         }
+        function modernRain(wave) {
+            var num = 0;
+            var start = 0;
+            var end = 0;
+            var time = 0;
+            let violence = getViolence(wave);
+
+            switch (violence) {
+                case 0:
+                    time = 1.5;
+                    start = 6;
+                    end = 8;
+                    num = randint(1, 2);
+                    break;
+                case 1:
+                    time = 1.25;
+                    start = 5;
+                    end = 7;
+                    num = randint(0, 4);
+                    break;
+                case 2:
+                    time = 1.05;
+                    start = 3;
+                    end = 6;
+                    num = randint(4, 5);
+                    break;
+                case 3:
+                    time = 1;
+                    start = 3;
+                    end = 6;
+                    num = randint(3, 7);
+                    break;
+                case 4:
+                    time = 0.5;
+                    start = 2;
+                    end = 6;
+                    num = randint(5, difficulty);
+                    break;
+                default:
+                    time = 0.25;
+                    start = 2;
+                    end = 6;
+                    num = randint(3, difficulty);
+            }
+
+            let objclass, name, message;
+
+            objclass = 'SpiderRainZombieSpawnerProps';
+            name = 'modern_superfanimp';
+            message = 'Bombimp !';
+
+            // Create rain configuration object
+            let rainConfig = {
+                ColumnStart: start,
+                ColumnEnd: end,
+                SpiderCount: num,
+                TimeBetweenGroups: `${time}`,
+                ZombieFallTime: `${time}`,
+                SpiderZombieName: name,
+                WaveStartMessage: message
+            };
+
+            append0(rainConfig, objclass, `wave${wave}ambush`);
+
+            // Properly return the correct RTID format without extra quotes
+            return [`RTID(wave${wave}ambush@.)`];
+        }
+
+
+
+        function generatePortals(waveIndex, portals, numPortals) {
+            const wavePortals = [];
+
+            for (let i = 0; i < numPortals; i++) {
+                const row = randint(0, 4);
+                const column = randint(4, 8);
+                const portalId = `PortalSpawn${waveIndex}_${column}${row}`;
+
+                wavePortals.push(`RTID(${portalId}@.)`);
+
+                // Append new portal configuration for spawning
+                append0({
+                    "PortalColumn": column,
+                    "PortalRow": row,
+                    "PortalType": portals[randint(0, portals.length - 1)],
+                }, 'SpawnModernPortalsWaveActionProps', portalId);
+            }
+
+            return wavePortals;
+        }
+
 
 
 
@@ -1164,6 +1248,9 @@
             case 'Modern':
                 if (coinFlip()){
                     initialZombiePlacement(3, 7, pool, randint(2, 3));
+                }
+                if (coinFlip()){
+                    railCarts();
                 }
                 chessboard(1, 8, ['goldtile','tar','goldtile','goldtile','gravestone_tutorial','gravestone_tutorial','gravestone_tutorial','gravestone_tutorial','gravestone_tutorial','surfboard', 'gravestoneSunOnDestruction','bufftile_attack','bufftile_speed','bufftile_shield']);
                 break;
@@ -1429,12 +1516,8 @@
 
             // Available minecart types
             let railcartTypes = [
-                "railcart_tutorial", // Modern
                 "railcart_cowboy",   // Cowboy
-                "railcart_egypt",    // Egypt
-                "railcart_pirate",   // Pirate
                 "railcart_future",   // Future
-                "railcart_steam"     // Steam Age
             ];
 
             // Randomly select a railcart type for this wave
@@ -1620,7 +1703,7 @@
             let end = 0;
 
             switch (violence) {
-                case 0:
+                case 0: // Low violence, fewer zombies
                     pool = [basic];
                     start = 6;
                     end = 8;
@@ -1633,46 +1716,48 @@
                     num = randint(1, difficulty);
                     break;
                 case 2:
-                    pool = [basic, imp, imp, conehead];
+                    pool = [basic, imp, conehead, buckethead];
                     start = 4;
                     end = 7;
                     num = randint(2, difficulty + 1);
                     break;
                 case 3:
-                    pool = [imp, conehead, imp, buckethead, garg];
+                    pool = [imp, conehead, buckethead, garg];
                     start = 3;
                     end = 6;
-                    num = randint(3, difficulty + 2);
+                    num = randint(3, difficulty + 3);
                     break;
-                case 4:
-                    pool = [buckethead, basic, buckethead,imp, brickhead, brickhead, brickhead, garg];
-                    start = 2;
-                    end = 6;
-                    num = randint(4, difficulty + 4);
-                    break;
+                case 4: // High violence, more zombies
                 default:
-                    pool = [buckethead, basic, buckethead,imp, brickhead, brickhead, brickhead, garg];
+                    pool = [buckethead, brickhead, imp, garg];
                     start = 2;
                     end = 6;
-                    num = randint(4, difficulty + 4);
+                    num = randint(4, difficulty + 5);
                     break;
             }
-            let objdata = new Object();
-            objdata.AdditionalPlantfood = "0",
-                objdata.Type = `${type}storm`,
-                objdata.ColumnStart = start,
-                objdata.ColumnEnd = end,
-                objdata.TimeBetweenGroups = 0.5,
-                objdata.GroupSize = randint(1,3);
-            let temp = [];
+
+            // Add object data for spawning storm zombies
+            let objdata = {
+                AdditionalPlantfood: 0,
+                Type: `${type}storm`,
+                ColumnStart: start,
+                ColumnEnd: end,
+                TimeBetweenGroups: 0.5,
+                GroupSize: randint(1, 3),
+                Zombies: []
+            };
+
+            // Populate zombies based on the pool
             for (let i = 0; i < num; i++) {
-                temp.push({ "Type": `RTID(${choice(pool)}@ZombieTypes)` });
+                objdata.Zombies.push({ "Type": `RTID(${choice(pool)}@ZombieTypes)` });
             }
-            objdata.Zombies = temp;
+
+            // Return pool for dark type storms
             if (type == 'dark') {
                 return pool;
-                
             }
+
+            // Append the storm ambush to the wave
             append0(objdata, "StormZombieSpawnerProps", `wave${wave}ambush`);
         }
 
@@ -1725,40 +1810,40 @@
             let violence= getViolence(wave);
             switch (violence) {
                 case 0:
-                    time = 1.0;
+                    time = 1.5;
                     start = 6;
                     end = 8;
                     num = randint(1, 2);
                     break;
                 case 1:
-                    time = 1.5;
+                    time = 1.25;
                     start = 5;
                     end = 7;
                     num = randint(2, 4);
                     break;
                 case 2:
-                    time = 1.5;
+                    time = 1.05;
                     start = 3;
                     end = 6;
-                    num = randint(4, 7);
+                    num = randint(4, 5);
                     break;
                 case 3:
-                    time = 1.5;
+                    time = 1;
                     start = 3;
                     end = 6;
-                    num = randint(6, 9);
+                    num = randint(3, 7);
                     break;
                 case 4:
-                    time = 1.5;
+                    time = 0.5;
                     start = 2;
                     end = 6;
-                    num = randint(8, 14);
+                    num = randint(5, difficulty);
                     break;
                 default:
-                    time = 1.1;
+                    time = 0.25;
                     start = 2;
                     end = 6;
-                    num = randint(8, 20);
+                    num = randint(3, difficulty);
             }
             let objclass, name, message;
             switch (stage) {
@@ -1769,13 +1854,18 @@
                     break;
                 case 'Harvest':
                     objclass = 'SpiderRainZombieSpawnerProps'
-                    name = 'harvest_imp'
+                    name = choice(['harvest_imp','spring_imp'])
                     message = 'Feather Falling!'
                     break;
                 case 'LostCity':
                     objclass = 'ParachuteRainZombieSpawnerProps'
-                    name = 'lostcity_lostpilot'
-                    message = 'Parachute Rain!'
+                    name = choice(['lostcity_lostpilot','lostcity_lostpilot',"zcorp_helpdesk"])
+                    if (name == "zcorp_helpdesk"){
+                        message = 'inzanity support!'
+                    }
+                    else {
+                        message = 'Parachute Rain!'
+                    }
                     break;
                 case 'Summer':
                     objclass = 'SpiderRainZombieSpawnerProps'
