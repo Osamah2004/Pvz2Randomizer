@@ -501,13 +501,7 @@
             "halloween_breakdancer",
             "stpatrick_breakdancer",
             "space_dancer",
-            "space_dancer_8bit",
-            "eighties_gargantuar_8bit",
             "stpatrick_gargantuar_metal",
-            "eighties_boombox_8bit",
-            "summer_boombox",
-            "summer_boombox_ballad",
-            "mashup_arcade",
             "mashup_arcade_spongebob"
 
         ];
@@ -772,6 +766,17 @@
 
             // Select dinos from the pool
             let dinos = sample(["raptor", "ptero", "stego", "tyranno", "ankylo"], k);
+            if ("ptero" in dinos){
+                pool.push('dino_armor1');
+                pool.push('dino_armor2');
+                pool.push('dino_armor3');
+                pool.push('dino_bully');
+            }
+            else{
+                pool.push('dino_armor3');
+                pool.push('dino_bully_blue');
+                pool.push('dino_bully');
+            }
 
             // Create DinoWaveActionProps for each row (5 rows) and for the selected dinos
             for (let i = 0; i < 5; i++) {
@@ -780,24 +785,36 @@
                 }
             }
 
-            // Initialize the waves
-            var waveOfEmptyWaves = [];
-            for (let i = 1; i <= total; i++) {
+            // Initialize the waves or single wave based on stage
+            if (stage === 'Modern') {
                 var emptyWave = [];
 
-                // Dino ambush logic for every interval-th wave and random waves
-                if (i % interval === 0 || randint(1, 3) === 3) {
-                    for (let j = 0; j < getViolence(i); j++) {
-                        emptyWave.push(`${rtid(choice(dinos) + randint(0, 4), '.')}`);
-                    }
+                // Dino ambush logic for a single wave
+                for (let j = 0; j < getViolence(1); j++) {
+                    emptyWave.push(`${rtid(choice(dinos) + randint(0, 4), '.')}`);
                 }
 
-                // Add the empty wave to the wave list
-                waveOfEmptyWaves.push(emptyWave);
-            }
+                return emptyWave;  // Return a single wave for Modern stage
+            } else {
+                var waveOfEmptyWaves = [];
+                for (let i = 1; i <= total; i++) {
+                    var emptyWave = [];
 
-            return waveOfEmptyWaves;
+                    // Dino ambush logic for every interval-th wave and random waves
+                    if (i % interval === 0 || randint(1, 3) === 3) {
+                        for (let j = 0; j < getViolence(i); j++) {
+                            emptyWave.push(`${rtid(choice(dinos) + randint(0, 4), '.')}`);
+                        }
+                    }
+
+                    // Add the empty wave to the wave list
+                    waveOfEmptyWaves.push(emptyWave);
+                }
+
+                return waveOfEmptyWaves;  // Return multiple waves for non-Modern stages
+            }
         }
+
 
 
 
@@ -915,15 +932,15 @@
             for (let waveIndex = 1; waveIndex < total; waveIndex++) {  // Start from wave 1
                 let violence = getViolence(waveIndex) / 7;  // Scale violence
 
-                // Coinflip decides whether to spawn rain or portals
-                if (coinFlip()) {
-                    // If Coinflip returns true, spawn rain for the wave
-                    const rainConfig = modernRain(waveIndex);  // Generate the rain configuration
+                // Coinflip decides whether to spawn rain, portals, or dinos
+                let eventType = randint(0, 2);  // 0: Rain, 1: Portals, 2: Dinos
 
-                    // Store the rain for this wave (similar to how portals are stored)
+                if (eventType === 0) {
+                    // Spawn rain for the wave
+                    const rainConfig = modernRain(waveIndex);  // Generate the rain configuration
                     waveConfigs[waveIndex] = rainConfig;
-                } else {
-                    // Otherwise, proceed with portal spawning logic
+                } else if (eventType === 1) {
+                    // Spawn portals for the wave
                     const { portals, portalNum } = portalSpawn(violence);
 
                     // Adjust how often portals spawn by adding a cooldown and adjusting the threshold
@@ -939,23 +956,19 @@
                     // Conditionally spawn portals based on violence level and cooldown
                     if ((waveIndex >= interval || violence >= Math.random()) && violence > portalThreshold) {
                         const wavePortals = generatePortals(waveIndex, portals, numPortalsToAdd);
-
-                        // Store the portals for this wave
                         waveConfigs[waveIndex] = wavePortals;
-
-                        // Apply a cooldown of 2-3 waves before portals can spawn again
-                        portalCooldown = randint(0, 3);
-
-                        // Chance for additional portals if in second half of the stage
-                        if (waveIndex > Math.floor(total / 2) && violence > Math.random()) {
-                            let extraPortals = Math.floor(Math.random() * (5 - numPortalsToAdd));  // Reduced extra portals
-                            wavePortals.push(...generatePortals(waveIndex, portals, extraPortals));
-                        }
+                        portalCooldown = randint(0, 3);  // Cooldown before portals can spawn again
                     }
+                } else if (eventType === 2) {
+                    // Spawn dinos for the wave
+                    const dinoWave = dinoStage();  // Generate the dino configuration
+                    waveConfigs[waveIndex] = dinoWave;
                 }
             }
+
             updateWaveManager(waveConfigs);  // Update wave manager with wave configurations
         }
+
         function modernRain(wave) {
             var num = 0;
             var start = 0;
@@ -1003,9 +1016,34 @@
 
             let objclass, name, message;
 
-            objclass = 'SpiderRainZombieSpawnerProps';
-            name = 'modern_superfanimp';
-            message = 'Bombimp !';
+            objclass = choice(['SpiderRainZombieSpawnerProps','ParachuteRainZombieSpawnerProps']);
+            if (objclass =='SpiderRainZombieSpawnerProps'){
+
+                
+                let impType = ['modern_superfanimp', 'tutorial_imp', 'future_imp',choice(imps)][Math.floor(Math.random() * 3)];
+                name = impType;
+                // Determine the name and message based on the imp type
+                if (impType === 'modern_superfanimp') {
+                    message = 'Bomb Imp!';
+                } else if (impType === 'tutorial_imp') {
+                    message = 'Imp Rain!';
+                } else if (impType === 'future_imp') {
+                    message = Math.random() < 0.5 ? 'Fallen Technology' : 'Spider Rain';
+                    message = `${message}!`;
+                }
+                else{
+                    message = 'Bag of imps !';
+                }
+            }
+            else{
+                name = choice(['lostcity_lostpilot',"zcorp_helpdesk"])
+                    if (name == "zcorp_helpdesk"){
+                        message = 'inzanity support!'
+                    }
+                    else {
+                        message = 'Parachute Rain!'
+                    }
+            }
 
             // Create rain configuration object
             let rainConfig = {
@@ -1095,7 +1133,8 @@
         }
 
         let cappedStartingPoints = randint(150,difficulty*50);
-        let cappedPointIncrement = randint(10,70*difficulty);
+        let cappedPointIncrement = randint(150,55*difficulty);
+        console.log(cappedPointIncrement)
 
 
 
@@ -1109,6 +1148,11 @@
         escalation.StartingPoints = cappedStartingPoints;
         escalation.PointIncrementPerWave = cappedPointIncrement;
         escalation.WaveManagerProps = "RTID(WaveManager@CurrentLevel)";
+
+        if (pool.length > 20) {
+            pool = pool.slice(0, 20);
+        }
+
         escalation.ZombiePool = pool;
 
 
@@ -1402,25 +1446,23 @@
             return index;
         }
 
-        function chessboard(start, end, typeName, num = randint(0, 20)) {
+        function chessboard(start, end, typeName, num = randint(3, 20)) {
             let grids = [];
             let occupied = new Set();
-            let columnSliders = {};  // Tracks the sliders in each column for backward connection checking
+            let columnSliders = {};  // Tracks sliders in each column for backward connection checking
 
-            // Helper function to check if there is a valid path leading back to a previous slider
+            // Helper function to check if there's a valid path leading back to a previous slider
             function isValidSliderPlacement(gridX, gridY) {
-                // Check all columns to the left of the current position (GridX = gridX, GridY = gridY)
                 for (let j = gridX - 1; j >= start; j--) {
-                    // Check if there is a slider in the same row leading backward
                     let leftSlider = columnSliders[j] ? columnSliders[j].find(slider => slider.GridY === gridY) : null;
                     if (leftSlider) {
-                        return true;  // Valid path exists, so slider can be placed
+                        return true;  // Valid backward path exists
                     }
                 }
-                return false;  // No valid path, cannot place a second slider here
+                return false;  // No backward path, cannot place slider here
             }
 
-            // Place the grid items
+            // Place grid items
             while (grids.length < num) {
                 let i = randint(0, 4);  // Row (Y-coordinate)
                 let j = randint(start, end);  // Column (X-coordinate)
@@ -1429,31 +1471,31 @@
                 let validSliderPlacement = true;
 
                 if (!occupied.has(posStr)) {
-                    // If it's Modern or Iceage stage, allow sliders and other grid items
+                    // Modern and Iceage stages allow sliders and grid items
                     if (stage === 'Modern' || stage === 'Iceage') {
                         let randomType = Math.random();
-                        let shouldPlaceSlider = randomType < 0.3;  // 30% chance to place a slider, rest are normal items
+                        let shouldPlaceSlider = randomType < 0.3;  // 30% chance to place a slider
 
                         if (shouldPlaceSlider) {
                             let sliderType;
-                            
-                            // Determine slider direction (up or down)
+
+                            // Determine slider direction
                             if (randomType < 0.15) {
                                 sliderType = (stage === 'Modern') ? 'slider_down_modern' : 'slider_down';  // Slider Down
-                                if (i === 4) validSliderPlacement = false;  // Cannot place down sliders in row 4 (Y-axis restriction)
+                                if (i === 4) validSliderPlacement = false;  // Can't place slider down in Y = 4
                             } else {
                                 sliderType = (stage === 'Modern') ? 'slider_up_modern' : 'slider_up';  // Slider Up
-                                if (i === 0) validSliderPlacement = false;  // Cannot place up sliders in row 0 (Y-axis restriction)
+                                if (i === 0) validSliderPlacement = false;  // Can't place slider up in Y = 0
                             }
 
-                            // Check if there is a valid backward path before placing the second slider
+                            // Check if placing another slider in the same Y row requires a valid backward path
                             if (columnSliders[j] && columnSliders[j].length >= 1) {
                                 if (!isValidSliderPlacement(j, i)) {
                                     validSliderPlacement = false;  // Disallow if no backward path leads to this slider
                                 }
                             }
 
-                            // If placement is valid, add the slider to the grid and update columnSliders
+                            // Place slider if valid
                             if (validSliderPlacement) {
                                 grids.push({ ...pos, "TypeName": sliderType });
                                 if (!columnSliders[j]) columnSliders[j] = [];
@@ -1462,13 +1504,13 @@
                             }
 
                         } else {
-                            // Otherwise, place a regular grid item from typeName array
+                            // Place regular grid item
                             grids.push({ ...pos, "TypeName": choice(typeName) });
                             occupied.add(posStr);
                         }
 
                     } else {
-                        // For other stages, just place normal grid items from typeName array
+                        // For other stages, place normal grid items from typeName
                         grids.push({ ...pos, "TypeName": choice(typeName) });
                         occupied.add(posStr);
                     }
@@ -1476,10 +1518,11 @@
             }
 
             // Finalize grid placements
-            let objdata = new Object();
+            let objdata = {};
             objdata.InitialGridItemPlacements = grids;
             append(objdata, "InitialGridItemProperties", "GI");
         }
+
 
 
 
