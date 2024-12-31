@@ -276,12 +276,12 @@
         }
 
         specials.push(...extraSpecials());
-        let part ="harvest";
+        let part ="carnie";
         let bots = ["steam_clockwork","iceage_dodo_veteran","hero_zmech","steam_mechanic","steam_repairimp","future_imp","future_protector_generator","future_gargantuar","mech_cone","disco_mech","future_protector","west_bull","west_bull_veteran"]
         let basics = ["tutorial","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", part,part,part,part, part,part,part,part, "steam_miner", "steam"];
         let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp","zcorp_imp","zcorp_imp"];
         let gargs = ["egypt_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar"]
-        let validArmor4 = ["tutorial","iceage","eighties","beach","zcorp", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
+        let validArmor4 = ["tutorial","carnie","iceage","eighties","beach","zcorp", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
         
         let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran", "spongebob_vi", "spongebob_vi_armor1", "spongebob_vi_armor2", "seagull", "steam_inventor"];
         let stage = ["Modern", "Egypt", "Pirate", "West", "Future", "Beach", "Iceage", "LostCity", "Eighties", "Dino","Harvest"];
@@ -1685,7 +1685,7 @@
                     imp = "egypt_imp"
                     conehead = "mummy_armor1";
                     buckethead = "mummy_armor2";
-                    brickhead = "mummy_armor4";
+                    brickhead = "ra";
                     garg = "tomb_raiser";
                     break;
                 case 'pirate':
@@ -1748,13 +1748,13 @@
             switch (violence) {
                 case 0: // Low violence, fewer zombies
                     pool = [basic];
-                    start = 6;
+                    start = 4;
                     end = 8;
                     num = 1;
                     break;
                 case 1:
                     pool = [basic, imp, conehead];
-                    start = 5;
+                    start = 4;
                     end = 7;
                     num = randint(1, difficulty);
                     break;
@@ -1762,20 +1762,20 @@
                     pool = [basic, imp, conehead, buckethead];
                     start = 4;
                     end = 7;
-                    num = randint(2, difficulty + 1);
+                    num = randint(1, difficulty + 1);
                     break;
                 case 3:
                     pool = [imp, conehead, buckethead, garg];
                     start = 3;
                     end = 6;
-                    num = randint(3, difficulty + 3);
+                    num = randint(1, difficulty + 3);
                     break;
                 case 4: // High violence, more zombies
                 default:
                     pool = [buckethead, brickhead, imp, garg];
-                    start = 2;
+                    start = 4;
                     end = 6;
-                    num = randint(4, difficulty + 5);
+                    num = randint(1, difficulty + 1);
                     break;
             }
 
