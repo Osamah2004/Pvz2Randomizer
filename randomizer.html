@@ -376,7 +376,7 @@
 
         // Special logic for difficulty higher than 40
         
-        if (difficulty > 4) {
+        if (difficulty >= 4) {
             pool.push("hero_zmech");
             if (Math.random()*10 <= 50) {  // 50% chance to use the miniboss pool
                 pool = minibossPool;
