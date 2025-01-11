@@ -356,7 +356,7 @@
             "hero_crystalskull",
             "feastivus_multplicity",
             "mashup_arcade",
-            "mashup_arcade_cabinet_miniboss",
+            "iceage_chief_miniboss_phase1",
             "hero_electricboogaloo",
             "hero_armor1",
             "hero_armor2",
@@ -379,7 +379,7 @@
         if (difficulty >= 4) {
             pool.push("hero_zmech");
             if (Math.random()*10 <= 50) {  // 50% chance to use the miniboss pool
-                pool = minibossPool;
+                pool = sample(minibossPool,5);
             }
         }
         switch (stage) {
