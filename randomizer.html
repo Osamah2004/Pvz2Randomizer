@@ -115,10 +115,17 @@
         if (localStorage.getItem('difficulty') != null){
             document.getElementById('difficulty').selectedIndex = localStorage.getItem('difficulty')
         }
-        function updateDifficultyText(value){
-            localStorage.setItem('difficulty',value);
-            reload();
-        }
+        function updateDifficultyText(selectElement) {
+        // Get the selected option text
+        const difficultyText = selectElement.options[selectElement.selectedIndex].text;
+
+        // Save the difficulty value to localStorage
+        localStorage.setItem('difficulty', selectElement.value);
+
+        // Update the display
+        // Reload the page if needed
+        reload();
+    }
 
         function copyCode() {
             const text = JSON.stringify(level, null, 2); // Converts the object to a formatted JSON string
@@ -199,22 +206,19 @@
             switch (mod) {
                 case 'rfl':
                     return [
-                            "fire_ball","ice_ball","iceage_charred",
-                            "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel","roman_medusa","steam_furnace",
-                            "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer","roman_healer","roman_shield_pair",
-                            "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser","roman_shield_pair",
-                            "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler", "zcorp_racer_chair", "zcorp_consultant","eighties_breakdancer",
-                            "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1","roman_ballista","eighties_mc",
-                            "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter", "iceage_dodo_veteran", "iceage_hunter_veteran","eighties_glitter",
-                            "eighties_arcade", "eighties_arcade_basic", "iceage_weaselhoarder_veteran", "iceage_chief", "iceage_chief_veteran","eighties_punk",
-                            "eighties_boombox", "dino_bully", "dino_bully_veteran", "dino_bully_blue", "dino_pterry", "iceage_troglobite_basic", "modern_newspaper", "modern_balloon", "modern_allstar",
-                            "prospector", "west_bull", "west_bull_veteran", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack", "future_jetpack_disco", "dark_explorer", "explorer_veteran",
-                            "lostcity_explorer", "barrelroller_explosive", "halloween_ghost", "future_protector_generator", "general_treadmill_phase2", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic",
-                            "carnie_stiltwalker","carnie_firebreather","carnie_cannon","carnie_magician","carnie_imp_twins","harvest_outhouse","harvest_pitchfork","harvest_eggstealer","harvest_pterry","foodfight_gobbler_king",
-                            "eighties_punk_veteran",
-                            "eighties_breakdancer",
-                            "eighties_arcade"
-                        ];
+                        "fire_ball","ice_ball","iceage_charred",
+                        "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel","roman_medusa","steam_furnace",
+                        "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer","roman_healer","roman_shield_pair",
+                        "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser","roman_shield_pair","carnie_cottoncandy_blue",
+                        "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler", "zcorp_racer_chair", "zcorp_consultant","eighties_breakdancer",
+                        "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1","roman_ballista","eighties_mc","carnie_cottoncandy_pink",
+                        "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter", "iceage_dodo_veteran", "iceage_hunter_veteran","eighties_glitter","carnie_trapeze_duo",
+                        "eighties_arcade", "eighties_arcade_basic", "iceage_weaselhoarder_veteran", "iceage_chief", "iceage_chief_veteran","eighties_punk","carnie_trapeze_quad","carnie_trapeze_trio",
+                        "eighties_boombox", "dino_bully", "dino_bully_veteran", "dino_bully_blue", "dino_pterry", "iceage_troglobite_basic", "modern_newspaper", "modern_balloon", "modern_allstar",
+                        "prospector", "west_bull", "west_bull_veteran", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack", "future_jetpack_disco", "dark_explorer", "explorer_veteran",
+                        "lostcity_explorer", "barrelroller_explosive", "halloween_ghost", "future_protector_generator", "general_treadmill_phase2", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic",
+                        "carnie_stiltwalker","carnie_firebreather","carnie_cannon","carnie_magician","harvest_outhouse","harvest_pitchfork","harvest_eggstealer","harvest_pterry","foodfight_gobbler_king"
+                    ];
                     break;
                 default:
                     return [];
@@ -240,24 +244,24 @@
                     "fire_ball","ice_ball","iceage_charred",
                     "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel","roman_medusa","steam_furnace",
                     "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer","roman_healer","roman_shield_pair",
-                    "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser","roman_shield_pair",
+                    "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser","roman_shield_pair","carnie_cottoncandy_blue",
                     "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler", "zcorp_racer_chair", "zcorp_consultant","eighties_breakdancer",
-                    "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1","roman_ballista","eighties_mc",
-                    "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter", "iceage_dodo_veteran", "iceage_hunter_veteran","eighties_glitter",
-                    "eighties_arcade", "eighties_arcade_basic", "iceage_weaselhoarder_veteran", "iceage_chief", "iceage_chief_veteran","eighties_punk",
+                    "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1","roman_ballista","eighties_mc","carnie_cottoncandy_pink",
+                    "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter", "iceage_dodo_veteran", "iceage_hunter_veteran","eighties_glitter","carnie_trapeze_duo",
+                    "eighties_arcade", "eighties_arcade_basic", "iceage_weaselhoarder_veteran", "iceage_chief", "iceage_chief_veteran","eighties_punk","carnie_trapeze_quad","carnie_trapeze_trio",
                     "eighties_boombox", "dino_bully", "dino_bully_veteran", "dino_bully_blue", "dino_pterry", "iceage_troglobite_basic", "modern_newspaper", "modern_balloon", "modern_allstar",
                     "prospector", "west_bull", "west_bull_veteran", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack", "future_jetpack_disco", "dark_explorer", "explorer_veteran",
                     "lostcity_explorer", "barrelroller_explosive", "halloween_ghost", "future_protector_generator", "general_treadmill_phase2", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic",
-                    "carnie_stiltwalker","carnie_firebreather","carnie_cannon","carnie_magician","carnie_imp_twins","harvest_outhouse","harvest_pitchfork","harvest_eggstealer","harvest_pterry","foodfight_gobbler_king"
+                    "carnie_stiltwalker","carnie_firebreather","carnie_cannon","carnie_magician","harvest_outhouse","harvest_pitchfork","harvest_eggstealer","harvest_pterry","foodfight_gobbler_king"
                 ];
             default:
                 specials = [
                     "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus",
                     "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite",
                     "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser",
-                    "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler",
+                    "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler","feastivus_swashbuckler",
                     "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1",
-                    "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter",
+                    "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter","feastivus_piano","feastivus_poncho",
                     "eighties_boombox", "dino_bully", "modern_newspaper", "modern_balloon", "modern_allstar",
                     "prospector", "west_bull", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack", "future_jetpack_disco"
                 ];
@@ -278,14 +282,14 @@
         specials.push(...extraSpecials());
         let part ="carnie";
         let bots = ["steam_clockwork","iceage_dodo_veteran","hero_zmech","steam_mechanic","steam_repairimp","future_imp","future_protector_generator","future_gargantuar","mech_cone","disco_mech","future_protector","west_bull","west_bull_veteran"]
-        let basics = ["tutorial","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", part,part,part,part, part,part,part,part, "steam_miner", "steam"];
-        let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp","zcorp_imp","zcorp_imp"];
-        let gargs = ["egypt_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar"]
+        let basics = ["tutorial","feastivus","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", part, part, part, part, part, part, part, part, "steam_miner", "steam"];
+        let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp","zcorp_imp","carnie_imp_twins"];
+        let gargs = ["egypt_gargantuar","feastivus_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","carnie_gargantuar"]
         let validArmor4 = ["tutorial","carnie","iceage","eighties","beach","zcorp", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
         
         let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran", "spongebob_vi", "spongebob_vi_armor1", "spongebob_vi_armor2", "seagull", "steam_inventor"];
-        let stage = ["Modern", "Egypt", "Pirate", "West", "Future", "Beach", "Iceage", "LostCity", "Eighties", "Dino","Harvest"];
-        stage.push(...extraStages());
+        let stage = ["Modern","Carnival","ModernPool", "Egypt", "Pirate", "West", "Future", "Beach", "Iceage", "LostCity", "Eighties", "Dino","Harvest"];
+        stage.push(...extraStages());1
         let stageBtn = localStorage.getItem('selectedStage');
 
         for (let i = 0; i < stage.length; i++) {
@@ -708,7 +712,7 @@
             addJamObjects();
         }
 
-        let nonAmbush = ['West', 'Eighties'];
+        let nonAmbush = ['West', 'Eighties',"Carnival","ModernPool"];
         function waveArray() {
             let emptyWave = [];
             let waveOfEmptyWaves = [];
@@ -1221,9 +1225,11 @@
         "Doomed from the start -", 
         "Zombot's sanity -", 
         "The last stand -",
-        "balls -",
+        "ballz -",
+        "being banned sucks -",
+        "a COOL invasion -",
         "no idea for level name -"
-    ]) + stage + " " + difficultyText + " Difficulty";
+    ]) + " " + stage + " - " + difficultyText + " Difficulty";
 
         if (difficulty > 3) {
             if (stage === "Iceage") {
