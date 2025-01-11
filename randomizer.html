@@ -206,7 +206,7 @@
             switch (mod) {
                 case 'rfl':
                     return [
-                        "fire_ball","ice_ball","iceage_charred",
+                        "fire_ball","ice_ball","iceage_charred","beach_fisherman_land",
                         "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel","roman_medusa","steam_furnace",
                         "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer","roman_healer","roman_shield_pair",
                         "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser","roman_shield_pair","carnie_cottoncandy_blue",
@@ -241,7 +241,7 @@
         switch (mod) {
             case 'rfl':
                 specials = [
-                    "fire_ball","ice_ball","iceage_charred",
+                    "fire_ball","ice_ball","iceage_charred","beach_fisherman_land",
                     "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel","roman_medusa","steam_furnace",
                     "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer","roman_healer","roman_shield_pair",
                     "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser","roman_shield_pair","carnie_cottoncandy_blue",
@@ -282,14 +282,14 @@
         specials.push(...extraSpecials());
         let part ="carnie";
         let bots = ["steam_clockwork","iceage_dodo_veteran","hero_zmech","steam_mechanic","steam_repairimp","future_imp","future_protector_generator","future_gargantuar","mech_cone","disco_mech","future_protector","west_bull","west_bull_veteran"]
-        let basics = ["tutorial","feastivus","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", part, part, part, part, part, part, part, part, "steam_miner", "steam"];
+        let basics = ["tutorial","duckytube","feastivus","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem", part, part, part, part, part, part, part, part, "steam_miner", "steam"];
         let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp","zcorp_imp","carnie_imp_twins"];
         let gargs = ["egypt_gargantuar","feastivus_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","carnie_gargantuar"]
-        let validArmor4 = ["tutorial","carnie","iceage","eighties","beach","zcorp", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
+        let validArmor4 = ["tutorial","duckytube","carnie","iceage","eighties","beach","zcorp", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
         
         let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran", "spongebob_vi", "spongebob_vi_armor1", "spongebob_vi_armor2", "seagull", "steam_inventor"];
         let stage = ["Modern","Carnival","ModernPool", "Egypt", "Pirate", "West", "Future", "Beach", "Iceage", "LostCity", "Eighties", "Dino","Harvest"];
-        stage.push(...extraStages());1
+        stage.push(...extraStages());
         let stageBtn = localStorage.getItem('selectedStage');
 
         for (let i = 0; i < stage.length; i++) {
@@ -389,6 +389,12 @@
         switch (stage) {
             case 'Modern':
                 basics = ['tutorial'];
+                break;
+            case "ModernPool":
+                pool.push("duckytube");
+                pool.push("duckytube_armor1");
+                pool.push("duckytube_armor2");
+                pool.push("beach_snorkel");
                 break;
             case 'Iceage':
                 basics = ['iceage'];
