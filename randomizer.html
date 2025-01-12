@@ -1289,8 +1289,25 @@
              waveManager.Waves = modernStage();
         }
         else waveManager.Waves = waveArray();
+        if (stage == "Carnival") {
+            append(
+                {
+                    "RandomPostersLeft": [
+                        "IMAGE_BACKGROUNDS_CARNIVAL_POSTER_BASICS_LEFT",
+                        "IMAGE_BACKGROUNDS_CARNIVAL_POSTER_POTATOCHIP_LEFT"
+                    ],
+                    "RandomPostersRight": [
+                        "IMAGE_BACKGROUNDS_CARNIVAL_POSTER_BASICS_RIGHT",
+                        "IMAGE_BACKGROUNDS_CARNIVAL_POSTER_POTATOCHIP_RIGHT"
+                    ],
+                    "UseRandomPosters": true
+                },
+                "CarniePosterModuleProperties",
+                "CarnieLevelGenPosterModule"
+            );
 
-
+            modules.push("RTID(CarnieLevelGenPosterModule@.)");
+        }
         append(waveManager, "WaveManagerProperties", "WaveManager");
 
         level.objects = objects;
@@ -1642,50 +1659,6 @@
             objdata.Rails = rails;
             objdata.Railcarts = carts;
             append(objdata, "RailcartProperties", "CowboyRails");
-        }
-
-
-
-
-        /*
-        {"aliases":["Sandstorm1_C1"],
-        "objclass": "StormZombieSpawnerProps",
-        "objdata": {
-        objdata.AdditionalPlantfood = "0",
-        objdata.Type = "sandstorm",
-        objdata.ColumnStart = 1,
-        objdata.ColumnEnd = 1,
-        objdata.TimeBetweenGroups = 0.5,
-        objdata.GroupSize = 1,
-            "Zombies": [
-                {"Type": "RTID(tutorial@ZombieTypes)"},
-                {"Type": "RTID(tutorial@ZombieTypes)"}
-            ]
-        }},
-        */
-        function addObjectives() {
-            const survivalTimeObjective = Math.min(10,randint(180/2,(180*difficulty)/2)); // Time in seconds for survival objective
-
-            // Only add objectives if the level has no mowers
-            if (!mowers) {
-                objects.push({
-                    "objclass": "StarChallengeBeatTheLevelProps",
-                    "objdata": {
-                        "Description": "Survive without any lawn mowers",
-                        "DescriptiveName": "Custom Objective"
-                    }
-                });
-            }
-
-            // Check difficulty and add survival timer with 30% chance
-            if (difficulty > 3 && Math.random() < 0.3) {
-                objects.push({
-                    "objclass": "StarChallengeLevelTimerProperties",
-                    "objdata": {
-                        "TimeLimit": survivalTimeObjective
-                    }
-                });
-            }
         }
         function stormAmbush(wave, type) {
             let violence= getViolence(wave);
