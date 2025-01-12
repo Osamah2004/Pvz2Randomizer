@@ -1206,7 +1206,7 @@
              
         }
 
-        if (stage !== 'Dark' && stage !== 'Summer') {
+        if (stage !== 'Dark' || stage !== 'Summer' || stage !== 'Carnival') {
             
             modules.push("RTID(DefaultSunDropper@LevelModules)") ;
         };
@@ -1319,7 +1319,7 @@
                 chessboard(2, 8, ['gravestone_egypt']);
                 break;
             case 'Carnival':
-                createPattern(0, 4, ["carnie_card_sunify", "carnie_card_PFify", "carnie_card_basic", "carnie_card_armor2", "carnie_card_armor4"]);
+                chessboard(0, 4, ["carnie_card_sunify", "carnie_card_PFify", "carnie_card_basic", "carnie_card_armor2", "carnie_card_armor4"]);
                 break;
             case 'Modern':
                 if (coinFlip()){
