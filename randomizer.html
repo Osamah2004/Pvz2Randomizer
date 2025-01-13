@@ -49,7 +49,7 @@
         <h2>Select Difficulty</h2>
         <div class="select-container">
             <label for="difficulty">Difficulty Level:</label>
-            <select id="difficulty" name="difficulty" onchange="updateDifficultyText(this.value)">
+            <select id="difficulty" name="difficulty" onchange="updateDifficultyText(this)">
                 <option hidden defaultSelected>-</option>
                 <option value="1">Easy</option>
                 <option value="2">Normal</option>
@@ -80,13 +80,25 @@
         let violence = 1;
 
         // Generate preview for level variables
+        document.addEventListener('DOMContentLoaded', () => {
+    // Initialize difficulty from localStorage
+        const difficultySelect = document.getElementById("difficulty");
+        if (difficultySelect) {
+            const savedDifficulty = localStorage.getItem('difficulty');
+            if (savedDifficulty !== null) {
+                difficultySelect.value = savedDifficulty;
+            }
+        }
+    });
+
         function generatePreview() {
-            
+            console.log("Generating preview...");
+            console.log({ pool, cappedStartingPoints, cappedPointIncrement, plantfoodToSpawnCount, flags });
+
             let previewContainer = document.getElementById('levelPreview');
             previewContainer.innerHTML = '';
 
             let variablesHTML = `
-
                 <div class="inner-div">
                     <div class="variable-name">Special Pool</div>
                     <div class="variable-value">${pool.join(', ')}</div>
@@ -110,6 +122,19 @@
 
             previewContainer.innerHTML = variablesHTML;
         }
+
+
+        // Update difficulty and save to localStorage
+        function updateDifficultyText(selectElement) {
+            if (!selectElement) return;
+
+            const difficultyText = selectElement.options[selectElement.selectedIndex]?.text || '';
+            localStorage.setItem('difficulty', selectElement.value);
+
+            console.log(`Selected difficulty: ${difficultyText}`);
+            location.reload(); // Reload the page
+        }
+
         let difficulty = localStorage.getItem('difficulty');
         let difficultyText = document.getElementById("difficulty").options[document.getElementById("difficulty").selectedIndex].text;
         if (localStorage.getItem('difficulty') != null){
@@ -1459,6 +1484,15 @@
             localStorage.setItem('filename', selectedFilename);
             localStorage.setItem('stage', selectedStage);
             location.reload();
+        }
+        function updateDifficultyText(selectElement) {
+        if (!selectElement) return;
+
+        const difficultyText = selectElement.options[selectElement.selectedIndex]?.text || '';
+        localStorage.setItem('difficulty', selectElement.value);
+        console.log(`Selected difficulty: ${difficultyText}`);
+
+        reload(); // Refresh the page
         }
 
 
