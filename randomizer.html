@@ -362,13 +362,13 @@
         if (difficulty === 1) { // Easy difficulty
             maxSpecials = randint(2, 4);  // 2-4 specials
         } else if (difficulty <= 3) { // Normal difficulty (2-3)
-            maxSpecials = randint(10, 20);  // 10-20 specials
+            maxSpecials = randint(4, 20);  // 10-20 specials
         } else if (difficulty <= 6) { // Insane difficulty (4-6)
-            maxSpecials = randint(25, 35);  // 25-35 specials
+            maxSpecials = randint(10, 35);  // 25-35 specials
         } else if (difficulty <= 9) { // Crazy difficulty (7-9)
-            maxSpecials = randint(45, 60);  
+            maxSpecials = randint(20, 60);  
         } else { // Johan difficulty (10+)
-            maxSpecials = randint(80, specials.length);  // No limit (all specials)
+            maxSpecials = randint(20, specials.length);  // No limit (all specials)
         }
         // Scale the number of specials to pick based on difficulty, capped by maxSpecials
         let numSpecials = Math.min(randint(1, difficulty * 5), maxSpecials);
@@ -1345,7 +1345,7 @@
                 chessboard(2, 8, ['gravestone_egypt']);
                 break;
             case 'Carnival':
-                chessboard(0, 4, ["carnie_card_sunify", "carnie_card_PFify", "carnie_card_basic", "carnie_card_armor2", "carnie_card_armor4"]);
+                chessboard(0, 8, ["carnie_card_sunify", "carnie_card_PFify", "carnie_card_basic", "carnie_card_armor2", "carnie_card_armor4"],randint(2,5));
                 break;
             case 'Modern':
                 if (coinFlip()){
