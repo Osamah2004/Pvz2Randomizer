@@ -1669,17 +1669,67 @@
 
 
         function powertileBoard(start, end, typeName, num) {
+            // Predefined grid patterns
+            const patterns = [
+                // Pattern 1: 5 grid points
+                [
+                    { GridX: 0, GridY: 0 },
+                    { GridX: 0, GridY: 1 },
+                    { GridX: 0, GridY: 2 },
+                    { GridX: 0, GridY: 3 },
+                    { GridX: 0, GridY: 4 },
+                ],
+                // Pattern 2: 3 grid points
+                [
+                    { GridX: 0, GridY: 0 },
+                    { GridX: 0, GridY: 2 },
+                    { GridX: 0, GridY: 4 },
+                ],
+                // Pattern 3: 2 grid points
+                [
+                    { GridX: 0, GridY: 0 },
+                    { GridX: 0, GridY: 4 },
+                ],
+                // Pattern 4: 1 grid point
+                [
+                    { GridX: 0, GridY: 2 },
+                ],
+                // Pattern 5: 4 grid points
+                [
+                    { GridX: 0, GridY: 3 },
+                    { GridX: 0, GridY: 4 },
+                    { GridX: 0, GridY: 1 },
+                    { GridX: 0, GridY: 0 },
+                ],
+            ];
+
             let grids = [];
+            let patternIndex = 0;  // Start from the first pattern
+
+            // Iterate until we've placed the desired number of grid items
             while (grids.length < num) {
-                let i = randint(0, 4);  // Random Y between 0 and 4 (rows)
-                let j = randint(start, Math.min(end, 7));  // X capped at 7
-                if (grids.length < num) {
-                    let pos = { "GridX": j, "GridY": i };
-                    grids.push({ ...pos, "TypeName": typeName });  // Allowing overlap
+                // Get the current pattern
+                let pattern = patterns[patternIndex];
+
+                // For each grid item in the selected pattern
+                for (let item of pattern) {
+                    if (grids.length >= num) break; // Stop if we've reached the target number of grid items
+
+                    // Randomize the X position within the given range
+                    let randomX = randint(start, end);
+
+                    // Place grid item with random X and pattern's GridY
+                    grids.push({ GridX: randomX, GridY: item.GridY, TypeName: typeName });
+
                 }
+
+                // Move to the next pattern
+                patternIndex = (patternIndex + 1) % patterns.length;
             }
+
             return grids;
         }
+
 
         // Buff tile spawns on the far edge, always at x = 8
         function bufftileBoard(start, end, typeName, num) {
