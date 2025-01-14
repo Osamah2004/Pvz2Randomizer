@@ -769,13 +769,13 @@
                 if (i % interval === 0) {
                     waveOfEmptyWaves.push([rtid(`wave${i}ambush`, '.')]);
                     ambush(i);
-                    if (['Dark', 'Iceage'].includes(stage)) {
+                    if (['Dark', 'Iceage',"Xmas"].includes(stage)) {
                         waveOfEmptyWaves[i - 1].push(rtid(`wave${i}ambushExtra`, '.'));
                     }
                 } else if (randint(1, 3) === 3) {
                     waveOfEmptyWaves.push([rtid(`wave${i}ambush`, '.')]);
                     ambush(i);
-                    if (['Dark', 'Iceage', 'Beach'].includes(stage)) {
+                    if (['Dark', 'Iceage',"Xmas", 'Beach'].includes(stage)) {
                         waveOfEmptyWaves[i - 1].push(rtid(`wave${i}ambushExtra`, '.'));
                     }
                 } else {
@@ -871,7 +871,7 @@
                     occupied.add(posStr);
 
                     // If stage is 'Iceage', place frozen zombies
-                    if (stage === 'Iceage') {
+                    if (stage === 'Iceage' || stage === "Xmas") {
                         initialZombies.push({ ...pos, "TypeName": choice(pool), "Condition": "icecubed" });  // Always frozen
                     } 
                     if (stage === 'Modern') {
