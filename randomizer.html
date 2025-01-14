@@ -880,7 +880,6 @@
                     else{
                         break;
                     }
-                    // You can add future stages like 'Feastivus' or 'Modern' here later
                 }
             }
 
@@ -1599,14 +1598,32 @@
             let columnSliders = {};  // Tracks sliders in each column for backward connection checking
 
             // Helper function to check if there's a valid path leading back to a previous slider
-            function isValidSliderPlacement(gridX, gridY) {
-                for (let j = gridX - 1; j >= start; j--) {
-                    let leftSlider = columnSliders[j] ? columnSliders[j].find(slider => slider.GridY === gridY) : null;
-                    if (leftSlider) {
-                        return true;  // Valid backward path exists
+            function isValidSliderPlacement(gridX, gridY, sliderType) {
+                if (sliderType === 'slider_up' && gridY === 0) {
+                    return false;  // Can't place slider up in Y = 0
+                }
+                if (sliderType === 'slider_down' && gridY === 4) {
+                    return false;  // Can't place slider down in Y = 4
+                }
+
+                // Ensure that no other sliders are in conflicting rows for vertical sliders
+                if (sliderType === 'slider_up') {
+                    for (let y = gridY - 1; y >= 0; y--) {
+                        let conflictingSlider = columnSliders[gridX] ? columnSliders[gridX].find(slider => slider.GridY === y) : null;
+                        if (conflictingSlider) {
+                            return false;  // Conflict with an existing slider
+                        }
+                    }
+                } else if (sliderType === 'slider_down') {
+                    for (let y = gridY + 1; y <= 4; y++) {
+                        let conflictingSlider = columnSliders[gridX] ? columnSliders[gridX].find(slider => slider.GridY === y) : null;
+                        if (conflictingSlider) {
+                            return false;  // Conflict with an existing slider
+                        }
                     }
                 }
-                return false;  // No backward path, cannot place slider here
+
+                return true;  // No conflicts, valid placement
             }
 
             // Place grid items
@@ -1629,17 +1646,12 @@
                             // Determine slider direction
                             if (randomType < 0.15) {
                                 sliderType = (stage === 'Modern') ? 'slider_down_modern' : 'slider_down';  // Slider Down
+                                validSliderPlacement = isValidSliderPlacement(j, i, sliderType);  // Check if it's valid
                                 if (i === 4) validSliderPlacement = false;  // Can't place slider down in Y = 4
                             } else {
                                 sliderType = (stage === 'Modern') ? 'slider_up_modern' : 'slider_up';  // Slider Up
+                                validSliderPlacement = isValidSliderPlacement(j, i, sliderType);  // Check if it's valid
                                 if (i === 0) validSliderPlacement = false;  // Can't place slider up in Y = 0
-                            }
-
-                            // Check if placing another slider in the same Y row requires a valid backward path
-                            if (columnSliders[j] && columnSliders[j].length >= 1) {
-                                if (!isValidSliderPlacement(j, i)) {
-                                    validSliderPlacement = false;  // Disallow if no backward path leads to this slider
-                                }
                             }
 
                             // Place slider if valid
@@ -1669,6 +1681,7 @@
             objdata.InitialGridItemPlacements = grids;
             append(objdata, "InitialGridItemProperties", "GI");
         }
+
 
 
 
@@ -1831,35 +1844,16 @@
         function stormAmbush(wave, type) {
             let violence= getViolence(wave);
             let pool = [];
-            var basic, imp, conhead, buckethead, brickhead, garg;
+            var basic, imp, conhead, buckethead,randm, brickhead, garg;
             switch (type) {
                 case 'sand':
                     basic = "mummy";
-                    imp = "egypt_imp"
+                    imp = "egypt_imp";
+                    randm = choice(pool);
                     conehead = "mummy_armor1";
                     buckethead = "mummy_armor2";
                     brickhead = "ra";
                     garg = "tomb_raiser";
-                    break;
-                case 'pirate':
-                    imp = "pirate_imp"
-                    garg = "pirate_gargantuar";
-                    break;
-                case 'future':
-                    imp = "future_imp"
-                    garg = "future_gargantuar";
-                    break;
-                case 'cowboy':
-                    imp = "west_bullrider"
-                    garg = "cowboy";
-                    break;
-                case 'dino':
-                    imp = "dino_imp"
-                    garg = "dino_gargantuar";
-                    break;
-                case 'beach':
-                    imp = "beach_imp"
-                    garg = "beach_gargantuar";
                     break;
                 case 'dark':
                     basic = { "Type": "RTID(dark@ZombieTypes)" };
@@ -1871,6 +1865,7 @@
                     break;
                 case 'snow':
                     basic = "iceage";
+                    randm = choice(pool);
                     conehead = "iceage_armor1";
                     buckethead = "iceage_armor2";
                     brickhead = "iceage_armor3";
@@ -1878,17 +1873,6 @@
                     garg = "iceage_dodo";
                     break;
                 case 'eighties':
-                    imp = "eighties_imp";
-                    garg = "eighties_gargantuar";
-                    break;
-                case 'summer':
-                    basic = "summer_basic";
-                    conehead = "summer_armor1";
-                    buckethead = "summer_armor2";
-                    brickhead = "eighties_armor4";
-                    imp = "summer_imp"
-                    garg = "summer_gargantuar";
-                    break;
                 default:
                     imp = "zcorp_imp"
                     garg = "zcorp_gargantuar";;
@@ -2153,6 +2137,9 @@
                     portalSpawn(wave);
                     break;
                 case 'Iceage':
+                    ambushRoulette(wave);
+                    break;
+                case 'Xmas':
                     ambushRoulette(wave);
                     break;
                 case 'Egypt':
