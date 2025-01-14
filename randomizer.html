@@ -1344,7 +1344,7 @@
                 chessboard(2, 8, ['gravestone_egypt']);
                 break;
             case 'Carnival':
-                createPattern(0, 8, ["carnie_card_sunify", "carnie_card_PFify", "carnie_card_basic", "carnie_card_armor2", "carnie_card_armor4"],randint(2,5));
+                createPattern(0, 8, ["carnie_card_sunify", "carnie_card_PFify", "carnie_card_basic", "carnie_card_armor2", "carnie_card_armor4"]);
                 break;
             case 'Modern':
                 if (coinFlip()){
@@ -1511,7 +1511,7 @@
             const index = objects.findIndex(obj => obj.objclass === targetClass);
             return index;
         }
-        function createPattern(start, end, typeName, num = Math.floor(Math.random() * (20 - 3 + 1)) + 3) {
+        function createPattern(start, end, typeName, num = randint(1,4)) {
             const patterns = [
                 [
                     { GridX: 0, GridY: 0, TypeName: null },
@@ -1543,21 +1543,20 @@
             let grids = [];
             let occupiedX = new Set(); // Tracks occupied GridX values
 
-            // Place grid items
-            while (grids.length < num) {
+            // Create an array of X positions for each pattern (ensuring they are unique)
+            let xPositions = [];
+            while (xPositions.length < num) {
                 let randomX = randint(start, end); // Random X between start and end
-                let patternIndex = Math.floor(Math.random() * patterns.length); // Pick a random pattern
-                let pattern = patterns[patternIndex];
+                if (!xPositions.includes(randomX)) { // Ensure uniqueness of X positions
+                    xPositions.push(randomX);
+                }
+            }
 
-                // Ensure the random X position is not already occupied
-                if (occupiedX.has(randomX)) continue;
-
-                // Pick a random number of items from the pattern (e.g., 1 or 2)
-                let itemsToPlace = Math.floor(Math.random() * (pattern.length)) + 1;
-
-                // For each selected item, place it at the random X position
-                for (let i = 0; i < itemsToPlace && grids.length < num; i++) {
-                    let item = pattern[i];
+            // Place grid items based on the number of patterns and their specific X values
+            for (let i = 0; i < num; i++) {
+                let randomX = xPositions[i]; // Get the X position for this iteration
+                let pattern = patterns[Math.floor(Math.random() * patterns.length)]; // Pick a random pattern
+                for (let item of pattern) {
                     let pos = { GridX: randomX, GridY: item.GridY, TypeName: typeName[Math.floor(Math.random() * typeName.length)] };
                     let posStr = JSON.stringify({ GridX: pos.GridX, GridY: pos.GridY });
 
@@ -1573,7 +1572,7 @@
             let objdata = {};
             objdata.InitialGridItemPlacements = grids;
             append(objdata, "InitialGridItemProperties", "GI");
-            }
+        }
 
 
         
