@@ -1557,18 +1557,21 @@
                 }
             }
 
+            // Count total number of grid items
+            let totalGridItems = 0;
+
             // Place grid items based on the number of patterns and their specific X values
-            for (let i = 0; i < num; i++) {
+            for (let i = 0; i < xPositions.length && totalGridItems < num; i++) {
                 let randomX = xPositions[i]; // Get the X position for this iteration
                 let pattern = patterns[Math.floor(Math.random() * patterns.length)]; // Pick a random pattern
 
                 // For each item in the selected pattern, assign the same X but keep GridY as is
                 for (let item of pattern) {
-                    let pos = { GridX: randomX, GridY: item.GridY, TypeName: typeName[Math.floor(Math.random() * typeName.length)] };
-                    let posStr = JSON.stringify({ GridX: pos.GridX, GridY: pos.GridY });
+                    if (totalGridItems >= num) break; // Stop if we exceed the num limit
 
-                    // Add this position to the grid and mark GridX as occupied
+                    let pos = { GridX: randomX, GridY: item.GridY, TypeName: typeName[Math.floor(Math.random() * typeName.length)] };
                     grids.push(pos);
+                    totalGridItems++; // Increment the total grid items counter
                 }
             }
 
@@ -1577,6 +1580,7 @@
             objdata.InitialGridItemPlacements = grids;
             append(objdata, "InitialGridItemProperties", "GI");
         }
+
 
 
 
