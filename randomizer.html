@@ -254,7 +254,7 @@
         function extraStages() {
             switch (mod) {
                 case 'rfl':
-                    return ['Summer',"Harvest","XmasStage","Carnival","ModernPool"];
+                    return ['Summer',"Harvest","Xmas","Carnival","ModernPool"];
                     break;
 
                 default:
@@ -1221,7 +1221,7 @@
         modules.push("RTID(ChallengeSeedBank@LevelModules)");
         let mowers = false;
         if (coinFlip()) {
-            if (stage ==`Harvest` || stage ==`Summer` || stage == "XmasStage"){
+            if (stage ==`Harvest` || stage ==`Summer` || stage == "Xmas"){
                 modules.push(`RTID(HolidayMowers@LevelModules)`) ;
             }
             else {
@@ -1372,7 +1372,7 @@
             case 'Summer':
                 chessboard(3, 7, ["fireworks", 'speaker','presentSunOnDestruction','presentPlantfoodOnDestruction','presentPlantOnDestruction','presentPlantOnDestruction_valentines']);
                 break;
-            case 'XmasStage':
+            case 'Xmas':
                 chessboard(3, 7, ['presentSunOnDestruction','presentPlantfoodOnDestruction','presentPlantOnDestruction']);
                 break;
             case 'Future':
@@ -2068,7 +2068,7 @@
                     name = 'summer_imp'
                     message = 'Hot Dogs!'
                     break;
-                case 'XmasStage':
+                case 'Xmas':
                     objclass = 'SpiderRainZombieSpawnerProps'
                     name = 'feastivus_imp'
                     message = 'imp spirit !'
@@ -2162,7 +2162,7 @@
                     raidingParty(wave);
                     break;
                 case `Summer`:
-                case `XmasStage`:
+                case `Xmas`:
                 case `Harvest`:
                 case 'Future':
                 case 'LostCity':
