@@ -1511,8 +1511,9 @@
             const index = objects.findIndex(obj => obj.objclass === targetClass);
             return index;
         }
-        function createPattern(start, end, typeName, num = randint(1,4)) {
+        function createPattern(start, end, typeName, num = Math.floor(Math.random() * (20 - 3 + 1)) + 3) {
             const patterns = [
+                // Pattern 1: 5 grid points
                 [
                     { GridX: 0, GridY: 0, TypeName: null },
                     { GridX: 0, GridY: 1, TypeName: null },
@@ -1520,18 +1521,22 @@
                     { GridX: 0, GridY: 3, TypeName: null },
                     { GridX: 0, GridY: 4, TypeName: null },
                 ],
+                // Pattern 2: 3 grid points
                 [
                     { GridX: 0, GridY: 0, TypeName: null },
                     { GridX: 0, GridY: 2, TypeName: null },
                     { GridX: 0, GridY: 4, TypeName: null },
                 ],
+                // Pattern 3: 2 grid points
                 [
                     { GridX: 0, GridY: 0, TypeName: null },
                     { GridX: 0, GridY: 4, TypeName: null },
                 ],
+                // Pattern 4: 1 grid point
                 [
                     { GridX: 0, GridY: 2, TypeName: null },
                 ],
+                // Pattern 5: 4 grid points
                 [
                     { GridX: 0, GridY: 3, TypeName: null },
                     { GridX: 0, GridY: 4, TypeName: null },
@@ -1556,15 +1561,14 @@
             for (let i = 0; i < num; i++) {
                 let randomX = xPositions[i]; // Get the X position for this iteration
                 let pattern = patterns[Math.floor(Math.random() * patterns.length)]; // Pick a random pattern
+
+                // For each item in the selected pattern, assign the same X but keep GridY as is
                 for (let item of pattern) {
                     let pos = { GridX: randomX, GridY: item.GridY, TypeName: typeName[Math.floor(Math.random() * typeName.length)] };
                     let posStr = JSON.stringify({ GridX: pos.GridX, GridY: pos.GridY });
 
                     // Add this position to the grid and mark GridX as occupied
-                    if (!occupiedX.has(pos.GridX)) {
-                        grids.push(pos);
-                        occupiedX.add(pos.GridX);
-                    }
+                    grids.push(pos);
                 }
             }
 
@@ -1573,6 +1577,7 @@
             objdata.InitialGridItemPlacements = grids;
             append(objdata, "InitialGridItemProperties", "GI");
         }
+
 
 
         
