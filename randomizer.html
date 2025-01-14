@@ -1541,21 +1541,30 @@
             ];
 
             let grids = [];
-            let occupied = new Set(); // Tracks placed grid items
+            let occupiedX = new Set(); // Tracks occupied GridX values
 
             // Place grid items
             while (grids.length < num) {
-                let randomX = Math.floor(Math.random() * (end - start + 1)) + start; // Random X between start and end
-                let pattern = patterns[Math.floor(Math.random() * patterns.length)]; // Pick a random pattern
+                let randomX = randint(start, end); // Random X between start and end
+                let patternIndex = Math.floor(Math.random() * patterns.length); // Pick a random pattern
+                let pattern = patterns[patternIndex];
 
-                for (let item of pattern) {
+                // Ensure the random X position is not already occupied
+                if (occupiedX.has(randomX)) continue;
+
+                // Pick a random number of items from the pattern (e.g., 1 or 2)
+                let itemsToPlace = Math.floor(Math.random() * (pattern.length)) + 1;
+
+                // For each selected item, place it at the random X position
+                for (let i = 0; i < itemsToPlace && grids.length < num; i++) {
+                    let item = pattern[i];
                     let pos = { GridX: randomX, GridY: item.GridY, TypeName: typeName[Math.floor(Math.random() * typeName.length)] };
                     let posStr = JSON.stringify({ GridX: pos.GridX, GridY: pos.GridY });
 
-                    // Ensure no duplicate placement in the same GridX, GridY
-                    if (!occupied.has(posStr)) {
+                    // Add this position to the grid and mark GridX as occupied
+                    if (!occupiedX.has(pos.GridX)) {
                         grids.push(pos);
-                        occupied.add(posStr);
+                        occupiedX.add(pos.GridX);
                     }
                 }
             }
@@ -1564,7 +1573,9 @@
             let objdata = {};
             objdata.InitialGridItemPlacements = grids;
             append(objdata, "InitialGridItemProperties", "GI");
-        }
+            }
+
+
         
 
 
