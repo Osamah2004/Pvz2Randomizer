@@ -242,7 +242,7 @@
                         "eighties_boombox", "dino_bully", "dino_bully_veteran", "dino_bully_blue", "dino_pterry", "iceage_troglobite_basic", "modern_newspaper", "modern_balloon", "modern_allstar",
                         "prospector", "west_bull", "west_bull_veteran", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack", "future_jetpack_disco", "dark_explorer", "explorer_veteran",
                         "lostcity_explorer", "barrelroller_explosive", "halloween_ghost", "future_protector_generator", "general_treadmill_phase2", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic",
-                        "carnie_stiltwalker","carnie_firebreather","carnie_cannon","carnie_magician","harvest_outhouse","harvest_pitchfork","harvest_eggstealer","harvest_pterry","foodfight_gobbler_king"
+                        "carnie_stiltwalker","carnie_firebreather","carnie_cannon","carnie_magician","harvest_outhouse","harvest_pitchfork","harvest_eggstealer","harvest_pterry","foodfight_gobbler_king","leprachaun_dodo","stpatrick_ra","stpatrick_punk","stpatrick_glitter"
                     ];
                     break;
                 default:
@@ -254,7 +254,7 @@
         function extraStages() {
             switch (mod) {
                 case 'rfl':
-                    return ['Summer',"Harvest","Xmas","Carnival","ModernPool"];
+                    return ['Summer',"Harvest","Xmas","Valentine","Paddys","Carnival","ModernPool"];
                     break;
 
                 default:
@@ -265,20 +265,72 @@
         let specials = []
         switch (mod) {
             case 'rfl':
-                specials = [
-                    "fire_ball","ice_ball","iceage_charred","beach_fisherman_land",
-                    "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus", "beach_snorkel","roman_medusa","steam_furnace",
-                    "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite", "beach_surfer","roman_healer","roman_shield_pair",
-                    "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser","roman_shield_pair","carnie_cottoncandy_blue",
-                    "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler", "zcorp_racer_chair", "zcorp_consultant","eighties_breakdancer",
-                    "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1","roman_ballista","eighties_mc","carnie_cottoncandy_pink",
-                    "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter", "iceage_dodo_veteran", "iceage_hunter_veteran","eighties_glitter","carnie_trapeze_duo",
-                    "eighties_arcade", "eighties_arcade_basic", "iceage_weaselhoarder_veteran", "iceage_chief", "iceage_chief_veteran","eighties_punk","carnie_trapeze_quad","carnie_trapeze_trio",
-                    "eighties_boombox", "dino_bully", "dino_bully_veteran", "dino_bully_blue", "dino_pterry", "iceage_troglobite_basic", "modern_newspaper", "modern_balloon", "modern_allstar",
-                    "prospector", "west_bull", "west_bull_veteran", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack", "future_jetpack_disco", "dark_explorer", "explorer_veteran",
-                    "lostcity_explorer", "barrelroller_explosive", "halloween_ghost", "future_protector_generator", "general_treadmill_phase2", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic",
-                    "carnie_stiltwalker","carnie_firebreather","carnie_cannon","carnie_magician","harvest_outhouse","harvest_pitchfork","harvest_eggstealer","harvest_pterry","foodfight_gobbler_king"
-                ];
+            let specials = [
+                // Ancient Egypt
+                "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser","explorer", "explorer_veteran", 
+
+                // Pirate Seas
+                "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler","barrelroller_explosive","pelican",
+
+                // Wild West
+                "prospector", "west_bull", "west_bull_veteran", "poncho", "piano", "chicken_farmer",
+
+                // Future
+                "future_protector", "future_protector_generator", "future_jetpack", "future_jetpack_disco","disco_mech","football_mech"
+                ,"mech_cone",
+
+                // Dark Ages
+                "dark_wizard", "dark_juggler", "dark_king", "dark_explorer","dark_wizard_veteran","dark_wizard_veteran_vanilla","dark_robber",
+
+
+                // Big Wave Beach
+                "beach_fisherman_land", "beach_octopus", "beach_snorkel", "beach_surfer",
+
+                // Lost City
+                "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1",
+                "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter", "lostcity_explorer",
+
+                // Frostbite Caves
+                "iceage_charred", "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite",
+                "iceage_dodo_veteran", "iceage_hunter_veteran", "iceage_weaselhoarder_veteran", "iceage_chief",
+                "iceage_chief_veteran", "iceage_troglobite_basic",
+
+                // Jurassic Marsh
+                "dino_bully", "dino_bully_veteran", "dino_bully_blue", "dino_pterry","dino_eggstealer",
+
+                // Modern Day
+                "modern_newspaper", "modern_balloon", "modern_allstar","tutorial_balloon","modern_superfanimp",
+                "newspaper_veteran",
+
+                // Steam Ages
+                "steam_furnace", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic",
+
+                // Roman World
+                "roman_medusa", "roman_healer", "roman_shield_pair", "roman_ballista",
+
+                // 80s World
+                "eighties_breakdancer", "eighties_mc", "eighties_glitter", "eighties_arcade",
+                "eighties_arcade_basic", "eighties_punk", "eighties_boombox",
+
+                // Carnival
+                "carnie_cottoncandy_blue", "carnie_cottoncandy_pink", "carnie_trapeze_duo", "carnie_trapeze_quad",
+                "carnie_trapeze_trio", "carnie_stiltwalker", "carnie_firebreather", "carnie_cannon", "carnie_magician",
+
+                // Halloween
+                "halloween_ghost",
+
+                // Thanksgiving (Harvest)
+                "harvest_outhouse", "harvest_pitchfork", "harvest_eggstealer", "harvest_pterry",
+
+                // Food Fight
+                "foodfight_gobbler_king",
+                // Luck
+                "leprachaun_dodo","stpatrick_ra","stpatrick_punk","stpatrick_glitter",
+
+                // Miscellaneous
+                "general_treadmill_phase2",
+            ];
+
             default:
                 specials = [
                     "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus",
