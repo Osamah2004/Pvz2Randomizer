@@ -410,9 +410,9 @@
         specials.push(...extraSpecials());
         let part ="stpatrick";
         let bots = ["steam_clockwork","iceage_dodo_veteran","hero_zmech","steam_mechanic","steam_repairimp","future_imp","future_protector_generator","future_gargantuar","mech_cone","disco_mech","future_protector","west_bull","west_bull_veteran"]
-        let basics = ["tutorial","duckytube","feastivus","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem","valentines","stpatrick",part, part, part, part, part, part, part, part, "steam_miner", "steam"];
+        let basics = ["tutorial","duckytube","feastivus","valentines","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem","valentines","stpatrick", "steam_miner", "steam",part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part];
         let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp","leprachaun_imp","holiday_imp","feastivus_imp","valentines_imp","zcorp_imp","carnie_imp_twins"];
-        let gargs = ["egypt_gargantuar","feastivus_gargantuar","stpatrick_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","carnie_gargantuar"]
+        let gargs = ["egypt_gargantuar","feastivus_gargantuar","valentines_gargantuar","stpatrick_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","carnie_gargantuar"]
         let validArmor4 = ["tutorial","duckytube","carnie","iceage","eighties","beach","zcorp", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
         
         let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran", "spongebob_vi", "spongebob_vi_armor1", "spongebob_vi_armor2", "seagull", "steam_inventor"];
@@ -688,11 +688,33 @@
         }
         selectJamers(stage);
 
-
-        pool.unshift(choice(validArmor4) + '_armor4');
-        pool.unshift(choice(basics) + '_armor2');
-        pool.unshift(choice(basics) + '_armor1');
-        pool.unshift(choice(basics));
+        if (coinFlip()){
+            pool.unshift(choice(validArmor4) + '_armor4');
+        }
+        if (coinFlip()){
+            pool.unshift(choice(basics) + '_armor2');
+        }
+        if (coinFlip()){
+            pool.unshift(choice(basics) + '_armor1');
+        }
+        if (coinFlip()){
+            pool.unshift(choice(basics));
+        }
+        if (coinFlip()){
+            pool.unshift(choice(validArmor4) + '_armor4');
+        }
+        if (coinFlip()){
+            pool.unshift(choice(basics) + '_armor2');
+        }
+        if (coinFlip()){
+            pool.unshift(choice(basics) + '_armor1');
+        }
+        if (coinFlip()){
+            pool.unshift(choice(basics));
+        }
+        if (coinFlip()){
+            pool.unshift(choice(basics));
+        }
         if (pool[0] == 'summer') {
             pool[0] = 'summer_basic';
         }
@@ -1489,7 +1511,7 @@
                 createPattern(0, 8, ["carnie_card_sunify", "carnie_card_PFify", "carnie_card_basic", "carnie_card_armor2", "carnie_card_armor4"]);
                 break;
             case 'Paddys':
-                createPattern(0, 8, ["gravestone_tutorial","gravestone_tutorial","goldtile","presentPlantOnDestruction","presentZombieOnDestruction"]);
+                createPattern(0, 8, ["gravestone_tutorial","gravestone_tutorial","gravestone_tutorial","gravestone_tutorial","gravestone_tutorial","goldtile","goldtile","presentPlantOnDestruction","presentZombieOnDestruction","presentZombieOnDestruction","presentZombieOnDestruction"]);
                 break;
             case 'Modern':
                 if (coinFlip()){
