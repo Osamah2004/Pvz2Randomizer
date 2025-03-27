@@ -1716,11 +1716,36 @@
         }
         function powertileBoard(start, end, typeName, num) {
             const patterns = [
-                [{ GridX: 0, GridY: 0 }, { GridX: 0, GridY: 1 }, { GridX: 0, GridY: 2 }, { GridX: 0, GridY: 3 }, { GridX: 0, GridY: 4 }],
-                [{ GridX: 0, GridY: 0 }, { GridX: 0, GridY: 2 }, { GridX: 0, GridY: 4 }],
-                [{ GridX: 0, GridY: 0 }, { GridX: 0, GridY: 4 }],
-                [{ GridX: 0, GridY: 2 }],
-                [{ GridX: 0, GridY: 3 }, { GridX: 0, GridY: 4 }, { GridX: 0, GridY: 1 }, { GridX: 0, GridY: 0 }],
+                // Pattern 1: 5 grid points
+                [
+                    { GridX: 0, GridY: 0 },
+                    { GridX: 0, GridY: 1 },
+                    { GridX: 0, GridY: 2 },
+                    { GridX: 0, GridY: 3 },
+                    { GridX: 0, GridY: 4 },
+                ],
+                // Pattern 2: 3 grid points
+                [
+                    { GridX: 0, GridY: 0 },
+                    { GridX: 0, GridY: 2 },
+                    { GridX: 0, GridY: 4 },
+                ],
+                // Pattern 3: 2 grid points
+                [
+                    { GridX: 0, GridY: 0 },
+                    { GridX: 0, GridY: 4 },
+                ],
+                // Pattern 4: 1 grid point
+                [
+                    { GridX: 0, GridY: 2 },
+                ],
+                // Pattern 5: 4 grid points
+                [
+                    { GridX: 0, GridY: 3 },
+                    { GridX: 0, GridY: 4 },
+                    { GridX: 0, GridY: 1 },
+                    { GridX: 0, GridY: 0 },
+                ],
             ];
 
             let grids = [];
@@ -1763,11 +1788,36 @@
         }
         function bufftileBoard(typeName, num) {
             const patterns = [
-                [{ GridX: 0, GridY: 0 }, { GridX: 0, GridY: 1 }, { GridX: 0, GridY: 2 }, { GridX: 0, GridY: 3 }, { GridX: 0, GridY: 4 }],
-                [{ GridX: 0, GridY: 0 }, { GridX: 0, GridY: 2 }, { GridX: 0, GridY: 4 }],
-                [{ GridX: 0, GridY: 0 }, { GridX: 0, GridY: 4 }],
-                [{ GridX: 0, GridY: 2 }],
-                [{ GridX: 0, GridY: 3 }, { GridX: 0, GridY: 4 }, { GridX: 0, GridY: 1 }, { GridX: 0, GridY: 0 }],
+                // Pattern 1: 5 grid points
+                [
+                    { GridX: 0, GridY: 0 },
+                    { GridX: 0, GridY: 1 },
+                    { GridX: 0, GridY: 2 },
+                    { GridX: 0, GridY: 3 },
+                    { GridX: 0, GridY: 4 },
+                ],
+                // Pattern 2: 3 grid points
+                [
+                    { GridX: 0, GridY: 0 },
+                    { GridX: 0, GridY: 2 },
+                    { GridX: 0, GridY: 4 },
+                ],
+                // Pattern 3: 2 grid points
+                [
+                    { GridX: 0, GridY: 0 },
+                    { GridX: 0, GridY: 4 },
+                ],
+                // Pattern 4: 1 grid point
+                [
+                    { GridX: 0, GridY: 2 },
+                ],
+                // Pattern 5: 4 grid points
+                [
+                    { GridX: 0, GridY: 3 },
+                    { GridX: 0, GridY: 4 },
+                    { GridX: 0, GridY: 1 },
+                    { GridX: 0, GridY: 0 },
+                ],
             ];
 
             let grids = [];
