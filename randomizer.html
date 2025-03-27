@@ -1593,12 +1593,12 @@
 
                 // Place power tiles ensuring required amounts
                 for (let type of ensuredPowerTiles) {
-                    InitialGridItemPlacements.push(...powertileBoard(0, 4, strPower + type, 1));
+                    InitialGridItemPlacements.push(...powertileBoard(0, 5, strPower + type, 1));
                 }
 
                 // Place buff tiles ensuring required amounts
                 for (let type of ensuredBuffTiles) {
-                    InitialGridItemPlacements.push(...bufftileBoard(0, 4, strBuff + type, 1));
+                    InitialGridItemPlacements.push(...bufftileBoard(0, 5, strBuff + type, 1));
                 }
 
                 var obj = new Object();
@@ -1715,37 +1715,92 @@
             return index;
         }
         function powertileBoard(start, end, typeName, num) {
-            return createPattern(start, end, typeName, num);
-        }
-
-        function bufftileBoard(start, end, typeName, num) {
-            // Buff tile spawns only at x = 8, so we override the X positioning logic
             const patterns = [
-                [{ GridX: 8, GridY: 0 }],
-                [{ GridX: 8, GridY: 1 }],
-                [{ GridX: 8, GridY: 2 }],
-                [{ GridX: 8, GridY: 3 }],
-                [
-                    { GridX: 8, GridY: 0 },
-                    { GridX: 8, GridY: 1 },
-                    { GridX: 8, GridY: 2 },
-                    { GridX: 8, GridY: 3 },
-                ],
+                [{ GridX: 0, GridY: 0 }, { GridX: 0, GridY: 1 }, { GridX: 0, GridY: 2 }, { GridX: 0, GridY: 3 }, { GridX: 0, GridY: 4 }],
+                [{ GridX: 0, GridY: 0 }, { GridX: 0, GridY: 2 }, { GridX: 0, GridY: 4 }],
+                [{ GridX: 0, GridY: 0 }, { GridX: 0, GridY: 4 }],
+                [{ GridX: 0, GridY: 2 }],
+                [{ GridX: 0, GridY: 3 }, { GridX: 0, GridY: 4 }, { GridX: 0, GridY: 1 }, { GridX: 0, GridY: 0 }],
             ];
 
             let grids = [];
+            let typeCount = {}; // Track occurrences of each tile type
+            let xPositions = [];
+
+            // Ensure at least two of each type if selected
+            for (let type of typeName) {
+                typeCount[type] = 0;
+            }
+
+            while (xPositions.length < num) {
+                let randomX = randint(start, end);
+                if (!xPositions.includes(randomX)) {
+                    xPositions.push(randomX);
+                }
+            }
+
             let totalGridItems = 0;
-            while (totalGridItems < num) {
+            for (let i = 0; i < xPositions.length && totalGridItems < num; i++) {
+                let randomX = xPositions[i];
                 let pattern = patterns[Math.floor(Math.random() * patterns.length)];
+
                 for (let item of pattern) {
                     if (totalGridItems >= num) break;
-                    grids.push({ ...item, TypeName: typeName[Math.floor(Math.random() * typeName.length)] });
+
+                    let chosenType = typeName[Math.floor(Math.random() * typeName.length)];
+
+                    // Ensure minimum of 2 occurrences for each selected type
+                    if (typeCount[chosenType] < 2 && totalGridItems + (2 - typeCount[chosenType]) <= num) {
+                        typeCount[chosenType]++;
+                    }
+
+                    grids.push({ GridX: randomX, GridY: item.GridY, TypeName: chosenType });
                     totalGridItems++;
                 }
             }
 
             return grids;
         }
+        function bufftileBoard(typeName, num) {
+            const patterns = [
+                [{ GridX: 0, GridY: 0 }, { GridX: 0, GridY: 1 }, { GridX: 0, GridY: 2 }, { GridX: 0, GridY: 3 }, { GridX: 0, GridY: 4 }],
+                [{ GridX: 0, GridY: 0 }, { GridX: 0, GridY: 2 }, { GridX: 0, GridY: 4 }],
+                [{ GridX: 0, GridY: 0 }, { GridX: 0, GridY: 4 }],
+                [{ GridX: 0, GridY: 2 }],
+                [{ GridX: 0, GridY: 3 }, { GridX: 0, GridY: 4 }, { GridX: 0, GridY: 1 }, { GridX: 0, GridY: 0 }],
+            ];
+
+            let grids = [];
+            let typeCount = {}; // Track occurrences of each tile type
+
+            // Ensure at least two of each type if selected
+            for (let type of typeName) {
+                typeCount[type] = 0;
+            }
+
+            let totalGridItems = 0;
+            while (totalGridItems < num) {
+                let pattern = patterns[Math.floor(Math.random() * patterns.length)];
+
+                for (let item of pattern) {
+                    if (totalGridItems >= num) break;
+
+                    let chosenType = typeName[Math.floor(Math.random() * typeName.length)];
+                    let randomX = Math.floor(Math.random() * 3) + 6; // Random X between 6 and 8
+
+                    // Ensure minimum of 2 occurrences for each selected type
+                    if (typeCount[chosenType] < 2 && totalGridItems + (2 - typeCount[chosenType]) <= num) {
+                        typeCount[chosenType]++;
+                    }
+
+                    grids.push({ GridX: randomX, GridY: item.GridY, TypeName: chosenType });
+                    totalGridItems++;
+                }
+            }
+
+            return grids;
+        }
+
 
 
 
