@@ -76,6 +76,7 @@
 
     <script>
         let violence = 1;
+        let pool =[]
 
         // Generate preview for level variables
         document.addEventListener('DOMContentLoaded', () => {
@@ -88,6 +89,7 @@
             }
         }
     });
+    
 
     function generatePreview() {
         console.log("Generating preview...");
@@ -527,7 +529,7 @@
                 pool = pool.push(...sample(minibossPool,5));
             }
         }
-        let pool = sample(specials, numSpecials);
+        pool = sample(specials, numSpecials);
         switch (stage) {
             case 'Modern':
                 basics = ['tutorial'];
