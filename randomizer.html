@@ -706,7 +706,11 @@
             }
         }
         selectJamers(stage);
-
+        let basicPool = pool.toSpliced(4, pool.length);
+        basicPool[0] = rtid(basicPool[0], 'ZombieTypes')
+        basicPool[1] = rtid(basicPool[1], 'ZombieTypes')
+        basicPool[2] = rtid(basicPool[2], 'ZombieTypes')
+        basicPool[3] = rtid(basicPool[3], 'ZombieTypes')
         if (coinFlip()){
             pool.unshift(choice(validArmor4) + '_armor4');
         }
@@ -743,11 +747,6 @@
         if (pool[0] == 'summer') {
             pool[0] = 'summer_basic';
         }
-        let basicPool = pool.toSpliced(4, pool.length);
-        basicPool[0] = rtid(basicPool[0], 'ZombieTypes')
-        basicPool[1] = rtid(basicPool[1], 'ZombieTypes')
-        basicPool[2] = rtid(basicPool[2], 'ZombieTypes')
-        basicPool[3] = rtid(basicPool[3], 'ZombieTypes')
         let table = document.createElement('table');
         table.style.width = '50%';
         table.style.margin = '0 auto'; // Center horizontally
@@ -1608,6 +1607,7 @@
         for (let i = 0; i < pool.length; i++) {
             pool[i] = `RTID(${pool[i]}@ZombieTypes)`;
         }
+        pool.pop()
 
         window.onload = function () {
             let filename = localStorage.getItem('filename');
