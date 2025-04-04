@@ -1316,8 +1316,8 @@
             else return randint(1, 8);
         }
 
-        let cappedStartingPoints = randint(150,difficulty*50);
-        let cappedPointIncrement = randint(150,55*difficulty);
+        let cappedStartingPoints = randint(150, Math.pow(difficulty, 2) * 50);
+        let cappedPointIncrement = randint(150, Math.pow(difficulty, 2) * 55);
         console.log(cappedPointIncrement)
 
 
