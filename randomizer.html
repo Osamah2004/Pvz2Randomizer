@@ -43,8 +43,6 @@
         .json<br>
         <label>Stage: </label>
         <select id="stage"></select>
-        <label>Custom list: </label>
-        <input type="checkbox" onclick="customList()" id="customList">
         <br>
         <h2>Select Difficulty</h2>
         <div class="select-container">
@@ -91,37 +89,45 @@
         }
     });
 
-        function generatePreview() {
-            console.log("Generating preview...");
-            console.log({ pool, cappedStartingPoints, cappedPointIncrement, plantfoodToSpawnCount, flags });
+    function generatePreview() {
+        console.log("Generating preview...");
+        console.log({ pool, cappedStartingPoints, cappedPointIncrement, plantfoodToSpawnCount, flags });
 
-            let previewContainer = document.getElementById('levelPreview');
-            previewContainer.innerHTML = '';
+        let previewContainer = document.getElementById('levelPreview');
+        previewContainer.innerHTML = ''; // Clear previous content
 
-            let variablesHTML = `
-                <div class="inner-div">
-                    <div class="variable-name">Special Pool</div>
-                    <div class="variable-value">${pool.join(', ')}</div>
-                </div>
-                <div class="inner-div">
-                    <div class="variable-name">Starting Points</div>
-                    <div class="variable-value">${cappedStartingPoints}</div>
-                </div>
-                <div class="inner-div">
-                    <div class="variable-name">Points Increment</div>
-                    <div class="variable-value">${cappedPointIncrement}</div>
-                </div>
-                <div class="inner-div">
-                    <div class="variable-name">Plant Food to Spawn</div>
-                    <div class="variable-value">${plantfoodToSpawnCount}</div>
-                </div>
-                <div class="inner-div">
-                    <div class="variable-name">Flags</div>
-                    <div class="variable-value">${flags}</div>
-                </div>`;
+        // Remove duplicates from the pool array and clean up the RTID(@ZombieTypes) part
+        let uniquePool = [...new Set(pool)];
+        let cleanedPool = uniquePool.map(item => item.replace(/RTID\((.*?)@ZombieTypes\)/, '$1'));
+        let poolDisplay = cleanedPool.length ? cleanedPool.join(', ') : 'No special pool defined';
 
-            previewContainer.innerHTML = variablesHTML;
-        }
+        let variablesHTML = `
+            <div class="inner-div">
+                <div class="variable-name">Special Pool</div>
+                <div class="variable-value">${poolDisplay}</div>
+            </div>
+            <div class="inner-div">
+                <div class="variable-name">Starting Points</div>
+                <div class="variable-value">${cappedStartingPoints}</div>
+                <div class="variable-name">Points Increment</div>
+                <div class="variable-value">${cappedPointIncrement}</div>
+            </div>
+            <div class="inner-div">
+                <div class="variable-name">Plant Food to Spawn</div>
+                <div class="variable-value">${plantfoodToSpawnCount}</div>
+            </div>
+            <div class="inner-div">
+                <div class="variable-name">Stage</div>
+                <div class="variable-value">${stage}Stage</div>
+            </div>
+            <div class="inner-div">
+                <div class="variable-name">Flags</div>
+                <div class="variable-value">${flags}</div>
+            </div>`;
+
+        previewContainer.innerHTML = variablesHTML;
+    }
+
 
 
         // Update difficulty and save to localStorage
@@ -298,7 +304,7 @@
                 "feastivus_swashbuckler","feastivus_poncho","feastivus_camel_onehump","feastivus_camel_twohump","feastivus_camel_manyhump","feastivus_troglobite","feastivus_hunter",
                 "feastivus_fisherman",
                 // Miscellaneous
-                "general_treadmill_phase2",
+                "general_treadmill_phase2","spongebob_sniffer", "spongebob_superfanimp", "spongebob_newspaper", "spongebob_kelpyg", "april_underseer", "luan_juggler", "n3xt_duckytube", "n3xt_duckytube_fem", "n3xt_greaser", "n3xt_bowler", "n3xt_pigeonfeeder", "n3xt_pigeon", "n3xt_swinger", "spongebob_ourple", "spongebob_endo", "spongebob_endo_scary", "spongebob_allstar_ragdoll", "mashup_arcade_spongebob", "zombossmech_holiday_spongebob", "april_cowboy_gargantuar", "april_future_gargantuar", "april_barrelroller", "april_spring_prospector"
             ];
                     break;
                 default:
@@ -310,7 +316,7 @@
         function extraStages() {
             switch (mod) {
                 case 'rfl':
-                    return ['Summer',"Harvest","Xmas","Valentine","Paddys","Carnival","ModernPool"];
+                    return ['Summer',"Harvest","Xmas","Valentine","Paddys","Carnival","ModernPool","SpongebobGood","SpongebobShit","SpongebobMall","SpringFools","N3XTDave","N3XTCampgrounds","N3XTJungle","FNAF","HappyLand","Mesopotamia","Spongebob24Good","LunarSolar","LunarNebula","LunarVortex","LunarStardust"];
                     break;
 
                 default:
@@ -359,7 +365,8 @@
                 "newspaper_veteran",
 
                 // Steam Ages
-                "steam_furnace", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic",
+                "steam_furnace", "steam_repairimp", "steam_inventor", "steam_gentleman", "steam_mechanic","steam_gargantuar_reg",
+
 
                 // Roman World
                 "roman_medusa", "roman_healer", "roman_shield_pair", "roman_ballista",
@@ -371,7 +378,7 @@
 
                 // Carnival
                 "carnie_cottoncandy_blue", "carnie_cottoncandy_pink", "carnie_trapeze_duo", "carnie_trapeze_quad",
-                "carnie_trapeze_trio", "carnie_stiltwalker", "carnie_firebreather", "carnie_cannon", "carnie_magician",
+                "carnie_trapeze_trio","carnie_trapeze_conga","carnie_stiltwalker", "carnie_firebreather", "carnie_cannon", "carnie_magician",
 
                 // Halloween
                 "halloween_ghost","halloween_witch","halloween_relichunter","halloween_octopus",
@@ -389,7 +396,7 @@
                 "feastivus_swashbuckler","feastivus_poncho","feastivus_camel_onehump","feastivus_camel_twohump","feastivus_camel_manyhump","feastivus_troglobite","feastivus_hunter",
                 "feastivus_fisherman",
                 // Miscellaneous
-                "general_treadmill_phase2",
+                "general_treadmill_phase2","spongebob_sniffer","spongebob_armor5","spongebob_armor3", "spongebob_superfanimp", "spongebob_newspaper", "spongebob_kelpyg", "april_underseer", "luan_juggler", "n3xt_duckytube", "n3xt_duckytube_fem", "n3xt_greaser", "n3xt_bowler", "n3xt_pigeonfeeder", "n3xt_pigeon", "n3xt_swinger", "spongebob_ourple", "spongebob_endo", "spongebob_endo_scary", "spongebob_allstar_ragdoll", "mashup_arcade_spongebob", "zombossmech_holiday_spongebob", "april_cowboy_gargantuar", "april_future_gargantuar", "april_barrelroller", "april_spring_prospector"
             ];
 
             default:
@@ -420,10 +427,10 @@
         specials.push(...extraSpecials());
         let part ="zcorp";
         let bots = ["steam_clockwork","iceage_dodo_veteran","hero_zmech","steam_mechanic","steam_repairimp","future_imp","future_protector_generator","future_gargantuar","mech_cone","disco_mech","future_protector","west_bull","west_bull_veteran"]
-        let basics = ["tutorial","duckytube","feastivus","valentines","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem","valentines","stpatrick", "steam_miner", "steam",part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part];
+        let basics = ["tutorial","duckytube","feastivus","valentines","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem","valentines","stpatrick", "steam_miner", "steam","spongebob","n3xt","n3xt_fem","happyland",part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part];
         let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp","leprachaun_imp","holiday_imp","feastivus_imp","valentines_imp","zcorp_imp","carnie_imp_twins"];
         let gargs = ["egypt_gargantuar","feastivus_gargantuar","valentines_gargantuar","stpatrick_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","carnie_gargantuar"]
-        let validArmor4 = ["tutorial","duckytube","carnie","iceage","eighties","beach","zcorp", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
+        let validArmor4 = ["tutorial","duckytube","happyland","spongebob","carnie","iceage","eighties","beach","zcorp", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
         
         let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran", "spongebob_vi", "spongebob_vi_armor1", "spongebob_vi_armor2", "seagull", "steam_inventor"];
         let stage = ["Modern", "Egypt", "Pirate", "West", "Future", "Beach", "Iceage", "LostCity", "Eighties", "Dino"];
@@ -487,7 +494,6 @@
         let numSpecials = Math.min(randint(1, difficulty * 5), maxSpecials);
 
         // Select the actual specials based on the final number
-        let pool = sample(specials, numSpecials);
 
 
 
@@ -514,16 +520,14 @@
             "hero_barrelroller",
             "hero_barrel",
             "hero_smash"
-        ];
-
-        // Special logic for difficulty higher than 40
-        
+        ];   
         if (difficulty >= 4) {
             pool.push("hero_zmech");
             if (Math.random()*10 <= 50) {  // 50% chance to use the miniboss pool
-                pool = sample(minibossPool,5);
+                pool = pool.push(...sample(minibossPool,5));
             }
         }
+        let pool = sample(specials, numSpecials);
         switch (stage) {
             case 'Modern':
                 basics = ['tutorial'];
@@ -672,6 +676,9 @@
             "mashup_arcade_spongebob"
 
         ];
+        let selectedZombie = [];
+
+    
 
         // Helper function to filter out conflicting zombies
         function filterConflictingZombies(selectedZombies) {
@@ -725,6 +732,12 @@
         if (coinFlip()){
             pool.unshift(choice(basics));
         }
+        if (pool[0] == 'n3xt') {
+            pool[0] = 'n3xt_basic';
+        }
+        if (pool[0] == 'n3xt_fem') {
+            pool[0] = 'n3xt_basic_fem';
+        }
         if (pool[0] == 'summer') {
             pool[0] = 'summer_basic';
         }
@@ -736,6 +749,13 @@
         let table = document.createElement('table');
         table.style.width = '50%';
         table.style.margin = '0 auto'; // Center horizontally
+        if (selectedZombie == []){
+            pass;
+        }
+        else{
+            selectedZombie = selectedZombie + basicPool;
+            pool.push(selectedZombie);
+        }
 
 
         function addRow(cellType, text) {
@@ -748,58 +768,9 @@
 
 
 
-        function customList() {
-            let levelPool = level.objects[3].objdata.ZombiePool;
-            levelPool = [];
-            levelPool.push(...basicPool);
-            let div1 = document.getElementById('div1');
-            if (document.getElementById('customList').checked == false) {
-                div1.removeChild(document.getElementById('selectTag'));
-                table.innerHTML = '';
-                div1.removeChild(table);
-                levelPool.push(...sample(specials, randint(2, 4)));
-                if (stage == 'Pirate') {
-                    levelPool.push(...sample(flyingUnits, randint(1, 3)))
-                }
-                for (let i = 0; i < levelPool.length; i++) {
-                    levelPool[i] = rtid(levelPool[i], 'ZombieTypes');
-                }
-                level.objects[3].objdata.ZombiePool = levelPool;
-                return;
-            }
-            let select = createOptions(specials);
-            select.id = 'selectTag';
-            let option = document.createElement('option');
-            option.value = "";
-            option.textContent = "-";
-            option.defaultSelected = true; // Default selected
-            option.hidden = true; // Hidden
-            select.insertBefore(option, select.firstChild);
-            select.oninput = function () {
-                addRow('td', select.value);
-                switch (select.value) {
-                    case 'piano':
-                        levelPool[0] = rtid('cowboy', 'zombieTypes')
-                        levelPool[1] = rtid('cowboy_armor1', 'zombieTypes')
-                        levelPool[2] = rtid('cowboy_armor2', 'zombieTypes')
-                        levelPool[3] = rtid('cowboy_armor4', 'zombieTypes')
-                        break;
-                    case 'dark_king':
-                        levelPool[0] = rtid('dark', 'zombieTypes')
-                        levelPool[1] = rtid('dark_armor1', 'zombieTypes')
-                        levelPool[2] = rtid('dark_armor2', 'zombieTypes')
-                        levelPool[3] = rtid('dark_armor3', 'zombieTypes')
-                        break;
-                    default:
-                        break;
-                }
-                levelPool.push(rtid(select.value, 'ZombieTypes'));
-                level.objects[3].objdata.ZombiePool = levelPool;
-            }
-            //let basicPool = pool.toSpliced(4,pool.length);
-            div1.appendChild(select);
-            div1.appendChild(table);
-        }
+
+
+
 
 
         function choice(arr) {
@@ -868,7 +839,7 @@
                 }
             }
         }
-        let nonAmbush = ['West', 'Eighties', "Carnival", "ModernPool"];
+        let nonAmbush = ['West', 'Eighties', "Carnival", "ModernPool","SpongebobGood","SpongebobShit","SpongebobMall","SpringFools","N3XTDave","N3XTCampgrounds","N3XTJungle","FNAF","HappyLand","Mesopotamia","Spongebob24Good","LunarSolar","LunarNebula","LunarVortex","LunarStardust"];
         let j8bitstage = ["Paddys",'Modern'];
         // Function to add jam objects to the core structure
         function addJamObjects(stage) {
