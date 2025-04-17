@@ -242,7 +242,6 @@ function conditionFunction(div){
     buttonSlow.textContent = 'Immune to plants\' conditions';
     buttonSlow.onclick = function() {
         immuneToSlow.forEach(condition => {
-            debugger;
             removeCondition(condition);
             let conditionToRemove = document.getElementById(condition);
             conditionToRemove?.remove();
@@ -415,7 +414,7 @@ function rtid(value,object2){
     object2[0] = value;
     return `RTID(${value}@.)`;
 }
-
+let caesarActions = new Array(7);
 let zombieAction;
 function handleAction(div,zombieProperty,index = 0){
     listOfObjects = new Array(2 + zombieProperty.objdata.Actions.length);
@@ -430,7 +429,11 @@ function handleAction(div,zombieProperty,index = 0){
     let inputContainer = document.createElement('td');
     let inputField = document.createElement('input');
     inputField.onchange = function() {
+        console.log(index)
         aliasText.textContent = inputField.value;
+        if (zombieProperty.objclass === 'ZombieGeneralCaesarProps'){
+            caesarActions[index].aliases[0] = inputField.value;
+        }
         if (zombieProperty.objclass === 'ZombieCarnieMagicianProps') {
             zombieProperty.objdata.Actions[index] = rtid(inputField.value, magicianObjects[index].aliases);
         }
@@ -444,8 +447,12 @@ function handleAction(div,zombieProperty,index = 0){
     div.appendChild(document.createElement('br'));
     div.appendChild(inputLabel);
     div.appendChild(inputField);
+    console.log(magicianObjects)
     if (zombieProperty.objclass === 'ZombieCarnieMagicianProps'){
         objdataHandling(magicianObjects[index].objdata, div);
+    }
+    else if (zombieProperty.objclass === 'ZombieGeneralCaesarProps'){
+        objdataHandling(caesarActions[index].objdata, div)
     }
     else objdataHandling(zombieAction.objdata,div);
 }
@@ -511,7 +518,6 @@ function findValueByKey(lists, keyToFind) {
     function displayHint(targetText, fileName = targetText) {
         const elements = document.querySelectorAll('undefined');
     
-        console.log(`Current text: ${targetText}`);
         let target;
         elements.forEach(element => {
             if (element.textContent.includes(targetText)) {
@@ -711,7 +717,16 @@ function findValueByKey(lists, keyToFind) {
         //let zombieProperty = zombiePropertiesObjectsData.find(p => p.aliases.includes
         //(zombieType.objdata.Properties.slice(zombieType.objdata.Properties.indexOf('(') + 1, zombieType.objdata.Properties.indexOf('@'))));
         let len = zombieProperty.objdata.Actions.length;
-        if (len === 3){
+        if (len === 7){
+            for (let i = 0; i < 7; i++) {
+                let actionAlias = zombieProperty.objdata.Actions[i];
+                let temp = zombieActionsData.find(p => p.aliases.includes(actionAlias.slice(actionAlias.indexOf('(') + 1, actionAlias.indexOf('@'))));
+                caesarActions[i] = temp;
+                handleAction(div, zombieProperty,i);
+            }
+            console.log(caesarActions)
+        }
+        else if (len === 3){
             let magicianTable = document.createElement('table');
             let massiveList = [];
             zombieActionsData.forEach(object => {
@@ -807,19 +822,29 @@ function findValueByKey(lists, keyToFind) {
         pushObject(zombieType,0);
         pushObject(zombieProperty,1);
         if (zombieProperty.objdata.hasOwnProperty("Actions")){
-            console.log('hasAction')
             if (zombieProperty.objclass === 'ZombieCarnieMagicianProps'){
                 pushObject(magicianObjects[0],2)
                 pushObject(magicianObjects[1],3)
                 pushObject(magicianObjects[2],4)
             }
+            else if (zombieProperty.objclass === 'ZombieGeneralCaesarProps'){
+                for (let i = 0; i < caesarActions.length; i++) {
+                    const temp = caesarActions[i];
+                    pushObject(caesarActions[i],i+2)
+                }
+            }
             else pushObject(zombieAction,2)
         }
         let zombieDataString = listOfObjects;
+        console.log("Number of objects: " + zombieDataString.length)
         for (let key in zombieDataString) {
             if (zombieDataString[key].includes('$')) {
                 console.log('the key has a dollar sign $')
                 zombieDataString[key] = zombieDataString[key].replace('$', '');
+            }
+            if (zombieDataString[key].includes(',,,,,,')) {
+                console.log('the key has many commas')
+                zombieDataString[key] = zombieDataString[key].replace(',,,,,,', '');
             }
         }
         navigator.clipboard.writeText(zombieDataString).then(function() {
