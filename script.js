@@ -816,7 +816,7 @@ function findValueByKey(lists, keyToFind) {
     button.onclick = function() {
         zombieProperty.objdata.ConditionImmunities = conditionImmunitiesObject;
         zombieType = {
-            "#Made by the custom zombie tool website":0,
+            "#Made by the custom zombie workshop":0,
             ...zombieType,
         };
         pushObject(zombieType,0);
