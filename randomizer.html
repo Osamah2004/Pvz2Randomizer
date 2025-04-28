@@ -715,7 +715,7 @@
         let basics = ["tutorial","duckytube","feastivus","valentines","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem","stpatrick", "steam_miner", "steam","spongebob","n3xt","n3xt_fem","happyland","spring",part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part];
         let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp","spring_imp","leprachaun_imp","holiday_imp","feastivus_imp","valentines_imp","zcorp_imp","hero_impfinity","carnie_imp_twins"];
         let gargs = ["egypt_gargantuar","feastivus_gargantuar","valentines_gargantuar","stpatrick_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","carnie_gargantuar"]
-        let validArmor4 = ["tutorial","duckytube","happyland","spongebob","carnie","iceage","eighties","beach","zcorp", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
+        let validArmor4 = ["tutorial","spring","duckytube","happyland","spongebob","carnie","iceage","eighties","beach","zcorp", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
         
         let flyingUnits = ["lostcity_bug_armor2", "lostcity_bug_armor1", "modern_balloon", "tutorial_balloon", "future_jetpack_veteran", "future_jetpack", "pelican", "cannon", "lostcity_bug", "summer_bug", "summer_bug_armor1", "summer_bug_armor2", "future_jetpack_veteran", "spongebob_vi", "spongebob_vi_armor1", "spongebob_vi_armor2", "seagull", "steam_inventor"];
         let stage = ["Modern", "Egypt", "Pirate", "West", "Future", "Beach", "Iceage", "LostCity", "Eighties", "Dino"];
@@ -823,40 +823,84 @@
                 }
             }
         }
-        if (pool.includes('king')) {
-            pool.push('dark_armor1', 'dark_armor2', 'dark_armor3', 'dark_armor4');
+        // Function to fix basic names
+        function fixBasic(name) {
+            if (name === 'n3xt') return 'n3xt_basic';
+            if (name === 'n3xt_fem') return 'n3xt_basic_fem';
+            if (name === 'summer') return 'summer_basic';
+            return name;
         }
 
-        if (pool.includes('piano')) {
-            pool.push('cowboy_armor1', 'cowboy_armor2', 'cowboy_armor4', 'cowboy');
+        // Function to handle armor4 special cases
+        function pickArmor4() {
+            let armorBase = validArmor4[Math.floor(Math.random() * validArmor4.length)];
+            if (armorBase === 'spring') {
+                let colors = ['blue', 'red', 'green'];
+                let color = colors[Math.floor(Math.random() * colors.length)];
+                return 'spring_armor4_' + color;
+            } else {
+                return armorBase + "_armor4";
+            }
         }
-        let pick0= basics[Math.floor(Math.random() * basics.length)];
 
+        // Pick first set
+        let pick0 = fixBasic(basics[Math.floor(Math.random() * basics.length)]);
         let pick1 = basics[Math.floor(Math.random() * basics.length)] + "_armor1";
-
-        // pick random again from basics
         let pick2 = basics[Math.floor(Math.random() * basics.length)] + "_armor2";
+        let pick3 = pickArmor4();
 
-        // pick random from validArmor4
-        let pick3 = validArmor4[Math.floor(Math.random() * validArmor4.length)] + "_armor4";
+        pool.push(
+            rtid(pick0, 'ZombieTypes'),
+            rtid(pick1, 'ZombieTypes'),
+            rtid(pick2, 'ZombieTypes'),
+            rtid(pick3, 'ZombieTypes')
+        );
 
-        // then add them to pool
-        pool.push(pick0);
-        pool.push(pick1);
-        pool.push(pick2);
-        pool.push(pick3);
+        // Maybe add 1 to 3 more sets
+        let extraSets = Math.floor(Math.random() * 3) + 2; // 1 to 3
+
+        for (let i = 0; i < extraSets; i++) {
+            let extraPick0 = fixBasic(basics[Math.floor(Math.random() * basics.length)]);
+            let extraPick1 = basics[Math.floor(Math.random() * basics.length)] + "_armor1";
+            let extraPick2 = basics[Math.floor(Math.random() * basics.length)] + "_armor2";
+            let extraPick3 = pickArmor4();
+
+            pool.push(
+                rtid(extraPick0, 'ZombieTypes'),
+                rtid(extraPick1, 'ZombieTypes'),
+                rtid(extraPick2, 'ZombieTypes'),
+                rtid(extraPick3, 'ZombieTypes')
+            );
+        }
+
+        // Check if any pool element includes 'king'
+        let hasKing = pool.some(zombie => String(zombie).includes('king'));
+
+        // Check if any pool element includes 'piano'
+        let hasPiano = pool.some(zombie => String(zombie).includes('piano'));
+
+        // If king is found, add dark variants
+        if (hasKing) {
+            pool.push(
+                rtid('dark_armor1', 'ZombieTypes'),
+                rtid('dark_armor2', 'ZombieTypes'),
+                rtid('dark_armor3', 'ZombieTypes'),
+                rtid('dark_armor4', 'ZombieTypes')
+            );
+        }
+
+        // If piano is found, add cowboy variants
+        if (hasPiano) {
+            pool.push(
+                rtid('cowboy_armor1', 'ZombieTypes'),
+                rtid('cowboy_armor2', 'ZombieTypes'),
+                rtid('cowboy_armor4', 'ZombieTypes'),
+                rtid('cowboy', 'ZombieTypes')
+            );
+        }
+
         if (stage === 'Heroes'){
             pool = minibossPool;
-        }
-        // Name normalization
-        for (let i = 0; i < pool.length; i++) {
-            if (pool[i] === 'n3xt') {
-                pool[i] = 'n3xt_basic';
-            } else if (pool[i] === 'n3xt_fem') {
-                pool[i] = 'n3xt_basic_fem';
-            } else if (pool[i] === 'summer') {
-                pool[i] = 'summer_basic';
-            }
         }
         let table = document.createElement('table');
         table.style.width = '50%';
