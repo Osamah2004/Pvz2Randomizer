@@ -333,6 +333,7 @@
         } else {
             // Original random selection logic
             let maxSpecials;
+            
             if (difficulty === 1) maxSpecials = randint(2, 4);
             else if (difficulty <= 3) maxSpecials = randint(4, 20);
             else if (difficulty <= 6) maxSpecials = randint(10, 35);
@@ -341,6 +342,7 @@
             
             let numSpecials = Math.min(randint(1, difficulty * 5), maxSpecials);
             pool = sample(specials, numSpecials);
+            console.log(difficulty);
             
             if (difficulty >= 4) {
                 pool.push("hero_zmech");
@@ -828,6 +830,7 @@
         if (pool.includes('piano')) {
             pool.push('cowboy_armor1', 'cowboy_armor2', 'cowboy_armor4', 'cowboy');
         }
+        let pick0= basics[Math.floor(Math.random() * basics.length)];
 
         let pick1 = basics[Math.floor(Math.random() * basics.length)] + "_armor1";
 
@@ -838,10 +841,10 @@
         let pick3 = validArmor4[Math.floor(Math.random() * validArmor4.length)] + "_armor4";
 
         // then add them to pool
+        pool.push(pick0);
         pool.push(pick1);
         pool.push(pick2);
         pool.push(pick3);
-        pool.push(pick3)
         if (stage === 'Heroes'){
             pool = minibossPool;
         }
@@ -1716,7 +1719,7 @@
         for (let i = 0; i < pool.length; i++) {
             pool[i] = `RTID(${pool[i]}@ZombieTypes)`;
         }
-        pool.pop()
+        
 
         window.onload = function () {
             let filename = localStorage.getItem('filename');
