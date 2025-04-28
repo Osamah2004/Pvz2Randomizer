@@ -599,7 +599,7 @@
         function extraStages() {
             switch (mod) {
                 case 'rfl':
-                    return ['Summer',"Harvest","Xmas","Valentine","Paddys","Carnival","Hero","ModernPool","SpongebobGood","SpongebobShit","SpongebobMall","SpringFools","N3XTDave","N3XTCampgrounds","N3XTJungle","FNAF","HappyLand","Mesopotamia","Spongebob24Good","LunarSolar","LunarNebula","LunarVortex","LunarStardust"];
+                    return ['Summer',"Harvest","Xmas","Valentine","Paddys","Carnival","Heroes","ModernPool","SpongebobGood","SpongebobShit","SpongebobMall","SpringFools","N3XTDave","N3XTCampgrounds","N3XTJungle","FNAF","HappyLand","Mesopotamia","Spongebob24Good","LunarSolar","LunarNebula","LunarVortex","LunarStardust"];
                     break;
 
                 default:
@@ -781,29 +781,24 @@
             "hero_electricboogaloo",
             "hero_armor1",
             "hero_armor2",
-            "hero_flag",
             "hero_disco_mech",
             "hero_impfinity",
-            "hero_impfinity_zmech",
+            "hero_impfinity",
             "hero_neptuna",
             "hero_rustbolt",
             "hero_superbrainz",
             "hero_weaselhoarder",
-            "hero_weasel",
-            "hero_dodo",
+            "galaxy_dodo",
             "hero_barrelroller",
-            "hero_barrel",
             "hero_smash",
             "hero_mc",
             "hero_brainiac",
             "hero_glitter",
-            "hero_stellar_glitter",
             "hero_bassloid",
             "hero_bass_basic",
             "hero_grate_mystery",
             "hero_steelwalker",
-            "hero_captain_jones",
-            "hero_bass"
+            "hero_captain_jones"
         ];
 
         if (useManualSelection) {
@@ -832,7 +827,7 @@
         basicPool[1] = rtid(basicPool[1], 'ZombieTypes');
         basicPool[2] = rtid(basicPool[2], 'ZombieTypes');
         basicPool[3] = rtid(basicPool[3], 'ZombieTypes');
-        if (stage === 'Hero'){
+        if (stage === 'Heroes'){
             pool = minibossPool;
         }
         // Name normalization
@@ -1460,7 +1455,7 @@
         modules.push("RTID(ChallengeSeedBank@LevelModules)");
         let mowers = false;
         if (coinFlip()) {
-            if (stage == "Harvest" || stage == "Summer" || stage == "Xmas" || stage == "Paddys" || stage == "Spring" || stage == "Valentine" || stage == "Hero"){
+            if (stage == "Harvest" || stage == "Summer" || stage == "Xmas" || stage == "Paddys" || stage == "Spring" || stage == "Valentine" || stage == "Heroes"){
                 modules.push(`RTID(HolidayMowers@LevelModules)`) ;
             }
             else {
@@ -2323,7 +2318,7 @@
                     name = 'leprachaun_imp'
                     message = 'Leprachaun!'
                     break;
-                case 'Hero':
+                case 'Heroes':
                     objclass = 'SpiderRainZombieSpawnerProps'
                     name = 'hero_impfinity'
                     message = 'Impfinity Clones!'
@@ -2436,7 +2431,7 @@
                     case 'Paddys':
                     case 'Spring':
                     case 'Valentine':
-                    case 'Hero':
+                    case 'Heroes':
                 case 'LostCity':
                     rain(wave);
                     break;
