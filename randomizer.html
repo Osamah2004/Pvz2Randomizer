@@ -823,7 +823,8 @@
                 }
             }
         }
-        // Function to fix basic names
+                // Function to fix basic names
+                // Function to fix basic names
         function fixBasic(name) {
             if (name === 'n3xt') return 'n3xt_basic';
             if (name === 'n3xt_fem') return 'n3xt_basic_fem';
@@ -849,29 +850,14 @@
         let pick2 = basics[Math.floor(Math.random() * basics.length)] + "_armor2";
         let pick3 = pickArmor4();
 
-        pool.push(
-            rtid(pick0, 'ZombieTypes'),
-            rtid(pick1, 'ZombieTypes'),
-            rtid(pick2, 'ZombieTypes'),
-            rtid(pick3, 'ZombieTypes')
-        );
+        // Only add RTID once
+        pool.push(pick0);
+        pool.push(pick1);
+        pool.push(pick2);
+        pool.push(pick3);
+        pool.push(rtid(pick3, 'ZombieTypes'));
+        pool.pop()
 
-        // Maybe add 1 to 3 more sets
-        let extraSets = Math.floor(Math.random() * 3) + 2; // 1 to 3
-
-        for (let i = 0; i < extraSets; i++) {
-            let extraPick0 = fixBasic(basics[Math.floor(Math.random() * basics.length)]);
-            let extraPick1 = basics[Math.floor(Math.random() * basics.length)] + "_armor1";
-            let extraPick2 = basics[Math.floor(Math.random() * basics.length)] + "_armor2";
-            let extraPick3 = pickArmor4();
-
-            pool.push(
-                rtid(extraPick0, 'ZombieTypes'),
-                rtid(extraPick1, 'ZombieTypes'),
-                rtid(extraPick2, 'ZombieTypes'),
-                rtid(extraPick3, 'ZombieTypes')
-            );
-        }
 
         // Check if any pool element includes 'king'
         let hasKing = pool.some(zombie => String(zombie).includes('king'));
@@ -898,6 +884,8 @@
                 rtid('cowboy', 'ZombieTypes')
             );
         }
+
+
 
         if (stage === 'Heroes'){
             pool = minibossPool;
