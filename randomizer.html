@@ -710,7 +710,7 @@
         specials.push(...extraSpecials());
         let part ="spring";
         let bots = ["steam_clockwork","iceage_dodo_veteran","hero_zmech","steam_mechanic","steam_repairimp","future_imp","future_protector_generator","future_gargantuar","mech_cone","disco_mech","future_protector","west_bull","west_bull_veteran"]
-        let basics = ["tutorial","duckytube","feastivus","valentines","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem","valentines","stpatrick", "steam_miner", "steam","spongebob","n3xt","n3xt_fem","happyland","spring",part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part];
+        let basics = ["tutorial","duckytube","feastivus","valentines","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem","stpatrick", "steam_miner", "steam","spongebob","n3xt","n3xt_fem","happyland","spring",part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part];
         let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp","spring_imp","leprachaun_imp","holiday_imp","feastivus_imp","valentines_imp","zcorp_imp","hero_impfinity","carnie_imp_twins"];
         let gargs = ["egypt_gargantuar","feastivus_gargantuar","valentines_gargantuar","stpatrick_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","carnie_gargantuar"]
         let validArmor4 = ["tutorial","duckytube","happyland","spongebob","carnie","iceage","eighties","beach","zcorp", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
@@ -821,12 +821,27 @@
                 }
             }
         }
+        if (pool.includes('king')) {
+            pool.push('dark_armor1', 'dark_armor2', 'dark_armor3', 'dark_armor4');
+        }
 
-        let basicPool = pool.toSpliced(4, pool.length);
-        basicPool[0] = rtid(basicPool[0], 'ZombieTypes');
-        basicPool[1] = rtid(basicPool[1], 'ZombieTypes');
-        basicPool[2] = rtid(basicPool[2], 'ZombieTypes');
-        basicPool[3] = rtid(basicPool[3], 'ZombieTypes');
+        if (pool.includes('piano')) {
+            pool.push('cowboy_armor1', 'cowboy_armor2', 'cowboy_armor4', 'cowboy');
+        }
+
+        let pick1 = basics[Math.floor(Math.random() * basics.length)] + "_armor1";
+
+        // pick random again from basics
+        let pick2 = basics[Math.floor(Math.random() * basics.length)] + "_armor2";
+
+        // pick random from validArmor4
+        let pick3 = validArmor4[Math.floor(Math.random() * validArmor4.length)] + "_armor4";
+
+        // then add them to pool
+        pool.push(pick1);
+        pool.push(pick2);
+        pool.push(pick3);
+        pool.push(pick3)
         if (stage === 'Heroes'){
             pool = minibossPool;
         }
