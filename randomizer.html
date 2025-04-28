@@ -1,5 +1,5 @@
+<!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,11 +62,12 @@
 <body>
     <div id="snackbar">Some text some message..</div>
     <div id="div1" class="filename-container">
-        <label> Options :</label>
-        <select onchange="setMod(modOption.value)" name="mod" id="modOption">
-            <option value="vnl">VNL</option>
-            <option value="rfl">RFL</option>
-        </select>
+        <label>Options:</label>
+            <select onchange="setMod(this.value)" name="mod" id="modOption">
+                <option value="vnl" disabled>VNL (Coming Soon)</option> <!-- Disabled VNL -->
+                <option value="rfl" selected>RFL</option> <!-- Default selected -->
+            </select>
+
 
         <label>Filename: </label><select id="filename"></select>
         <input style="width: 40px;" value="1" type="number" min="1" max="40" id="levelnum">
@@ -125,6 +126,13 @@
         let allZombies = {}; // Will store all zombies categorized by world
         let manualZombieSelection = [];
         let useManualSelection = false;
+
+        function setMod(selectedMod) {
+            mod = selectedMod;
+            console.log('Selected mod:', mod);
+            // You can call extraSpecials() or update other parts based on `mod`
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
         // Initialize difficulty from localStorage
         const difficultySelect = document.getElementById("difficulty");
@@ -199,6 +207,7 @@
         
         modal.style.display = 'block';
     }
+    
     
         function initializeAllZombies() {
             allZombies = {
@@ -590,7 +599,7 @@
         function extraStages() {
             switch (mod) {
                 case 'rfl':
-                    return ['Summer',"Harvest","Xmas","Valentine","Paddys","Carnival","ModernPool","SpongebobGood","SpongebobShit","SpongebobMall","SpringFools","N3XTDave","N3XTCampgrounds","N3XTJungle","FNAF","HappyLand","Mesopotamia","Spongebob24Good","LunarSolar","LunarNebula","LunarVortex","LunarStardust"];
+                    return ['Summer',"Harvest","Xmas","Valentine","Paddys","Carnival","Hero","ModernPool","SpongebobGood","SpongebobShit","SpongebobMall","SpringFools","N3XTDave","N3XTCampgrounds","N3XTJungle","FNAF","HappyLand","Mesopotamia","Spongebob24Good","LunarSolar","LunarNebula","LunarVortex","LunarStardust"];
                     break;
 
                 default:
@@ -699,10 +708,10 @@
         }
 
         specials.push(...extraSpecials());
-        let part ="spongebob";
+        let part ="spring";
         let bots = ["steam_clockwork","iceage_dodo_veteran","hero_zmech","steam_mechanic","steam_repairimp","future_imp","future_protector_generator","future_gargantuar","mech_cone","disco_mech","future_protector","west_bull","west_bull_veteran"]
-        let basics = ["tutorial","duckytube","feastivus","valentines","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem","valentines","stpatrick", "steam_miner", "steam","spongebob","n3xt","n3xt_fem","happyland",part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part];
-        let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp","leprachaun_imp","holiday_imp","feastivus_imp","valentines_imp","zcorp_imp","carnie_imp_twins"];
+        let basics = ["tutorial","duckytube","feastivus","valentines","carnie","eighties_8bit","roman", "mummy", "pirate", "cowboy", "future", "dark", "beach", "beach_fem", "iceage", "lostcity", "eighties", "dino", "summer", "zcorp", "zcorp_fem", "zcorp", "zcorp_fem","valentines","stpatrick", "steam_miner", "steam","spongebob","n3xt","n3xt_fem","happyland","spring",part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part,part, part, part, part, part, part, part, part];
+        let imps = ["tutorial_imp", "egypt_imp", "pirate_imp", "future_imp", "dark_imp", "beach_imp", "iceage_imp", "lostcity_imp", "eighties_imp", "dino_imp", "steam_imp","spring_imp","leprachaun_imp","holiday_imp","feastivus_imp","valentines_imp","zcorp_imp","hero_impfinity","carnie_imp_twins"];
         let gargs = ["egypt_gargantuar","feastivus_gargantuar","valentines_gargantuar","stpatrick_gargantuar", "cowboy_gargantuar", "future_gargantuar", "dark_gargantuar", "beach_gargantuar", "iceage_gargantuar", "lostcity_gargantuar", "dino_gargantuar", "tutorial_gargantuar", "summer_gargantuar", "steam_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","zcorp_gargantuar","carnie_gargantuar"]
         let validArmor4 = ["tutorial","duckytube","happyland","spongebob","carnie","iceage","eighties","beach","zcorp", "mummy", "pirate", "cowboy", "future", "dino", "dark"]
         
@@ -769,28 +778,32 @@
         let numSpecials = Math.min(randint(1, difficulty * 5), maxSpecials);
 
         let minibossPool = [
-            "miniboss_impfinity",
-            "birthday_caketank",
-            "hero_zmech",
-            "hero_crystalskull",
-            "feastivus_multplicity",
-            "mashup_arcade",
-            "iceage_chief_miniboss_phase1",
             "hero_electricboogaloo",
             "hero_armor1",
             "hero_armor2",
             "hero_flag",
             "hero_disco_mech",
-            "hero_jetpack_disco",
             "hero_impfinity",
+            "hero_impfinity_zmech",
             "hero_neptuna",
             "hero_rustbolt",
             "hero_superbrainz",
             "hero_weaselhoarder",
-            "galaxy_dodo",
+            "hero_weasel",
+            "hero_dodo",
             "hero_barrelroller",
             "hero_barrel",
-            "hero_smash"
+            "hero_smash",
+            "hero_mc",
+            "hero_brainiac",
+            "hero_glitter",
+            "hero_stellar_glitter",
+            "hero_bassloid",
+            "hero_bass_basic",
+            "hero_grate_mystery",
+            "hero_steelwalker",
+            "hero_captain_jones",
+            "hero_bass"
         ];
 
         if (useManualSelection) {
@@ -814,18 +827,14 @@
             }
         }
 
-        // [Rest of your pool generation logic remains the same as in previous example]
-        // Include all the stage-specific additions, conditional checks, etc.
-
-        // Remove the unused selectedZombie variable and its related code
-
-        // Final processing
         let basicPool = pool.toSpliced(4, pool.length);
         basicPool[0] = rtid(basicPool[0], 'ZombieTypes');
         basicPool[1] = rtid(basicPool[1], 'ZombieTypes');
         basicPool[2] = rtid(basicPool[2], 'ZombieTypes');
         basicPool[3] = rtid(basicPool[3], 'ZombieTypes');
-
+        if (stage === 'Hero'){
+            pool = minibossPool;
+        }
         // Name normalization
         for (let i = 0; i < pool.length; i++) {
             if (pool[i] === 'n3xt') {
@@ -1234,7 +1243,6 @@
 
             updateWaveManager(waveConfigs);  // Update wave manager with wave configurations
         }
-
         function modernRain(wave) {
             var num = 0;
             var start = 0;
@@ -1452,7 +1460,7 @@
         modules.push("RTID(ChallengeSeedBank@LevelModules)");
         let mowers = false;
         if (coinFlip()) {
-            if (stage ==`Harvest` || stage ==`Summer` || stage == "Xmas" || stage == "Paddys"){
+            if (stage == "Harvest" || stage == "Summer" || stage == "Xmas" || stage == "Paddys" || stage == "Spring" || stage == "Valentine" || stage == "Hero"){
                 modules.push(`RTID(HolidayMowers@LevelModules)`) ;
             }
             else {
@@ -1604,15 +1612,24 @@
             case 'West':
                 railCarts();
                 break;
+            case 'Valentine':
+                createPattern(0, 8, ["presentSunOnDestruction_valentines","presentPlantfoodOnDestruction_valentines","presentPlantOnDestruction_valentine","presentZombieOnDestruction_valentines","holidaydrink_valentines"]);
+                break;
+            case 'Spring':
+                createPattern(3, 8, ["gravestone_tutorial","holidaydrink_spring"]);
+                break;
+            case 'Spring':
+                createPattern(3, 8, ["gravestone_tutorial","holidaydrink_heroes"]);
+                break;
             case 'Harvest':
-                chessboard(5,8,["pumpkin_scarecrow","crater",'presentSunOnDestruction','presentPlantfoodOnDestruction','presentPlantOnDestruction','presentPlantOnDestruction_valentines']);
+                createPattern(0,8,["pumpkin_scarecrow","crater",'presentSunOnDestruction','presentPlantfoodOnDestruction','presentPlantOnDestruction','presentPlantOnDestruction_valentines']);
                 if (coinFlip()){
                     railCarts();
                 }
                 
                 break;
             case 'Summer':
-                chessboard(3, 7, ["fireworks", 'speaker','presentSunOnDestruction','presentPlantfoodOnDestruction','presentPlantOnDestruction','presentPlantOnDestruction_valentines']);
+                chessboard(3, 7, ["fireworks","holidaydrink_summernights", 'speaker','presentSunOnDestruction','presentPlantfoodOnDestruction','presentPlantOnDestruction','presentPlantOnDestruction_valentines']);
                 break;
             case 'Xmas':
                 chessboard(3, 7, ['presentSunOnDestruction','presentPlantfoodOnDestruction','presentPlantOnDestruction']);
@@ -2306,6 +2323,21 @@
                     name = 'leprachaun_imp'
                     message = 'Leprachaun!'
                     break;
+                case 'Hero':
+                    objclass = 'SpiderRainZombieSpawnerProps'
+                    name = 'hero_impfinity'
+                    message = 'Impfinity Clones!'
+                    break;
+                case 'Spring':
+                    objclass = 'SpiderRainZombieSpawnerProps'
+                    name = 'spring_imp'
+                    message = 'Egg rain!'
+                    break;
+                case 'Valentine':
+                    objclass = 'SpiderRainZombieSpawnerProps'
+                    name = 'valentines_imp'
+                    message = 'Cupid Rain!'
+                    break;
 
                 default:
                     if (Math.random() < 0.2) {
@@ -2397,11 +2429,14 @@
                 case 'Pirate':
                     raidingParty(wave);
                     break;
-                case `Summer`:
-                case `Xmas`:
-                case `Harvest`:
-                case 'Future':
-                case 'Paddys':
+                    case `Summer`:
+                    case `Xmas`:
+                    case `Harvest`:
+                    case 'Future':
+                    case 'Paddys':
+                    case 'Spring':
+                    case 'Valentine':
+                    case 'Hero':
                 case 'LostCity':
                     rain(wave);
                     break;
