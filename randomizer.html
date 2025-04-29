@@ -283,7 +283,7 @@
                     "spongebob_kelpyg", "april_underseer", "luan_juggler", "n3xt_duckytube", "n3xt_duckytube_fem", 
                     "n3xt_greaser", "n3xt_bowler", "n3xt_pigeonfeeder", "n3xt_pigeon", "n3xt_swinger", "spongebob_ourple", 
                     "spongebob_endo", "spongebob_endo_scary", "spongebob_allstar_ragdoll", "mashup_arcade_spongebob", 
-                    "zombossmech_holiday_spongebob", "april_cowboy_gargantuar", "april_future_gargantuar", 
+                    "april_cowboy_gargantuar", "april_future_gargantuar", 
                     "april_barrelroller", "april_spring_prospector"
                 ]
             };
@@ -589,7 +589,7 @@
                 "feastivus_swashbuckler","feastivus_poncho","feastivus_camel_onehump","feastivus_camel_twohump","feastivus_camel_manyhump","feastivus_troglobite","feastivus_hunter",
                 "feastivus_fisherman",
                 // Miscellaneous
-                "general_treadmill_phase2","spongebob_sniffer", "spongebob_superfanimp", "spongebob_newspaper", "spongebob_kelpyg", "april_underseer", "luan_juggler", "n3xt_duckytube", "n3xt_duckytube_fem", "n3xt_greaser", "n3xt_bowler", "n3xt_pigeonfeeder", "n3xt_pigeon", "n3xt_swinger", "spongebob_ourple", "spongebob_endo", "spongebob_endo_scary", "spongebob_allstar_ragdoll", "mashup_arcade_spongebob", "zombossmech_holiday_spongebob", "april_cowboy_gargantuar", "april_future_gargantuar", "april_barrelroller", "april_spring_prospector"
+                "general_treadmill_phase2","spongebob_sniffer", "spongebob_superfanimp", "spongebob_newspaper", "spongebob_kelpyg", "april_underseer", "luan_juggler", "n3xt_duckytube", "n3xt_duckytube_fem", "n3xt_greaser", "n3xt_bowler", "n3xt_pigeonfeeder", "n3xt_pigeon", "n3xt_swinger", "spongebob_ourple", "spongebob_endo", "spongebob_endo_scary", "spongebob_allstar_ragdoll", "mashup_arcade_spongebob", "april_cowboy_gargantuar", "april_future_gargantuar", "april_barrelroller", "april_spring_prospector"
             ];
                     break;
                 default:
@@ -681,7 +681,7 @@
                 "feastivus_swashbuckler","feastivus_poncho","feastivus_camel_onehump","feastivus_camel_twohump","feastivus_camel_manyhump","feastivus_troglobite","feastivus_hunter",
                 "feastivus_fisherman",
                 // Miscellaneous
-                "general_treadmill_phase2","spongebob_sniffer","spongebob_armor5","spongebob_armor3", "spongebob_superfanimp", "spongebob_newspaper", "spongebob_kelpyg", "april_underseer", "luan_juggler", "n3xt_duckytube", "n3xt_duckytube_fem", "n3xt_greaser", "n3xt_bowler", "n3xt_pigeonfeeder", "n3xt_pigeon", "n3xt_swinger", "spongebob_ourple", "spongebob_endo", "spongebob_endo_scary", "spongebob_allstar_ragdoll", "mashup_arcade_spongebob", "zombossmech_holiday_spongebob", "april_cowboy_gargantuar", "april_future_gargantuar", "april_barrelroller", "april_spring_prospector"
+                "general_treadmill_phase2","spongebob_sniffer","spongebob_armor5","spongebob_armor3", "spongebob_superfanimp", "spongebob_newspaper", "spongebob_kelpyg", "april_underseer", "luan_juggler", "n3xt_duckytube", "n3xt_duckytube_fem", "n3xt_greaser", "n3xt_bowler", "n3xt_pigeonfeeder", "n3xt_pigeon", "n3xt_swinger", "spongebob_ourple", "spongebob_endo", "spongebob_endo_scary", "spongebob_allstar_ragdoll", "mashup_arcade_spongebob", "april_cowboy_gargantuar", "april_future_gargantuar", "april_barrelroller", "april_spring_prospector"
             ];
 
             default:
@@ -1451,8 +1451,8 @@
             else return randint(1, 8);
         }
 
-        let cappedStartingPoints = randint(150, Math.pow(difficulty, 2) * 50);
-        let cappedPointIncrement = randint(150, Math.pow(difficulty, 2) * 55);
+        let cappedStartingPoints = randint(100, difficulty* 50);
+        let cappedPointIncrement = randint(25, difficulty* 55);
         console.log(cappedPointIncrement)
 
 
@@ -1502,7 +1502,24 @@
         modules.push("RTID(StandardIntro@LevelModules)");
         modules.push("RTID(ZombiesDeadWinCon@LevelModules)");
         modules.push("RTID(DefaultZombieWinCondition@LevelModules)");
-        modules.push("RTID(ChallengeSeedBank@LevelModules)");
+        if (mod === "ref") {
+            modules.push("RTID(ChallengeSeedBank@LevelModules)");
+        } else {
+            modules.push("RTID(SeedBank@CurrentLevel)");
+        }
+
+        // Add the SeedBank object
+        objects.push({
+            aliases: ["SeedBank"],
+            objclass: "SeedBankProperties",
+            objdata: {
+                PresetPlantList: [],
+                PlantIncludeList: [],
+                PlantExcludeList: [],
+                SelectionMethod: "chooser"
+            }
+        });
+
         let mowers = false;
         if (coinFlip()) {
             if (stage == "Harvest" || stage == "Summer" || stage == "Xmas" || stage == "Paddys" || stage == "Spring" || stage == "Valentine" || stage == "Heroes"){
@@ -1573,7 +1590,6 @@
         }
         } else {
             objdata.StageModule = `RTID(${stage}Stage@LevelModules)`;
-            modules.push("RTID(DefaultSunDropper@LevelModules)") ;
         }
         if (stage === 'Modern') {
             objdata.ResourceGroupNames = [
@@ -1663,7 +1679,7 @@
             case 'Spring':
                 createPattern(3, 8, ["gravestone_tutorial","holidaydrink_spring"]);
                 break;
-            case 'Spring':
+            case 'Heroes':
                 createPattern(3, 8, ["gravestone_tutorial","holidaydrink_heroes"]);
                 break;
             case 'Harvest':
@@ -1674,7 +1690,7 @@
                 
                 break;
             case 'Summer':
-                chessboard(3, 7, ["fireworks","holidaydrink_summernights", 'speaker','presentSunOnDestruction','presentPlantfoodOnDestruction','presentPlantOnDestruction','presentPlantOnDestruction_valentines']);
+                createPattern(3, 7, ["fireworks","holidaydrink_summernights", 'speaker','presentSunOnDestruction','presentPlantfoodOnDestruction','presentPlantOnDestruction','presentPlantOnDestruction_valentines']);
                 break;
             case 'Xmas':
                 chessboard(3, 7, ['presentSunOnDestruction','presentPlantfoodOnDestruction','presentPlantOnDestruction']);
@@ -1747,6 +1763,26 @@
             default:
                 break;
         }
+        
+        function addConstantGridSpawn(types, minDelay, maxDelay, initialCount, maxCount) {
+            let addGridSpawn = true;
+            let obj = {
+                aliases: [`ConstantGridSpawn1`],
+                objclass: "ZombiePotionModuleProperties",
+                objdata: {
+                    InitialPotionCount: initialCount,
+                    MaxPotionCount: maxCount,
+                    PotionSpawnTimer: {
+                        Min: minDelay,
+                        Max: maxDelay
+                    },
+                    PotionTypes: types
+                }
+            };
+
+            append(obj, "ZombiePotionModuleProperties", "LevelModules");
+        }
+
 
         for (let i = 0; i < pool.length; i++) {
             pool[i] = `RTID(${pool[i]}@ZombieTypes)`;
@@ -1822,7 +1858,7 @@
             const index = objects.findIndex(obj => obj.objclass === targetClass);
             return index;
         }
-        function createPattern(start, end, typeName, num = randint(1,11)) {
+        function createPattern(start, end, typeName, num = randint(4,11)) {
             const patterns = [
                 // Pattern 1: 5 grid points
                 [
