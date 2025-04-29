@@ -1521,9 +1521,16 @@
         });
 
         let mowers = false;
+        const holidayStages = [
+            "Harvest", "Summer", "Xmas", "Paddys", "Spring", "Valentine", "Heroes",
+            "SpongebobGood", "SpongebobShit", "SpongebobMall", "SpringFools", 
+            "N3XTDave", "N3XTCampgrounds", "N3XTJungle", "FNAF", "HappyLand", 
+            "Mesopotamia", "Spongebob24Good", "LunarSolar", "LunarNebula", 
+            "LunarVortex", "LunarStardust"
+        ];
         if (coinFlip()) {
-            if (stage == "Harvest" || stage == "Summer" || stage == "Xmas" || stage == "Paddys" || stage == "Spring" || stage == "Valentine" || stage == "Heroes"){
-                modules.push(`RTID(HolidayMowers@LevelModules)`) ;
+            if (holidayStages.includes(stage)) {
+                modules.push(`RTID(HolidayMowers@LevelModules)`);
             }
             else {
                 modules.push(`RTID(${stage}Mowers@LevelModules)`) ;
