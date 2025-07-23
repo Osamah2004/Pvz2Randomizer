@@ -62,58 +62,17 @@
 <body>
     <div id="snackbar">Some text some message..</div>
     <div id="div1" class="filename-container">
-        <label>Options:</label>
-            <select onchange="setMod(this.value)" name="mod" id="modOption">
-                <option value="vnl" disabled>VNL (Coming Soon)</option> <!-- Disabled VNL -->
-                <option value="rfl" selected>RFL</option> <!-- Default selected -->
-            </select>
-
-
         <label>Filename: </label><select id="filename"></select>
         <input style="width: 40px;" value="1" type="number" min="1" max="40" id="levelnum">
         .json<br>
-        <label>Stage: </label>
-        <select id="stage"></select>
-        <br>
-        <h2>Select Difficulty</h2>
-        <div class="select-container">
-            <label for="difficulty">Difficulty Level:</label>
-            <select id="difficulty" name="difficulty" onchange="updateDifficultyText(this)">
-                <option hidden defaultSelected>-</option>
-                <option value="1">Easy</option>
-                <option value="2">Normal</option>
-                <option value="3">Inzane</option>
-                <option value="4">CRAAAZY!</option>
-                <option value="5">Johan</option>
-            </select>
-        </div><br>
-    </div>
-    
-    <div class="filename-container">
-        <h2>PvZ2 Level Preview</h2>
-    
-        <div id="levelPreview" class="inner-container">
-            <!-- This is where the preview will appear -->
-        </div>
-        <button onclick="generatePreview()">Preview Variables</button><br>
         <button id="Copy" onclick="copyCode()">Copy</button>
-        <p> or </p>
+        or
         <button id="buttonA" onclick="startDownload()">Download</button>
-        <button id="selectZombiesBtn" onclick="openZombieSelection()">Select Zombies Manually</button>
+        <br>
+        <button>Refresh level</button>
         <div id="discordReminder" style="text-align: center; margin-top: 20px;">
             <p>Don't forget to join our <a href="https://discord.gg/PkKZV2heCP" target="_blank">Discord server</a> to report any bugs!</p>
         </div>
-    </div>
-
-    <!-- Zombie Selection Modal -->
-    <div id="zombieSelectionModal">
-        <div id="zombieSelectionContent">
-            <h2>Select Zombies to Include</h2>
-            <div id="zombieCategories"></div>
-            <button onclick="applyZombieSelection()">Apply Selection</button>
-            <button onclick="closeModal()">Cancel</button>
-        </div>
-        
     </div>
 
     <a href="loadObjects.html" id="redirect"></a>

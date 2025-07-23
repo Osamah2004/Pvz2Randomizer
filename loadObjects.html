@@ -6,18 +6,21 @@
     <title>Document</title>
 </head>
 <body>
-    <h1 id="h">Loading special zombies to local storage...</h1>
+    <h1 id="h">Loading shits into local storage...</h1>
     <script>
         (async function() {
             let arr = [
             "future_protector", "dark_wizard", "dark_juggler", "dark_king", "beach_octopus",
-                "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite",
-                "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser",
-                "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler",
-                "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1",
-                "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter",
-                "eighties_boombox", "dino_bully", "modern_newspaper", "modern_balloon", "modern_allstar",
-                "prospector", "west_bull", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack"
+            "iceage_hunter", "iceage_dodo", "iceage_weaselhoarder", "iceage_troglobite",
+            "camel_onehump", "camel_twohump", "camel_manyhump", "pharaoh", "ra", "tomb_raiser",
+            "explorer", "barrelroller", "cannon", "seagull", "pirate_captain", "swashbuckler",
+            "lostcity_impporter", "lostcity_excavator", "lostcity_jane", "lostcity_bug", "lostcity_bug_armor1",
+            "lostcity_bug_armor2", "lostcity_crystalskull", "lostcity_relichunter",
+            "eighties_boombox", "dino_bully", "modern_newspaper", "modern_balloon", "modern_allstar",
+            "prospector", "west_bull", "poncho", "piano", "chicken_farmer", "mech_cone", "football_mech", "disco_mech", "future_jetpack"
+            ]
+            let stages = [
+                "Egypt","Pirate","West","Future","Dark","Beach","Iceage","LostCity","Dino","Tutorial"
             ]
             let basics = [
                 'mummy',
@@ -32,31 +35,17 @@
                 'dino',
             ]
             let cones = [
-                'mummy_armor1',
-                'pirate_armor1',
-                'cowboy_armor1',
-                'future_armor1',
-                'dark_armor1',
-                'beach_armor1',
-                'iceage_armor1',
-                'lostcity_armor1',
-                'eighties_armor1',
-                'dino_armor1',
-            ]
+                'mummy_armor1','pirate_armor1','cowboy_armor1','future_armor1','dark_armor1','beach_armor1','iceage_armor1','lostcity_armor1','eighties_armor1','dino_armor1',]
             let buckets = [
-                'mummy_armor2',
-                'pirate_armor2',
-                'cowboy_armor2',
-                'future_armor2',
-                'dark_armor2',
-                'beach_armor2',
-                'iceage_armor2',
-                'lostcity_armor2',
-                'eighties_armor2',
-                'dino_armor2',
+                'mummy_armor2','pirate_armor2','cowboy_armor2','future_armor2','dark_armor2','beach_armor2','iceage_armor2','lostcity_armor2','eighties_armor2','dino_armor2',
             ]
             let levelSkeleton = {"objects":[{"objclass":"LevelDefinition","objdata":{"StartingSun":50,"Description":"Custom Level","FirstRewardParam":"moneybag","NormalPresentTable":"egypt_normal_01","ShinyPresentTable":"egypt_shiny_01","Loot":"RTID(DefaultLoot@LevelModules)","Modules":["RTID(StandardIntro@LevelModules)","RTID(SeedBank@CurrentLevel)","RTID(DefaultSunDropper@LevelModules)","RTID(ZombiesDeadWinCon@LevelModules)","RTID(DefaultZombieWinCondition@LevelModules)"],"Name":"My Level","StageModule":"RTID(ModernStage@LevelModules)"}},{"aliases":["SeedBank"],"objclass":"SeedBankProperties","objdata":{"SelectionMethod":"chooser"}},{"aliases":["Escalation"],"objclass":"LevelEscalationModuleProperties","objdata":{"FlagCount":0,"WavesPerFlag":0,"PlantfoodToSpawnCount":0,"StartingPoints":0,"PointIncrementPerWave":0,"WaveManagerProps":"RTID(WaveManager@CurrentLevel)","ZombiePool":["RTID(tutorial@ZombieTypes)"]}},{"aliases":["NewWaves"],"objclass":"WaveManagerModuleProperties","objdata":{}},{"aliases":["WaveManager"],"objclass":"WaveManagerProperties","objdata":{"FlagWaveInterval":8,"WaveCount":0,"SuppressFlagZombie":false,"Waves":[]}}],"version":1}
-        
+            let descriptions = [
+                'the level of all time...',
+                'rng let\'s goooooo.',
+                'THE MOOOON HAUNTS YOU.',
+                'BY THE EYE OF MAMA COCO.',
+            ]
             await new Promise(resolve => setTimeout(resolve, 2000));
             for (let i = 0; i < arr.length; i++) {
                 let ID = `S${i}`;
@@ -65,8 +54,9 @@
             localStorage.setItem('basics', basics);
             localStorage.setItem('cones', cones);
             localStorage.setItem('buckets', buckets);
+            localStorage.setItem('stages', stages);
             localStorage.setItem('levelSkeleton',JSON.stringify(levelSkeleton))
-            h.textContent = "Zombies successfully loaded.";
+            h.textContent = "Successfully loaded.";
             await new Promise(resolve => setTimeout(resolve, 1000));
             location.href = "randomizer.html";
         })();
