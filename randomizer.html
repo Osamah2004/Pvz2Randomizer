@@ -56,6 +56,12 @@
         .zombie-category h3 {
             margin-top: 0;
         }
+        a {
+            color: cyan;
+        }
+        a:hover {
+            color: #685426;
+        }
     </style>
 </head>
 
@@ -69,9 +75,11 @@
         or
         <button id="buttonA" onclick="startDownload()">Download</button>
         <br>
-        <button>Refresh level</button>
+        <!-- <button>Refresh level</button> -->
         <div id="discordReminder" style="text-align: center; margin-top: 20px;">
-            <p>Don't forget to join our <a href="https://discord.gg/PkKZV2heCP" target="_blank">Discord server</a> to report any bugs!</p>
+            <p>Don't forget to join our <a href="https://discord.gg/PkKZV2heCP" target="_blank">Discord server</a> to report bugs or suggest features</p>
+            <p>Or go to <a href="https://compassionate-cylinder-792552.framer.app/">this survey</a> </p>
+            <a href="levelRepository.html">check out the level repository</a>
         </div>
     </div>
 
@@ -79,6 +87,89 @@
 
     <h4><a id="home" href="index.html">Home page</a></h4>
     <script src="randomizer.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    let stageData = localStorage.getItem('stages');
+    let select = document.getElementById('filename');
+    let levelnum = document.getElementById('levelnum');
+    select.innerHTML = ''; // Clear existing options
+
+    if (stageData) {
+        if (stageData.includes(',')) {
+            let items = stageData.split(',').map(item => item.trim());
+            items.forEach(item => {
+                let option = document.createElement('option');
+                option.value = item;
+                option.textContent = item;
+                select.appendChild(option);
+            });
+        }
+    }
+
+    // Set Egypt as default if output is empty
+    let output = localStorage.getItem('output');
+    if (!output) {
+        output = 'Egypt1';
+        localStorage.setItem('output', output);
+    }
+
+    // Set select.value to part before digit, levelnum.value to digit part
+    const match = output.match(/^([^\d]*)(\d*)/);
+    if (match) {
+        select.value = match[1] || 'Egypt';
+        levelnum.value = match[2] || '1';
+    } else {
+        select.value = 'Egypt';
+        levelnum.value = '1';
+    }
+
+    select.addEventListener('change', function() {
+        localStorage.setItem('output', `${select.value}${levelnum.value}`);
+    });
+    levelnum.addEventListener('change', function() {
+        localStorage.setItem('output', `${select.value}${levelnum.value}`);
+    });
+
+    // Copy button functionality
+    window.copyCode = function() {
+        const skeleton = sessionStorage.getItem('skeleton');
+        if (skeleton) {
+            navigator.clipboard.writeText(skeleton);
+            showSnackbar('Level copied to clipboard!');
+        } else {
+            showSnackbar('Something went wrong.');
+        }
+    };
+
+    // Download button functionality
+    window.startDownload = function() {
+        const skeleton = sessionStorage.getItem('skeleton');
+        const output = localStorage.getItem('output') || 'Egypt1';
+        if (skeleton) {
+            const blob = new Blob([skeleton], {type: 'application/json'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = output + '.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+            showSnackbar('Level downloaded!');
+        } else {
+            showSnackbar('Something went wrong.');
+        }
+    };
+
+    // Snackbar function
+    function showSnackbar(message) {
+        var snackbar = document.getElementById('snackbar');
+        snackbar.textContent = message;
+        snackbar.className = 'show';
+        setTimeout(function() {
+            snackbar.className = snackbar.className.replace('show', '');
+        }, 3000);
+    }
+});</script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-/* Fonts */
+ /* Fonts */
 @font-face {
   font-family: 'PvZ2Regular';
   src: url('Font.ttf') format('truetype');
@@ -184,6 +184,26 @@ button:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.fakeButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: 'PvZ2Regular', sans-serif;
+  color: whitesmoke;
+  background: linear-gradient(to top, #493464, #7453c5);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  text-shadow: 1px 1px #000000;
+  border: 3px solid white;
+  margin: 10px 10px 10px 10px;
+}
+
+.fakeButton:hover {
+  background: linear-gradient(to top, #6a00f5, #361f71);
+  /* Darker green on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .red {
   padding: 10px 20px;
   font-size: 16px;
@@ -338,6 +358,11 @@ table {
   margin: 20px 0;
   font-size: 18px;
   text-align: left;
+  border: 2.5px solid #5a4100;
+  background: #e2dabd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 /* Zombie Form Styles */
 .zombie-form {
@@ -390,10 +415,10 @@ table {
   margin: 10px 0;
 }
 th, td {
+  border: 1.5px solid #5a4100;
   padding: 15px; /* Adjust padding for cells */
   color: #d46700;
   background-color: #e2dabd;
-  border-radius: solid;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

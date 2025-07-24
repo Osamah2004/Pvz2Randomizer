@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level Repository</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="randombg.js"></script>
+</head>
+<body>
+    <div class="level-flex-container">
+      <div class="level-form-side">
+        <button id="addLevel">
+            add your level/level pack
+        </button>
+        <h4><a id="home" href="index.html">Home page</a></h4>
+        <!-- Modal for adding a level -->
+        <div id="addLevelModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:1000; justify-content:center; align-items:center;">
+          <form id="levelForm" style="background:#b3b3b3; color:#333; padding:30px; border-radius:10px; min-width:320px; max-width:90vw; box-shadow:0 4px 16px #000; display:flex; flex-direction:column; gap:15px; position:relative;">
+            <button type="button" id="closeModal" class="red" style="position:absolute; top:10px; right:10px;">close</button>
+            <h2 style="margin-top:0;">Add Level</h2>
+            <label>Level Name:
+              <input type="text" id="levelName" name="levelName" minlength="3" maxlength="25" required />
+            </label>
+            <label>Description:
+              <input type="text" id="description" name="description" maxlength="75" />
+            </label>
+            <label>Difficulty:
+              <select id="difficulty" name="difficulty" required>
+                <option value="">Select...</option>
+                <option value="piss easy">piss easy</option>
+                <option value="easy">easy</option>
+                <option value="medium">medium</option>
+                <option value="hard">hard</option>
+                <option value="very hard">very hard</option>
+                <option value="kaizo">kaizo</option>
+                <option value="masochist">masochist</option>
+                <option value="impossible">impossible</option>
+              </select>
+            </label>
+            <label>Mod:
+              <input value="VNL" type="text" id="mod" name="mod" maxlength="3" required />
+            </label>
+            <label>Author:
+              <input type="text" id="author" name="author" maxlength="25" placeholder="anonymous if left empty" />
+            </label>
+            <label>Link:
+              <input type="text" id="link" name="link" required pattern="https://(www\.)?(mediafire\.com|drive\.google\.com)/.+" placeholder="mediafire or google drive link only" />
+            </label>
+            <div id="formError" style="color:red; min-height:1.5em;"></div>
+            <button type="submit" style="margin-top:10px;">Submit</button>
+          </form>
+        </div>
+      </div>
+      <div class="level-table-side">
+        <table>
+            <tr>
+                <th>Level name</th>
+                <th>Description</th>
+                <th>Difficulty</th>
+                <th>Mod</th>
+                <th>Author</th>
+                <th>Link</th>
+            </tr>
+            <tbody id="levelsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+      // TODO: Fill in your Firebase config here
+      const firebaseConfig = {
+    apiKey: "AIzaSyCU4o0_rKPSVHBm8VYm2oytD2R7Qp8WBKg",
+    authDomain: "pvz2-workshop-aeb81.firebaseapp.com",
+    projectId: "pvz2-workshop-aeb81",
+    storageBucket: "pvz2-workshop-aeb81.firebasestorage.app",
+    messagingSenderId: "222820297669",
+    appId: "1:222820297669:web:ecd7734a5c51dc229ab9ac",
+    measurementId: "G-QX9E4GE8VP"
+  };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+    </script>
+    <script src="levelRepositoryModal.js"></script>
+</body>
+</html> 

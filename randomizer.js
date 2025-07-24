@@ -1,8 +1,6 @@
-location.href = 'index.html'
-
 let A = document.getElementById('redirect');
 
-if (!localStorage.getItem("S0")){
+if (!localStorage.getItem("specials")){
     A.click()
 }
 
@@ -43,13 +41,6 @@ function sample(arr, k) {
     return result;
 }
 
-// Returns an array of i unique random digits between 0 and 42 inclusive
-function randomDigits(i) {
-    // Create an array of numbers from 0 to 42
-    const digits = Array.from({length: 43}, (_, idx) => idx);
-    return sample(digits, i);
-}
-
 function get(index){
     return JSON.parse(sessionStorage.getItem('skeleton')).objects[index].objdata;
 }
@@ -68,6 +59,8 @@ function levelModule(module){
     return `RTID(${module}@LevelModules)`
 }
 
+let stage;
+
 let flags;
 let interval;
 let waves;
@@ -81,6 +74,21 @@ let escalation = {
     "WaveManagerProps": "RTID(WaveManager@CurrentLevel)"
 }
 
+let newWaves = {
+    "FlagWaveInterval": 8,
+    "WaveCount": 0,
+    "SuppressFlagZombie": false,
+    "Waves": []
+}
+
+let levelDefinition = get(0)
+
+function newWavesStats(){
+    newWaves.FlagWaveInterval = interval;
+    newWaves.WaveCount = waves
+    set(newWaves,4)
+}
+
 function escalationStats(){
     escalation.FlagCount = flags
     escalation.WavesPerFlag = interval
@@ -90,9 +98,11 @@ function escalationStats(){
 }
 
 function setStats(){
+    stage = choice(getArrayFromLocalStorage('stages'))
+
     flags = randint(1,4);
     interval = randint(7,10);
-    waves = flags * waves
+    waves = flags * interval
 
     initialPoints = randint(2,6) * 50
     increment = randint(2,6) * 50
@@ -100,30 +110,44 @@ function setStats(){
     pf = randint(0,7)
 }
 
+function getArrayFromLocalStorage(key){
+    return localStorage.getItem(key).split(',')
+}
+
 function setPool(){
     let pool = []
     let numOfSpecials = randint(2,4)
-    pool.push(zombieType(choice(localStorage.getItem('basics').split(','))))
-    pool.push(zombieType(choice(localStorage.getItem('cones').split(','))))
-    pool.push(zombieType(choice(localStorage.getItem('buckets').split(','))))
-    let digitsArr = randomDigits(numOfSpecials)
-    console.log(digitsArr)
-    for (let i = 0; i <= numOfSpecials-1; i++){
-        pool.push(zombieType(localStorage.getItem(`S${i}`)))
-    }
+    let specials = getArrayFromLocalStorage('specials')
+    pool.push(zombieType(choice(getArrayFromLocalStorage('basics'))))
+    pool.push(zombieType(choice(getArrayFromLocalStorage('cones'))))
+    pool.push(zombieType(choice(getArrayFromLocalStorage('buckets'))))
+    specials = sample(specials,numOfSpecials)
+    specials.forEach(e => {
+        pool.push(zombieType(e))
+    });
     escalation.ZombiePool = pool
 }
 
 function setEscalation(){
     setPool()
     escalationStats()
-    console.log(escalation)
     set(escalation,2)
+}
+
+function setLevelDefinition(){
+    levelDefinition.Description = choice(getArrayFromLocalStorage('descriptions'))
+    levelDefinition.StageModule = levelModule(stage+'Stage')
+    levelDefinition.Modules.push(levelModule(stage+'Mowers'))
+    set(levelDefinition,0)
 }
 
 function buildLevel(){
     setStats()
     setEscalation()
+    newWavesStats()
+    setLevelDefinition()
 }
 
 buildLevel()
+
+console.log(levelDefinition)
