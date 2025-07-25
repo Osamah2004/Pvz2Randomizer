@@ -134,8 +134,14 @@ document.addEventListener('DOMContentLoaded', function() {
     window.copyCode = function() {
         const skeleton = sessionStorage.getItem('skeleton');
         if (skeleton) {
-            navigator.clipboard.writeText(skeleton);
-            showSnackbar('Level copied to clipboard!');
+            let prettySkeleton;
+            try {
+                prettySkeleton = JSON.stringify(JSON.parse(skeleton), null, 2);
+            } catch (e) {
+                prettySkeleton = skeleton; // fallback if not valid JSON
+            }
+            navigator.clipboard.writeText(prettySkeleton);
+            showSnackbar('Level copied to clipboard! Refresh the page for another level.');
         } else {
             showSnackbar('Something went wrong.');
         }
@@ -146,7 +152,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const skeleton = sessionStorage.getItem('skeleton');
         const output = localStorage.getItem('output') || 'Egypt1';
         if (skeleton) {
-            const blob = new Blob([skeleton], {type: 'application/json'});
+            let prettySkeleton;
+            try {
+                prettySkeleton = JSON.stringify(JSON.parse(skeleton), null, 2);
+            } catch (e) {
+                prettySkeleton = skeleton; // fallback if not valid JSON
+            }
+            const blob = new Blob([prettySkeleton], {type: 'application/json'});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = output + '.json';
@@ -154,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(link.href);
-            showSnackbar('Level downloaded!');
+            showSnackbar('Level downloaded! Refresh the page for another level.');
         } else {
             showSnackbar('Something went wrong.');
         }
